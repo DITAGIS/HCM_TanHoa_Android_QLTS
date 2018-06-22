@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Preference.getInstance().savePreferences(getString(R.string.preference_password), khachHang.getPassWord());
         Preference.getInstance().savePreferences(getString(R.string.preference_displayname), khachHang.getDisplayName());
 
-        Intent intent = new Intent(this, QuanLySuCo.class);
+        Intent intent = new Intent(this, QuanLyTaiSan.class);
 
         startActivity(intent);
     }

@@ -14,7 +14,7 @@ import com.esri.arcgisruntime.data.ServiceFeatureTable;
 
 import java.util.concurrent.ExecutionException;
 
-import hcm.ditagis.com.tanhoa.qlsc.QuanLySuCo;
+import hcm.ditagis.com.tanhoa.qlsc.QuanLyTaiSan;
 import hcm.ditagis.com.tanhoa.qlsc.R;
 
 public class QueryFeatureAsycn extends AsyncTask<String, ArcGISFeature, Void> {
@@ -53,7 +53,7 @@ public class QueryFeatureAsycn extends AsyncTask<String, ArcGISFeature, Void> {
                     FeatureQueryResult result = feature.get();
                     if (result.iterator().hasNext()) {
                         Feature item = result.iterator().next();
-                        if (QuanLySuCo.FeatureLayerDTGDiemSuCo != null) {
+                        if (QuanLyTaiSan.FeatureLayerDTGDiemSuCo != null) {
                             publishProgress((ArcGISFeature) item);
                         }
                     }

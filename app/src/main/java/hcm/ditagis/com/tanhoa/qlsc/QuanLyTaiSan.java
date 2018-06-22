@@ -85,7 +85,6 @@ import hcm.ditagis.com.tanhoa.qlsc.adapter.TraCuuAdapter;
 import hcm.ditagis.com.tanhoa.qlsc.async.EditAsync;
 import hcm.ditagis.com.tanhoa.qlsc.async.FindLocationAsycn;
 import hcm.ditagis.com.tanhoa.qlsc.async.PreparingAsycn;
-import hcm.ditagis.com.tanhoa.qlsc.entities.HoSoVatTuSuCo;
 import hcm.ditagis.com.tanhoa.qlsc.entities.MyAddress;
 import hcm.ditagis.com.tanhoa.qlsc.entities.entitiesDB.KhachHang;
 import hcm.ditagis.com.tanhoa.qlsc.libs.FeatureLayerDTG;
@@ -98,7 +97,7 @@ import hcm.ditagis.com.tanhoa.qlsc.utities.MySnackBar;
 import hcm.ditagis.com.tanhoa.qlsc.utities.Popup;
 import hcm.ditagis.com.tanhoa.qlsc.utities.Preference;
 
-public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AdapterView.OnItemClickListener {
+public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AdapterView.OnItemClickListener {
     private List<Object> mListObjectDB;
     private Uri mUri;
     private Popup mPopUp;
@@ -122,7 +121,6 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
     private LinearLayout mLayoutDisplayLayerAdministration;
     private Point mPointFindLocation;
     private Geocoder mGeocoder;
-    private List<HoSoVatTuSuCo> mListHoSoVatTuSuCo;
     private boolean mIsAddFeature;
     private ImageView mImageOpenStreetMap, mImageStreetMap, mImageImageWithLabel;
     private TextView mTxtOpenStreetMap, mTxtStreetMap, mTxtImageWithLabel;
@@ -166,8 +164,6 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
                 }
             }
         });
-
-
         if (CheckConnectInternet.isOnline(this))
             preparingAsycn.execute();
     }
@@ -190,16 +186,16 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
         //đưa listview search ra phía sau
         listViewSearch.invalidate();
         List<TraCuuAdapter.Item> items = new ArrayList<>();
-        mSearchAdapter = new TraCuuAdapter(QuanLySuCo.this, items);
+        mSearchAdapter = new TraCuuAdapter(QuanLyTaiSan.this, items);
         listViewSearch.setAdapter(mSearchAdapter);
-        listViewSearch.setOnItemClickListener(QuanLySuCo.this);
+        listViewSearch.setOnItemClickListener(QuanLyTaiSan.this);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(QuanLySuCo.this,
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(QuanLyTaiSan.this,
                 drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(QuanLySuCo.this);
+        navigationView.setNavigationItemSelectedListener(QuanLyTaiSan.this);
         mMapView = findViewById(R.id.mapView);
 
         setService();
@@ -328,12 +324,11 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
             if (config.getName() != null && config.getName().equals(getString(R.string.Name_DiemSuCo))) {
                 featureLayer.setId(config.getName());
                 Callout callout = mMapView.getCallout();
-                mPopUp = new Popup(QuanLySuCo.this, mMapView, serviceFeatureTable, callout, mLocationDisplay, mListObjectDB, mGeocoder, mFeatureLayerDTGS);
+                mPopUp = new Popup(QuanLyTaiSan.this, mMapView, serviceFeatureTable, callout, mLocationDisplay, mListObjectDB, mGeocoder, mFeatureLayerDTGS);
                 featureLayer.setPopupEnabled(true);
-                setRendererSuCoFeatureLayer(featureLayer);
                 FeatureLayerDTGDiemSuCo = mFeatureLayerDTG;
 
-                mMapViewHandler = new MapViewHandler(mFeatureLayerDTG, callout, mMapView, mPopUp, QuanLySuCo.this, mGeocoder);
+                mMapViewHandler = new MapViewHandler(mFeatureLayerDTG, callout, mMapView, mPopUp, QuanLyTaiSan.this, mGeocoder);
                 mFeatureLayerDTG.getFeatureLayer().getFeatureTable().loadAsync();
             }
 
@@ -351,8 +346,6 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
         mLayoutDisplayLayerFeature.removeAllViews();
         mLayoutDisplayLayerAdministration = findViewById(R.id.linnearDisplayLayerAdministration);
         mLayoutDisplayLayerAdministration.removeAllViews();
-        LinearLayout layoutDisplayLayerDiemSuCo = findViewById(R.id.linnearDisplayLayerDiemSuCo);
-        layoutDisplayLayerDiemSuCo.removeAllViews();
 
         LayerList layers = mMap.getOperationalLayers();
         int states[][] = {{android.R.attr.state_checked}, {}};
@@ -392,9 +385,7 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
 
                 }
             });
-            if (layer.getName().equals(getString(R.string.ALIAS_DIEM_SU_CO)))
-                layoutDisplayLayerDiemSuCo.addView(checkBox);
-            else if (layer.getName().equals(getString(R.string.ALIAS_THUA_DAT))
+            if (layer.getName().equals(getString(R.string.ALIAS_THUA_DAT))
                     || layer.getName().equals(getString(R.string.ALIAS_SONG_HO))
                     || layer.getName().equals(getString(R.string.ALIAS_GIAO_THONG))
                     || layer.getName().equals(getString(R.string.ALIAS_HANH_CHINH)))
@@ -426,43 +417,6 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
 //        });
     }
 
-    private void setRendererSuCoFeatureLayer(FeatureLayer mSuCoTanHoaLayer) {
-        UniqueValueRenderer uniqueValueRenderer = new UniqueValueRenderer();
-        uniqueValueRenderer.getFieldNames().add("TrangThai");
-        PictureMarkerSymbol chuaXuLy = new PictureMarkerSymbol(getString(R.string.url_image_symbol_chuasuachua));
-        chuaXuLy.setHeight(getResources().getInteger(R.integer.size_feature_renderer));
-        chuaXuLy.setWidth(getResources().getInteger(R.integer.size_feature_renderer));
-        PictureMarkerSymbol dangXuLy = new PictureMarkerSymbol(getString(R.string.url_image_symbol_dangsuachua));
-        dangXuLy.setHeight(getResources().getInteger(R.integer.size_feature_renderer));
-        dangXuLy.setWidth(getResources().getInteger(R.integer.size_feature_renderer));
-        PictureMarkerSymbol daXuLy = new PictureMarkerSymbol(getString(R.string.url_image_symbol_dasuachua));
-        daXuLy.setHeight(getResources().getInteger(R.integer.size_feature_renderer));
-        daXuLy.setWidth(getResources().getInteger(R.integer.size_feature_renderer));
-        PictureMarkerSymbol hoanThanh = new PictureMarkerSymbol(getString(R.string.url_image_symbol_hoanthanh));
-        hoanThanh.setHeight(getResources().getInteger(R.integer.size_feature_renderer));
-        hoanThanh.setWidth(getResources().getInteger(R.integer.size_feature_renderer));
-        uniqueValueRenderer.setDefaultSymbol(chuaXuLy);
-        uniqueValueRenderer.setDefaultLabel("Chưa xác định");
-
-        List<Object> chuaXuLyValue = new ArrayList<>();
-        chuaXuLyValue.add(0);
-        List<Object> dangXuLyValue = new ArrayList<>();
-        dangXuLyValue.add(1);
-        List<Object> daXuLyValue = new ArrayList<>();
-        daXuLyValue.add(2);
-
-        List<Object> hoanThanhValue = new ArrayList<>();
-        hoanThanhValue.add(3);
-        uniqueValueRenderer.getUniqueValues().add(new UniqueValueRenderer.UniqueValue(
-                "Chưa xử lý", "Chưa xử lý", chuaXuLy, chuaXuLyValue));
-        uniqueValueRenderer.getUniqueValues().add(new UniqueValueRenderer.UniqueValue(
-                "Chưa xử lý", "Chưa xử lý", dangXuLy, dangXuLyValue));
-        uniqueValueRenderer.getUniqueValues().add(new UniqueValueRenderer.UniqueValue(
-                "Chưa xử lý", "Chưa xử lý", daXuLy, daXuLyValue));
-        uniqueValueRenderer.getUniqueValues().add(new UniqueValueRenderer.UniqueValue(
-                "Chưa xử lý", "Chưa xử lý", hoanThanh, hoanThanhValue));
-        mSuCoTanHoaLayer.setRenderer(uniqueValueRenderer);
-    }
 
     private void changeStatusOfLocationDataSource() {
         mLocationDisplay = mMapView.getLocationDisplay();
@@ -479,15 +433,15 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
 
                 // If an error is found, handle the failure to start.
                 // Check permissions to see if failure may be due to lack of permissions.
-                boolean permissionCheck1 = ContextCompat.checkSelfPermission(QuanLySuCo.this,
+                boolean permissionCheck1 = ContextCompat.checkSelfPermission(QuanLyTaiSan.this,
                         reqPermissions[0]) == PackageManager.PERMISSION_GRANTED;
-                boolean permissionCheck2 = ContextCompat.checkSelfPermission(QuanLySuCo.this,
+                boolean permissionCheck2 = ContextCompat.checkSelfPermission(QuanLyTaiSan.this,
                         reqPermissions[1]) == PackageManager.PERMISSION_GRANTED;
 
                 if (!(permissionCheck1 && permissionCheck2)) {
                     // If permissions are not already granted, request permission from the user.
-                    ActivityCompat.requestPermissions(QuanLySuCo.this, reqPermissions, requestCode);
-                }  // Report other unknown failure types to the user - for example, location services may not // be enabled on the device. //                    String message = String.format("Error in DataSourceStatusChangedListener: %s", dataSourceStatusChangedEvent //                            .getSource().getLocationDataSource().getError().getMessage()); //                    Toast.makeText(QuanLySuCo.this, message, Toast.LENGTH_LONG).show();
+                    ActivityCompat.requestPermissions(QuanLyTaiSan.this, reqPermissions, requestCode);
+                }  // Report other unknown failure types to the user - for example, location services may not // be enabled on the device. //                    String message = String.format("Error in DataSourceStatusChangedListener: %s", dataSourceStatusChangedEvent //                            .getSource().getLocationDataSource().getError().getMessage()); //                    Toast.makeText(QuanLyTaiSan.this, message, Toast.LENGTH_LONG).show();
 
             }
         });
@@ -501,7 +455,7 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
             public void run() {
                 try {
                     if (booleanListenableFuture.get()) {
-                        QuanLySuCo.this.mPointFindLocation = position;
+                        QuanLyTaiSan.this.mPointFindLocation = position;
                     }
                     mPopUp.showPopupFindLocation(position);
                 } catch (InterruptedException | ExecutionException e) {
@@ -553,7 +507,7 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
             mLocationDisplay.startAsync();
 
         } else {
-            Toast.makeText(QuanLySuCo.this, getResources().getString(R.string.location_permission_denied), Toast.LENGTH_SHORT).show();
+            Toast.makeText(QuanLyTaiSan.this, getResources().getString(R.string.location_permission_denied), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -593,10 +547,10 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
                             (khachHangDangNhap.isTanPhu() && subAdminArea.equals(getString(R.string.QuanTanPhuName)))) {
                         capture();
                     } else {
-                        Toast.makeText(QuanLySuCo.this, R.string.message_not_area_management, Toast.LENGTH_LONG).show();
+                        Toast.makeText(QuanLyTaiSan.this, R.string.message_not_area_management, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(QuanLySuCo.this, R.string.message_not_area_management, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuanLyTaiSan.this, R.string.message_not_area_management, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -624,10 +578,10 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
                         mMapViewHandler.addFeature(null, mPointFindLocation);
                         deleteSearching();
                     } else {
-                        Toast.makeText(QuanLySuCo.this, R.string.message_not_area_management, Toast.LENGTH_LONG).show();
+                        Toast.makeText(QuanLyTaiSan.this, R.string.message_not_area_management, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(QuanLySuCo.this, R.string.message_not_area_management, Toast.LENGTH_LONG).show();
+                    Toast.makeText(QuanLyTaiSan.this, R.string.message_not_area_management, Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -673,7 +627,7 @@ public class QuanLySuCo extends AppCompatActivity implements NavigationView.OnNa
                         mMapViewHandler.querySearch(query, mSearchAdapter);
                     else if (query.length() > 0) {
                         deleteSearching();
-                        FindLocationAsycn findLocationAsycn = new FindLocationAsycn(QuanLySuCo.this,
+                        FindLocationAsycn findLocationAsycn = new FindLocationAsycn(QuanLyTaiSan.this,
                                 true, mGeocoder, mFeatureLayerDTGS, false, new FindLocationAsycn.AsyncResponse() {
                             @Override
                             public void processFinish(List<MyAddress> output) {

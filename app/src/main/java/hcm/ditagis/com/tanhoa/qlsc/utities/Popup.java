@@ -56,7 +56,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import hcm.ditagis.com.tanhoa.qlsc.QuanLySuCo;
+import hcm.ditagis.com.tanhoa.qlsc.QuanLyTaiSan;
 import hcm.ditagis.com.tanhoa.qlsc.R;
 import hcm.ditagis.com.tanhoa.qlsc.adapter.FeatureViewInfoAdapter;
 import hcm.ditagis.com.tanhoa.qlsc.adapter.FeatureViewMoreInfoAdapter;
@@ -69,7 +69,6 @@ import hcm.ditagis.com.tanhoa.qlsc.connectDB.HoSoVatTuSuCoDB;
 import hcm.ditagis.com.tanhoa.qlsc.entities.HoSoVatTuSuCo;
 import hcm.ditagis.com.tanhoa.qlsc.entities.MyAddress;
 import hcm.ditagis.com.tanhoa.qlsc.entities.VatTu;
-import hcm.ditagis.com.tanhoa.qlsc.entities.entitiesDB.KhachHang;
 import hcm.ditagis.com.tanhoa.qlsc.libs.FeatureLayerDTG;
 
 @SuppressLint("Registered")
@@ -77,7 +76,7 @@ public class Popup extends AppCompatActivity implements View.OnClickListener {
     private List<String> mListDMA, mListTenVatTuOngChinh, mListTenVatTuOngNganh;
     private List<VatTu> mListVatTuOngChinh, mListVatTuOngNganh;
     private List<Object> mListObjectDB;
-    private QuanLySuCo mMainActivity;
+    private QuanLyTaiSan mMainActivity;
     private ArcGISFeature mSelectedArcGISFeature = null;
     private ServiceFeatureTable mServiceFeatureTable;
     private Callout mCallout;
@@ -100,7 +99,7 @@ public class Popup extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    public Popup(QuanLySuCo mainActivity, MapView mapView, ServiceFeatureTable serviceFeatureTable,
+    public Popup(QuanLyTaiSan mainActivity, MapView mapView, ServiceFeatureTable serviceFeatureTable,
                  Callout callout, LocationDisplay locationDisplay, List<Object> listObjectDB, Geocoder geocoder, List<FeatureLayerDTG> featureLayerDTGS) {
         this.mMainActivity = mainActivity;
         this.mMapView = mapView;
@@ -988,23 +987,8 @@ public class Popup extends AppCompatActivity implements View.OnClickListener {
         refreshPopup(mSelectedArcGISFeature);
         ((TextView) linearLayout.findViewById(R.id.txt_thongtin_ten)).setText(featureLayer.getName());
         linearLayout.findViewById(R.id.imgBtn_layout_thongtinsuco).setOnClickListener(this);
-        if (featureLayer.getName().equals(mMainActivity.getString(R.string.ALIAS_DIEM_SU_CO))) {
-            //user admin mới có quyền xóa
-            if (KhachHang.khachHangDangNhap.getUserName().equals("admin")) {
-                linearLayout.findViewById(R.id.imgBtn_delete).setOnClickListener(this);
-            } else {
-                linearLayout.findViewById(R.id.imgBtn_delete).setVisibility(View.GONE);
-            }
-
-            //khi hoàn thành rồi thì không chỉnh sửa được
-            Object o = mSelectedArcGISFeature.getAttributes().get(mMainActivity.getString(R.string.Field_SuCo_TrangThai));
-            if (o != null && Integer.parseInt(o.toString())
-                    != mMainActivity.getResources().getInteger(R.integer.trang_thai_hoan_thanh))
-                linearLayout.findViewById(R.id.imgBtn_ViewMoreInfo).setOnClickListener(this);
-        } else {
-            linearLayout.findViewById(R.id.imgBtn_ViewMoreInfo).setVisibility(View.INVISIBLE);
-            linearLayout.findViewById(R.id.imgBtn_delete).setVisibility(View.INVISIBLE);
-        }
+        linearLayout.findViewById(R.id.imgBtn_ViewMoreInfo).setVisibility(View.INVISIBLE);
+        linearLayout.findViewById(R.id.imgBtn_delete).setVisibility(View.INVISIBLE);
 
         linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         Envelope envelope = mSelectedArcGISFeature.getGeometry().getExtent();

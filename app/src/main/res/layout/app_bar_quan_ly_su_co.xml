@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hcm.ditagis.com.tanhoa.qlsc.QuanLySuCo">
+    tools:context="hcm.ditagis.com.tanhoa.qlsc.QuanLyTaiSan">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -171,31 +171,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txt_quanlysuco_diemsuco"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:onClick="onClickTextView"
-                    android:text="Ẩn/hiện dữ liệu sự cố"
-                    android:textColor="@color/colorTextColor_1" />
-
-                <LinearLayout
-                    android:id="@+id/linnearDisplayLayerDiemSuCo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true"
-                    android:orientation="vertical" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_small"
-                    android:background="@android:color/black" />
 
                 <TextView
                     android:id="@+id/txt_quanlysuco_hanhchinh"

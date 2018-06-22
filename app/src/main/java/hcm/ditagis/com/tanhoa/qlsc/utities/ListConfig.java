@@ -115,12 +115,6 @@ public class ListConfig {
                 mContext.getResources().getStringArray(R.array.outFields_donghokhachhang),
                 mContext.getResources().getString(R.string.ALIAS_DONG_HO_KHACH_HANG),
                 mContext.getResources().getInteger(R.integer.minScale_donghokhachhang), new String[]{}));
-        configs.add(new Config(mContext.getResources().getString(R.string.URL_DIEM_SU_CO),
-                mContext.getResources().getStringArray(R.array.queryFields_diemsuco),
-                mContext.getResources().getStringArray(R.array.outFields_diemsuco),
-                Name.name_diemsuco, mContext.getResources().getString(R.string.ALIAS_DIEM_SU_CO),
-                mContext.getResources().getInteger(R.integer.minScale_diemsuco),
-                mContext.getResources().getStringArray(R.array.update_fields_arrays)));
         return configs;
     }
 

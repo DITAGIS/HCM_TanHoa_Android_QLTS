@@ -51,7 +51,6 @@ public class ThongKeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thong_ke);
 
-        mServiceFeatureTable = new ServiceFeatureTable(getResources().getString(R.string.URL_DIEM_SU_CO));
         TimePeriodReport timePeriodReport = new TimePeriodReport(this);
         List<ThongKeAdapter.Item> items = timePeriodReport.getItems();
         mThongKeAdapter = new ThongKeAdapter(this, items);

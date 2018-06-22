@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.ExecutionException;
 
-import hcm.ditagis.com.tanhoa.qlsc.QuanLySuCo;
+import hcm.ditagis.com.tanhoa.qlsc.QuanLyTaiSan;
 import hcm.ditagis.com.tanhoa.qlsc.R;
 import hcm.ditagis.com.tanhoa.qlsc.adapter.TraCuuAdapter;
 import hcm.ditagis.com.tanhoa.qlsc.async.SingleTapAddFeatureAsync;
@@ -85,8 +85,8 @@ public class MapViewHandler extends Activity {
                 image, mServiceFeatureTable, mMapView, mGeocoder, mFeatureLayerDTGs, new SingleTapAddFeatureAsync.AsyncResponse() {
             @Override
             public void processFinish(Feature output) {
-                if (output != null && QuanLySuCo.FeatureLayerDTGDiemSuCo != null) {
-                    mPopUp.setFeatureLayerDTG(QuanLySuCo.FeatureLayerDTGDiemSuCo);
+                if (output != null && QuanLyTaiSan.FeatureLayerDTGDiemSuCo != null) {
+                    mPopUp.setFeatureLayerDTG(QuanLyTaiSan.FeatureLayerDTGDiemSuCo);
                     mPopUp.showPopup((ArcGISFeature) output, true);
                 }
             }
@@ -144,9 +144,9 @@ public class MapViewHandler extends Activity {
 
                         mMapView.setViewpointGeometryAsync(extent);
                         suCoTanHoaLayer.selectFeature(item);
-                        if (QuanLySuCo.FeatureLayerDTGDiemSuCo != null) {
+                        if (QuanLyTaiSan.FeatureLayerDTGDiemSuCo != null) {
                             mSelectedArcGISFeature = (ArcGISFeature) item;
-                            mPopUp.setFeatureLayerDTG(QuanLySuCo.FeatureLayerDTGDiemSuCo);
+                            mPopUp.setFeatureLayerDTG(QuanLyTaiSan.FeatureLayerDTGDiemSuCo);
                             if (mSelectedArcGISFeature != null)
                                 mPopUp.showPopup(mSelectedArcGISFeature, false);
                         }
