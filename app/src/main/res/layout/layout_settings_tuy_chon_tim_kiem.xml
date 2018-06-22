@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/rdgr_layout_settings_tim_kiem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/fab_margin">
+
+        <RadioButton
+            android:id="@+id/rd_layout_settings_co_san"
+            style="@style/Radio"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preference_settings_tuy_chon_tim_kiem_co_san"
+            android:checked="true"
+            android:textSize="17sp" />
+
+        <RadioButton
+            android:id="@+id/rd_layout_settings_chua_co"
+            style="@style/Radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preference_settings_tuy_chon_tim_kiem_chua_co"
+            android:textSize="17sp" />
+
+
+    </RadioGroup>
+</LinearLayout>
