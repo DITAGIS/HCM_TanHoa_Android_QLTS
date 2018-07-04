@@ -115,6 +115,7 @@ public class ListConfig {
                 mContext.getResources().getStringArray(R.array.outFields_donghokhachhang),
                 mContext.getResources().getString(R.string.ALIAS_DONG_HO_KHACH_HANG),
                 mContext.getResources().getInteger(R.integer.minScale_donghokhachhang), new String[]{}));
+
         return configs;
     }
 

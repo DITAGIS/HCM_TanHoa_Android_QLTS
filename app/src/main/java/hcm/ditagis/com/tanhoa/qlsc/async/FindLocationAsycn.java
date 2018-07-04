@@ -91,7 +91,7 @@ public class FindLocationAsycn extends AsyncTask<String, List<MyAddress>, Void> 
                                 address.getSubAdminArea(), address.getAddressLine(0), "", "", ""));
                     publishProgress(lstLocation);
                 } else {
-                    if (MyServiceFeatureTable.getInstance(mContext, mFeatureLayerDTGS).getLayerThuaDat() != null) {
+                    if (MyServiceFeatureTable.getInstance(mContext, mFeatureLayerDTGS).getLayerHanhChinh() != null) {
                         Point project = new Point(mLongtitude, mLatitude);
                         Geometry center = GeometryEngine.project(project, SpatialReferences.getWgs84());
                         Geometry geometry = GeometryEngine.project(center, SpatialReferences.getWebMercator());
@@ -100,7 +100,8 @@ public class FindLocationAsycn extends AsyncTask<String, List<MyAddress>, Void> 
                         //lấy hành chính của điểm báo sự cố
                         queryParam.setGeometry(geometry);
                         queryParam.setWhereClause("1=1");
-                        final ListenableFuture<FeatureQueryResult> featureQueryResultListenableFuture = MyServiceFeatureTable.getInstance(mContext, mFeatureLayerDTGS).getLayerThuaDat().queryFeaturesAsync(queryParam);
+                        final ListenableFuture<FeatureQueryResult> featureQueryResultListenableFuture =
+                                MyServiceFeatureTable.getInstance(mContext, mFeatureLayerDTGS).getLayerHanhChinh().queryFeaturesAsync(queryParam);
                         featureQueryResultListenableFuture.addDoneListener(new Runnable() {
                             @Override
                             public void run() {
@@ -112,73 +113,74 @@ public class FindLocationAsycn extends AsyncTask<String, List<MyAddress>, Void> 
                                     }
                                     for (Object item : features) {
                                         Feature feature = (Feature) item;
-                                        Object soNha = feature.getAttributes().get("SoNha");
-                                        Object tenConDuong = feature.getAttributes().get("TenConDuong");
-                                        Object maDuong = feature.getAttributes().get("MaConDuong");
-                                        Object maPhuong = feature.getAttributes().get("MaPhuong");
+//                                        Object soNha = feature.getAttributes().get("SoNha");
+//                                        Object tenConDuong = feature.getAttributes().get("TenConDuong");
+//                                        Object maDuong = feature.getAttributes().get("MaConDuong");
+//                                        Object maPhuong = feature.getAttributes().get("MaPhuong");
                                         String location = "";
                                         //không có địa chỉ trên thửa đất
-                                        if (soNha == null || tenConDuong == null) {
-                                            List<Address> addressList = mGeocoder.getFromLocation(mLatitude, mLongtitude, 1);
-                                            for (Address address : addressList) {
-                                                location = address.getAddressLine(0);
-                                                lstLocation.add(new MyAddress(mLongtitude, mLatitude, address.getSubAdminArea(), location, "", "", ""));
-                                            }
-                                            publishProgress(lstLocation);
+//                                        if (soNha == null || tenConDuong == null) {
+                                        List<Address> addressList = mGeocoder.getFromLocation(mLatitude, mLongtitude, 1);
+                                        for (Address address : addressList) {
+                                            location = address.getAddressLine(0);
+                                            lstLocation.add(new MyAddress(mLongtitude, mLatitude, address.getSubAdminArea(), location, "", "", ""));
                                         }
+                                        publishProgress(lstLocation);
+//                                    }
                                         //ngược lại, địa chỉ khác null
-                                        else {
-                                            location = soNha.toString() + " " + tenConDuong.toString();
-                                            String maDuongStr = "";
-                                            String maPhuongStr = "";
-                                            if (maDuong != null)
-                                                maDuongStr = maDuong.toString();
-                                            if (maPhuong != null)
-                                                maPhuongStr = maPhuong.toString();
-                                            else if (MyServiceFeatureTable.getInstance(mContext, mFeatureLayerDTGS).getLayerDMA() != null) {
-                                                Point project = new Point(mLongtitude, mLatitude);
-                                                Geometry center = GeometryEngine.project(project, SpatialReferences.getWgs84());
-                                                Geometry geometry = GeometryEngine.project(center, SpatialReferences.getWebMercator());
-
-                                                //kiểm tra có thuộc địa bàn quản lý của tài khoản hay không
-                                                QueryParameters queryParam = new QueryParameters();
-                                                //lấy hành chính của điểm báo sự cố
-                                                queryParam.setGeometry(geometry);
-                                                queryParam.setWhereClause("1=1");
-                                                final ListenableFuture<FeatureQueryResult> featureQueryResultListenableFuture = MyServiceFeatureTable.getInstance(mContext, mFeatureLayerDTGS).getLayerThuaDat().queryFeaturesAsync(queryParam);
-                                                final String finalLocation = location;
-                                                final String finalMaDuongStr = maDuongStr;
-                                                final String finalMaPhuongStr = maPhuongStr;
-                                                featureQueryResultListenableFuture.addDoneListener(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        try {
-                                                            FeatureQueryResult features = featureQueryResultListenableFuture.get();
-                                                            for (Object item : features) {
-                                                                Feature feature = (Feature) item;
-                                                                Object maDMA = feature.getAttributes().get("MADMA");
-
-                                                                String maDMAStr = "";
-
-                                                                if (maDMA != null)
-                                                                    maDMAStr = maDMA.toString();
-                                                                lstLocation.add(new MyAddress(mLongtitude, mLatitude, "", finalLocation, finalMaDuongStr, finalMaPhuongStr, maDMAStr));
-                                                                publishProgress(lstLocation);
-
-
-                                                            }
-                                                        } catch (InterruptedException | ExecutionException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                        }
+//                                        else{
+//                                        location = soNha.toString() + " " + tenConDuong.toString();
+//                                        String maDuongStr = "";
+//                                        String maPhuongStr = "";
+//                                        if (maDuong != null)
+//                                            maDuongStr = maDuong.toString();
+//                                        if (maPhuong != null)
+//                                            maPhuongStr = maPhuong.toString();
+//                                        else if (MyServiceFeatureTable.getInstance(mContext, mFeatureLayerDTGS).getLayerDMA() != null) {
+//                                            Point project = new Point(mLongtitude, mLatitude);
+//                                            Geometry center = GeometryEngine.project(project, SpatialReferences.getWgs84());
+//                                            Geometry geometry = GeometryEngine.project(center, SpatialReferences.getWebMercator());
+//
+//                                            //kiểm tra có thuộc địa bàn quản lý của tài khoản hay không
+//                                            QueryParameters queryParam = new QueryParameters();
+//                                            //lấy hành chính của điểm báo sự cố
+//                                            queryParam.setGeometry(geometry);
+//                                            queryParam.setWhereClause("1=1");
+//                                            final ListenableFuture<FeatureQueryResult> featureQueryResultListenableFuture = MyServiceFeatureTable.getInstance(mContext, mFeatureLayerDTGS).getLayerThuaDat().queryFeaturesAsync(queryParam);
+//                                            final String finalLocation = location;
+//                                            final String finalMaDuongStr = maDuongStr;
+//                                            final String finalMaPhuongStr = maPhuongStr;
+//                                            featureQueryResultListenableFuture.addDoneListener(new Runnable() {
+//                                                @Override
+//                                                public void run() {
+//                                                    try {
+//                                                        FeatureQueryResult features = featureQueryResultListenableFuture.get();
+//                                                        for (Object item : features) {
+//                                                            Feature feature = (Feature) item;
+//                                                            Object maDMA = feature.getAttributes().get("MADMA");
+//
+//                                                            String maDMAStr = "";
+//
+//                                                            if (maDMA != null)
+//                                                                maDMAStr = maDMA.toString();
+//                                                            lstLocation.add(new MyAddress(mLongtitude, mLatitude, "", finalLocation, finalMaDuongStr, finalMaPhuongStr, maDMAStr));
+//                                                            publishProgress(lstLocation);
+//
+//
+//                                                        }
+//                                                    } catch (InterruptedException | ExecutionException e) {
+//                                                        e.printStackTrace();
+//                                                    }
+//                                                }
+//                                            });
+//                                        }
+//                                    }
                                     }
-                                } catch (InterruptedException | ExecutionException | IOException e) {
-                                    e.printStackTrace();
+                                } catch (InterruptedException | ExecutionException | IOException e1) {
+                                    e1.printStackTrace();
                                 }
                             }
+
                         });
                     }
                 }

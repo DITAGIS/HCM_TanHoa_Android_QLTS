@@ -2,6 +2,7 @@ package hcm.ditagis.com.tanhoa.qlsc.async;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
@@ -110,6 +111,12 @@ public class SingleTapMapViewAsync extends AsyncTask<Point, FeatureLayerDTG, Voi
         super.onPreExecute();
         mDialog.setMessage("Đang xử lý...");
         mDialog.setCancelable(false);
+        mDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                publishProgress();
+            }
+        });
         mDialog.show();
     }
 

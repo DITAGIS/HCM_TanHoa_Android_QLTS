@@ -12,7 +12,7 @@ import hcm.ditagis.com.tanhoa.qlsc.libs.FeatureLayerDTG;
 public class MyServiceFeatureTable {
     private ServiceFeatureTable layerThuaDat;
     private ServiceFeatureTable layerDMA;
-
+    private ServiceFeatureTable layerHanhChinh;
 
     private MyServiceFeatureTable(Context context, List<FeatureLayerDTG> mFeatureLayerDTGS) {
         for (FeatureLayerDTG feature : mFeatureLayerDTGS) {
@@ -20,6 +20,8 @@ public class MyServiceFeatureTable {
                 layerThuaDat = (ServiceFeatureTable) feature.getFeatureLayer().getFeatureTable();
             } else if (feature.getTitleLayer().equals(context.getString(R.string.ALIAS_DMA))) {
                 layerDMA = (ServiceFeatureTable) feature.getFeatureLayer().getFeatureTable();
+            } else if (feature.getTitleLayer().equals(context.getString(R.string.ALIAS_HANH_CHINH))) {
+                layerHanhChinh = (ServiceFeatureTable) feature.getFeatureLayer().getFeatureTable();
             }
         }
     }
@@ -39,5 +41,9 @@ public class MyServiceFeatureTable {
 
     public ServiceFeatureTable getLayerThuaDat() {
         return layerThuaDat;
+    }
+
+    public ServiceFeatureTable getLayerHanhChinh() {
+        return layerHanhChinh;
     }
 }

@@ -4,7 +4,7 @@
         <item>@string/Field_SuCo_NguyenNhan</item>
         <item>@string/Field_SuCo_VatLieu</item>
         <item>@string/Field_SuCo_ViTri</item>
-        <item>@string/Field_SuCo_VatTu</item>
+        <!--<item>@string/Field_SuCo_VatTu</item>-->
         <item>@string/Field_SuCo_DuongKinhOng</item>
     </string-array>
     <string-array name="update_fields_arrays">
@@ -23,15 +23,24 @@
         <item>VatTu</item>
         <item>KetQuaKiemTra</item>
         <item>ApLuc</item>
-        <item>THOIGIANTHUCHIEN</item>
+        <item>ThoiGianThucHien</item>
         <item>VatLieuOng</item>
         <item>@string/Field_SuCo_LoaiSuCo</item>
         <item>SDTNguoiBao</item>
         <item>MADMA</item>
         <item>TIETDIENBE</item>
-        <item>@string/Field_SuCo_PhuiDao_Dai</item>
-        <item>@string/Field_SuCo_PhuiDao_Cao</item>
-        <item>@string/Field_SuCo_PhuiDao_Rong</item>
+        <item>@string/Field_SuCo_PhuiDao1</item>
+        <item>@string/Field_SuCo_PhuiDao1_Dai</item>
+        <item>@string/Field_SuCo_PhuiDao1_Sau</item>
+        <item>@string/Field_SuCo_PhuiDao1_Rong</item>
+        <item>@string/Field_SuCo_PhuiDao2</item>>
+        <item>@string/Field_SuCo_PhuiDao2_Dai</item>
+        <item>@string/Field_SuCo_PhuiDao2_Sau</item>
+        <item>@string/Field_SuCo_PhuiDao2_Rong</item>
+        <item>@string/Field_SuCo_PhuiDao3</item>
+        <item>@string/Field_SuCo_PhuiDao3_Dai</item>
+        <item>@string/Field_SuCo_PhuiDao3_Sau</item>
+        <item>@string/Field_SuCo_PhuiDao3_Rong</item>
         <item>SoNha</item>
     </string-array>
     <string-array name="add_fields_arrays">
@@ -49,7 +58,6 @@
         <item>TENDMA</item>
         <item>MaDuong</item>
         <item>MaPhuong</item>
-        <item>MADMA</item>
     </string-array>
     <string-array name="vitri_ongnganh_arrays">
         <item>Bên phải nhà</item>
@@ -58,15 +66,6 @@
     <string-array name="vitri_ongchinh1_arrays">
         <item>Cách mép nhà…</item>
         <item>Cách bó vỉa…</item>
-    </string-array>
-    <string-array name="vitri_ongchinh2_arrays">
-        <item>Ống trên lề BTXM</item>
-        <item>Ống trên lề gạch con sâu</item>
-        <item>Ống trên lề gạch Tezzaro</item>
-        <item>Ống trên lề đá hoa cương</item>
-        <item>Ống dưới lòng đường nhựa</item>
-        <item>Ống dưới lòng đường BTXM</item>
-        <item>Ống dưới lòng đường đất đá</item>
     </string-array>
     <string-array name="nguyennhan_ongnganh_array">
         <item>Tét ống</item>

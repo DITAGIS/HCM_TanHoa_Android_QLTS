@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -13,7 +12,6 @@ import android.support.annotation.RequiresApi;
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
 import com.esri.arcgisruntime.data.ArcGISFeature;
 import com.esri.arcgisruntime.data.Attachment;
-import com.esri.arcgisruntime.data.EditResult;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureEditResult;
 import com.esri.arcgisruntime.data.FeatureQueryResult;
@@ -100,7 +98,7 @@ public class SingleTapAddFeatureAsync extends AsyncTask<Point, Feature, Void> {
                 @Override
                 public void processFinish(List<MyAddress> output) {
                     if (output != null) {
-                        feature.getAttributes().put(mContext.getString(R.string.SoNha), output.get(0).getLocation());
+                        feature.getAttributes().put(mContext.getString(R.string.Field_SuCo_DiaChi), output.get(0).getLocation());
                         String subAdminArea = output.get(0).getSubAdminArea();
                         if (subAdminArea.equals(mContext.getString(R.string.QuanPhuNhuanName)))
                             feature.getAttributes().put(mContext.getString(R.string.Field_SuCo_MaQuan), mContext.getString(R.string.QuanPhuNhuanCode));

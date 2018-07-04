@@ -13,11 +13,13 @@
     <string name="validate_change_password_lack">Mật khẩu phải đủ 6 ký tự</string>
     <string name="validate_password_old">Mật khẩu cũ không đúng</string>
 
-    <string name="app_name">Quản lý tài sản TH</string>
+    <string name="app_name">Quản lý tài sản Tân Hòa</string>
+    <string name="dialog_title_add">Thêm sự cố</string>
     <string name="btn_OK">OK</string>
     <string name="btn_save">Lưu thay đổi</string>
     <string name="btn_cancel">Hủy</string>
     <string name="quit">THOÁT</string>
+    <string name="title_su_co">Sự cố</string>
     <string name="people_info_title">Thông tin liên hệ</string>
     <string name="hoten_field">Họ và tên</string>
     <string name="sdt_field">Số điện thoại</string>
@@ -34,6 +36,7 @@
     <string name="ALIAS_ONG_TRUYEN_DAN">Ống truyền dẫn</string>
     <string name="ALIAS_MOI_NOI">Mối nối</string>
     <string name="ALIAS_TRU_HONG">Trụ họng</string>
+    <string name="ALIAS_DIEM_SU_CO">Điểm sự cố</string>
     <string name="ALIAS_VAN">Van</string>
     <string name="ALIAS_DIEM_AP_LUC">Điểm áp lực</string>
     <string name="ALIAS_DIEM_CUOI_ONG">Điểm cuối ống</string>
@@ -59,9 +62,18 @@
     <string name="URL_GIAO_THONG">http://113.161.88.180:800/arcgis/rest/services/TanHoa/TANHOABasemap/MapServer/2</string>
     <string name="URL_HANH_CHINH">http://113.161.88.180:800/arcgis/rest/services/TanHoa/TANHOABasemap/MapServer/3</string>
     <!--URL START-->
+    <string name="url_image_symbol_chuasuachua">http://sawagis.vn/tanhoa/Content/images/map/0.png</string>
+    <string name="url_image_symbol_dangsuachua">http://sawagis.vn/tanhoa/Content/images/map/1.png</string>
+    <string name="url_image_symbol_dasuachua">http://sawagis.vn/tanhoa/Content/images/map/2.png</string>
+    <string name="url_image_symbol_hoanthanh">http://sawagis.vn/tanhoa/Content/images/map/3.png</string>
     <!--URL END-->
     <string name="path_saveImage">.qlsc</string>
     <string name="attachment">attachment</string>
+    <!--<string name="world_elevation_service">https://ditagis.com:6443/arcgis/rest/services/HoChiMinh/SuCo_TanHoa/MapServer</string>-->
+    <!--<string name="service_feature_table">https://113.161.88.180:800/arcgis/rest/services/TanHoa/TanHoaSuCo/FeatureServer/0</string>-->
+    <string name="world_elevation_service">http://113.161.88.180:800/arcgis/rest/services/TanHoa/TanHoaSuCo/MapServer</string>
+    <string name="service_feature_table">http://113.161.88.180:800/arcgis/rest/services/TanHoa/TanHoaSuCo/FeatureServer/0</string>
+
     <string name="tongloaitrangthai">tongloaitrangthai</string>
     <string name="title_activity_tra_cuu">TraCuuActivity</string>
     <string name="ket_qua_objectid">ket_qua_objectid</string>
@@ -69,6 +81,7 @@
 
     <!--thông báo-->
     <string name="title_search">Tìm kiếm mọi thứ…</string>
+    <string name="notify_add_feature">Vui lòng click vào một điểm trên bản đồ để thêm một sự cố</string>
     <string name="location_permission_denied">Chưa có quyền truy cập vị trí</string>
 
     <!--navigation-->
@@ -80,14 +93,12 @@
     <string name="nav_cai_dat">Cài đặt</string>
     <string name="nav_change_password">Đổi mật khẩu</string>
     <string name="nav_log_out">Đăng xuất</string>
-    <string name="nav_cai_dat_them_su_co_title">Phương thức thêm điểm sự cố</string>
-    <string name="nav_cai_dat_tim_kiem_title">Tùy chọn tìm kiếm</string>
     <string name="nav_thong_ke">Thống kê</string>
     <string name="nav_thong_ke_tong_su_co">Tổng các sự cố: </string>
-    <string name="nav_thong_ke_chua_sua_chua">Chưa sửa chữa</string>
-    <string name="nav_thong_ke_dang_sua_chua">Đang sửa chữa</string>
-    <string name="nav_thong_ke_da_sua_chua">Đã sửa chữa</string>
-    <string name="nav_thong_ke_hoan_thanh">Hoàn thành</string>
+    <string name="SuCo_TrangThai_ChuaSuaChua">Chưa sửa chữa</string>
+    <string name="SuCo_TrangThai_DangSuaChua">Đang sửa chữa</string>
+    <string name="SuCo_TrangThai_DaSuaChua">Đã sửa chữa</string>
+    <string name="SuCo_TrangThai_HoanThanh">Hoàn thành</string>
 
     <!--async-->
     <string name="async_dang_xu_ly">Đang xử lý…</string>
@@ -121,16 +132,19 @@
     <string name="find_route_textview_begin">Từ</string>
     <string name="find_route_textview_end">Đến</string>
     <string name="todo">TODO</string>
-    <string name="title_layer_default">Đường phố 1</string>
-    <string name="title_layer_street">Đường phố 2</string>
+    <string name="title_layer_default">Mặc định</string>
+    <string name="title_layer_street">Đường phố</string>
     <string name="title_layer_satellite">Vệ tinh</string>
     <!--Route end-->
+
+
     <string name="action_logout">Đăng xuất</string>
     <string name="validate_no_connect">Không có kết nối internet</string>
     <string name="info_login_empty">Danh bạ hoặc mật khẩu không được để trống</string>
     <string name="validate_login_fail">Sai danh bạ hoặc mật khẩu</string>
     <string name="validate_hieuluc">Đồng hồ của khách hàng đã không còn hiệu lực\nVui lòng liên hệ công ty Cấp nước Tân Hòa\nđể biết thêm thông tin</string>
     <string name="validate_tracuutiennuoc_invalidtime">Chưa đến đợt đọc số!\nVui lòng chọn thời gian khác để tra cứu</string>
+
     <!--activity end-->
     <string name="change_password_check_old_password_message">Đang kiểm tra mật khẩu cũ…</string>
     <string name="change_password_message">Đang đổi mật khẩu…</string>
@@ -154,16 +168,6 @@
     <string name="sql_coloumn_login_phunhuan">phunhuan</string>
     <!--sql column login end-->
 
-    <!--sql column docso start-->
-    <string name="sql_coloumn_docso_cscu">cscu</string>
-    <string name="sql_coloumn_docso_csmoi">csmoi</string>
-    <string name="sql_coloumn_docso_tieuthucu">tieuthucu</string>
-    <string name="sql_coloumn_docso_tieuthumoi">tieuthumoi</string>
-    <string name="sql_coloumn_docso_tiennuoc">tiennuoc</string>
-    <string name="sql_coloumn_docso_thuevat">thue</string>
-    <string name="sql_coloumn_docso_phibvmt">bvmt</string>
-    <string name="sql_coloumn_docso_tongtien">tongtien</string>
-    <!--sql column docso end-->
 
     <!--sql column lichsuds begin-->
     <string name="sql_coloumn_lichsuds_nam">nam</string>
@@ -194,6 +198,7 @@
     <string name="sql_select_hosovattu_suco">select soluong, h.mavattu, tenvattu, donvitinh
         from dbo.hosovattusuco h inner join vattu v on h.mavattu = v.MaVatTu
         where idsuco = ?</string>
+    <string name="sql_delete_hosovattu_suco">delete from dbo.hosovattusuco where idsuco = ?</string>
 
     <!--sql end-->
     <string name="find_khachhHang_message">Đang lấy thông tin khách hàng…</string>
@@ -216,20 +221,12 @@
     <string name="format_new_line">\n%s</string>
     <string name="format_newline_address">\n%s %s</string>
     <string name="format_monthyear">%02d/%d</string>
+    <string name="format_definitionExp_DiemSuCo">trangthai = 0 or trangthai = 1 or (trangthai = 3 and (ngayxayra >= date\'%s\'))</string>
     <!--string format end-->
 
-    <string name="trangthai">TrangThai</string>
-    <string name="giabieu">Giá biểu</string>
-    <string name="dinhmuc">Đinh mức</string>
-    <string name="cscu">Chỉ số cũ</string>
-    <string name="csmoi">Chỉ số mới</string>
-    <string name="tieuthu">Tiêu thụ</string>
-    <string name="tongtien">Tổng tiền</string>
-    <string name="validate_tracuutiennuoc">Vui lòng chọn thời gian cần tra cứu</string>
-    <string name="tiennuoc">Tiền nước</string>
-    <string name="thueVAT">Thuế VAT</string>
-    <string name="phiBVMT">Phí BVMT</string>
     <string name="encode_string">DITAGIS*#</string>
+
+
     <string name="QuanPhuNhuanCode">768</string>
     <string name="QuanTanBinhCode">766</string>
     <string name="QuanTanPhuCode">767</string>
@@ -240,26 +237,35 @@
     <string name="QuanTanBinhName">Tân Bình</string>
     <string name="QuanTanPhuName">Tân Phú</string>
     <string name="format_date_month_year">%02d_%02d_%d</string>
-    <string name="SoNha">SoNha</string>
+
     <string name="LoaiSuCo_OngNganh">Ống ngánh</string>
     <string name="LoaiSuCo_OngChinh">Ống chính</string>
 
     <string name="btnLeftAddFeature">Lưu</string>
-    <string name="btnRightAddFeature">Chụp ảnh và lưu</string>
+    <string name="btnRightAddFeature">Chụp ảnh</string>
     <string name="btnLeftUpdateFeature">Cập nhật</string>
-    <string name="btnRightUpdateFeature">Chụp ảnh và cập nhật</string>
+    <string name="btnRightUpdateFeature">Chụp ảnh</string>
     <string name="message_error_add_feature">Không tạo được thuộc tính. Vui lòng thử lại sau</string>
 
     <!--field sự cố begin-->
     <string name="Field_SuCo_LoaiSuCo">LoaiSuCo</string>
     <string name="Field_SuCo_NguyenNhan">NguyenNhan</string>
     <string name="Field_SuCo_VatLieu">VatLieu</string>
-    <string name="Field_SuCo_PhuiDao_Dai">KichThuocPhuiDaoDai</string>
-    <string name="Field_SuCo_PhuiDao_Rong">KichThuocPhuiDaoRong</string>
-    <string name="Field_SuCo_PhuiDao_Cao">KichThuocPhuiDaoCao</string>
+    <string name="Field_SuCo_ViTri">ViTri</string>
+    <string name="Field_SuCo_PhuiDao1">PhuiDao1</string>
+    <string name="Field_SuCo_PhuiDao1_Dai">PhuiDao1Dai</string>
+    <string name="Field_SuCo_PhuiDao1_Rong">PhuiDao1Rong</string>
+    <string name="Field_SuCo_PhuiDao1_Sau">PhuiDao1Sau</string>
+    <string name="Field_SuCo_PhuiDao2">PhuiDao2</string>
+    <string name="Field_SuCo_PhuiDao2_Dai">PhuiDao2Dai</string>
+    <string name="Field_SuCo_PhuiDao2_Rong">PhuiDao2Rong</string>
+    <string name="Field_SuCo_PhuiDao2_Sau">PhuiDao2Sau</string>
+    <string name="Field_SuCo_PhuiDao3">PhuiDao3</string>
+    <string name="Field_SuCo_PhuiDao3_Dai">PhuiDao3Dai</string>
+    <string name="Field_SuCo_PhuiDao3_Rong">PhuiDao3Rong</string>
+    <string name="Field_SuCo_PhuiDao3_Sau">PhuiDao3Sau</string>
     <string name="Field_OBJECTID">OBJECTID</string>
     <string name="Field_SuCo_IDSuCo">IDSuCo</string>
-    <string name="Field_SuCo_ViTri">ViTri</string>
     <string name="Field_SuCo_TrangThai">TrangThai</string>
     <string name="Field_SuCo_NgayKhacPhuc">NgayKhacPhuc</string>
     <string name="Field_SuCo_NgayXayRa">NgayXayRa</string>
@@ -269,7 +275,14 @@
     <string name="Field_SuCo_NhanVienGiamSat">CONGNHANTHUCHIEN</string>
     <string name="Field_SuCo_DuongKinhOng">DuongKinhOng</string>
     <string name="Field_MADMA">MADMA</string>
+    <string name="Field_SuCo_DiaChi">SoNha</string>
     <string name="Field_SuCo_VatTu">VatTu</string>
     <string name="arcgis_query_by_OBJECTID">OBJECTID = %d</string>
+    <string name="message_CapNhat_VatTu">Danh sách vật tư đang trống!!!</string>
+    <string name="message_ChupAnh_HoanThanh">Cần chụp ảnh để hoàn thành sự cố</string>
+    <string name="message_soluong_themvattu">Số lượng không được để trống</string>
+    <string name="message_number_format_exception">Số liệu nhập vào không đúng định dạng</string>
+    <string name="btnRight_editItemViewMoreInfo">Cập nhật</string>
+    <string name="btnLeft_editItemViewMoreInfo">Hủy</string>
     <!--field sự cố end-->
 </resources>

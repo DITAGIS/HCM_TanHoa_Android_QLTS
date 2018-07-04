@@ -31,7 +31,24 @@ public class HoSoVatTuSuCoDB implements IDB<HoSoVatTuSuCo, Boolean, String> {
 
     @Override
     public Boolean delete(String s) {
-        return null;
+        Connection cnn = ConnectionDB.getInstance().getConnection();
+        boolean result = false;
+        try {
+            if (cnn == null)
+                return false;
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            PreparedStatement deleteStatement = cnn.prepareStatement(mContext.getString(R.string.sql_delete_hosovattu_suco));
+            deleteStatement.setString(1, s);
+            result = deleteStatement.execute();
+
+
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        } finally {
+
+        }
+        return result;
     }
 
     @Override
@@ -71,7 +88,7 @@ public class HoSoVatTuSuCoDB implements IDB<HoSoVatTuSuCo, Boolean, String> {
             rs = mStatement.executeQuery();
 
             while (rs.next()) {
-                hoSoVatTuSuCos.add(new HoSoVatTuSuCo(idSuCo, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+                hoSoVatTuSuCos.add(new HoSoVatTuSuCo(idSuCo, rs.getDouble(1), rs.getString(2), rs.getString(3), rs.getString(4)));
             }
         } catch (SQLException e1) {
             e1.printStackTrace();
@@ -86,6 +103,7 @@ public class HoSoVatTuSuCoDB implements IDB<HoSoVatTuSuCo, Boolean, String> {
         return hoSoVatTuSuCos;
     }
 
+
     public boolean insert(HoSoVatTuSuCo hoSoVatTuSuCo) {
         Connection cnn = ConnectionDB.getInstance().getConnection();
         int result = 0;
@@ -94,13 +112,14 @@ public class HoSoVatTuSuCoDB implements IDB<HoSoVatTuSuCo, Boolean, String> {
                 return false;
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            String query = mContext.getString(R.string.sql_insert_hosovattu_suco);
-            PreparedStatement statement = cnn.prepareStatement(query);
-            statement.setString(1, hoSoVatTuSuCo.getIdSuCo());
-            statement.setInt(2, hoSoVatTuSuCo.getSoLuong());
-            statement.setString(3, hoSoVatTuSuCo.getMaVatTu());
 
-            result = statement.executeUpdate();
+            String query = mContext.getString(R.string.sql_insert_hosovattu_suco);
+            PreparedStatement insertStatement = cnn.prepareStatement(query);
+            insertStatement.setString(1, hoSoVatTuSuCo.getIdSuCo());
+            insertStatement.setDouble(2, hoSoVatTuSuCo.getSoLuong());
+            insertStatement.setString(3, hoSoVatTuSuCo.getMaVatTu());
+
+            result = insertStatement.executeUpdate();
 
         } catch (SQLException e1) {
             e1.printStackTrace();

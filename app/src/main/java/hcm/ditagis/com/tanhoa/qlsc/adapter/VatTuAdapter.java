@@ -69,46 +69,30 @@ public class VatTuAdapter extends ArrayAdapter<VatTuAdapter.Item> {
 
     public static class Item {
         private String tenVatTu;
-        private int soLuong;
+        private double soLuong;
         private String donVi;
         private String maVatTu;
-
-        public Item(String tenVatTu, int soLuong, String donVi, String maVatTu) {
-            this.tenVatTu = tenVatTu;
-            this.soLuong = soLuong;
-            this.donVi = donVi;
-            this.maVatTu = maVatTu;
-        }
 
         public String getTenVatTu() {
             return tenVatTu;
         }
 
-        public void setTenVatTu(String tenVatTu) {
-            this.tenVatTu = tenVatTu;
-        }
-
-        public int getSoLuong() {
+        public double getSoLuong() {
             return soLuong;
-        }
-
-        public void setSoLuong(int soLuong) {
-            this.soLuong = soLuong;
         }
 
         public String getDonVi() {
             return donVi;
         }
 
-        public void setDonVi(String donVi) {
-            this.donVi = donVi;
-        }
-
         public String getMaVatTu() {
             return maVatTu;
         }
 
-        public void setMaVatTu(String maVatTu) {
+        public Item(String tenVatTu, double soLuong, String donVi, String maVatTu) {
+            this.tenVatTu = tenVatTu;
+            this.soLuong = soLuong;
+            this.donVi = donVi;
             this.maVatTu = maVatTu;
         }
     }

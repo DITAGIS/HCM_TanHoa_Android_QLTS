@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.ExecutionException;
 
-import hcm.ditagis.com.tanhoa.qlsc.QuanLyTaiSan;
+import hcm.ditagis.com.tanhoa.qlsc.QuanLySuCo;
 import hcm.ditagis.com.tanhoa.qlsc.R;
 import hcm.ditagis.com.tanhoa.qlsc.adapter.TraCuuAdapter;
 import hcm.ditagis.com.tanhoa.qlsc.async.SingleTapAddFeatureAsync;
@@ -85,9 +85,14 @@ public class MapViewHandler extends Activity {
                 image, mServiceFeatureTable, mMapView, mGeocoder, mFeatureLayerDTGs, new SingleTapAddFeatureAsync.AsyncResponse() {
             @Override
             public void processFinish(Feature output) {
-                if (output != null && QuanLyTaiSan.FeatureLayerDTGDiemSuCo != null) {
-                    mPopUp.setFeatureLayerDTG(QuanLyTaiSan.FeatureLayerDTGDiemSuCo);
-                    mPopUp.showPopup((ArcGISFeature) output, true);
+                if (output != null && QuanLySuCo.FeatureLayerDTGDiemSuCo != null) {
+                    ArcGISFeature arcGISFeature = (ArcGISFeature) output;
+                    if (arcGISFeature.canEditAttachments() && arcGISFeature.canUpdateGeometry()) {
+                        mPopUp.setFeatureLayerDTG(QuanLySuCo.FeatureLayerDTGDiemSuCo);
+                        mPopUp.showPopup(arcGISFeature, true);
+                    } else {
+                        MySnackBar.make(mMapView, "Điểm sự cố vừa thêm bị lỗi\nVui lòng liên hệ admin để xử lý", true);
+                    }
                 }
             }
         });
@@ -132,7 +137,8 @@ public class MapViewHandler extends Activity {
         final QueryParameters queryParameters = new QueryParameters();
         final String query = "OBJECTID = " + objectID;
         queryParameters.setWhereClause(query);
-        final ListenableFuture<FeatureQueryResult> feature = mServiceFeatureTable.queryFeaturesAsync(queryParameters);
+
+        final ListenableFuture<FeatureQueryResult> feature = mServiceFeatureTable.queryFeaturesAsync(queryParameters, ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
         feature.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -144,9 +150,9 @@ public class MapViewHandler extends Activity {
 
                         mMapView.setViewpointGeometryAsync(extent);
                         suCoTanHoaLayer.selectFeature(item);
-                        if (QuanLyTaiSan.FeatureLayerDTGDiemSuCo != null) {
+                        if (QuanLySuCo.FeatureLayerDTGDiemSuCo != null) {
                             mSelectedArcGISFeature = (ArcGISFeature) item;
-                            mPopUp.setFeatureLayerDTG(QuanLyTaiSan.FeatureLayerDTGDiemSuCo);
+                            mPopUp.setFeatureLayerDTG(QuanLySuCo.FeatureLayerDTGDiemSuCo);
                             if (mSelectedArcGISFeature != null)
                                 mPopUp.showPopup(mSelectedArcGISFeature, false);
                         }
@@ -217,7 +223,7 @@ public class MapViewHandler extends Activity {
                         }
                         String viTri = "";
                         try {
-                            viTri = attributes.get(mContext.getString(R.string.Field_SuCo_ViTri)).toString();
+                            viTri = attributes.get(mContext.getString(R.string.Field_SuCo_DiaChi)).toString();
                         } catch (Exception ignored) {
 
                         }

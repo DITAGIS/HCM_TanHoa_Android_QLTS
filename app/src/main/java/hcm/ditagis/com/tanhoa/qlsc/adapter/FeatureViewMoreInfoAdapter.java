@@ -72,13 +72,8 @@ public class FeatureViewMoreInfoAdapter extends ArrayAdapter<FeatureViewMoreInfo
         }
         txtValue.setText(item.getValue());
         if (item.isEdit()) {
-            if (item.isMustEdit()) {
-                convertView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorRed));
-                convertView.findViewById(R.id.img_viewmoreinfo_edit).setVisibility(View.VISIBLE);
-            } else {
-                convertView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent_1));
-                convertView.findViewById(R.id.img_viewmoreinfo_edit).setVisibility(View.VISIBLE);
-            }
+            convertView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorAccent_1));
+            convertView.findViewById(R.id.img_viewmoreinfo_edit).setVisibility(View.VISIBLE);
         } else {
             convertView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorBackground_1));
             convertView.findViewById(R.id.img_viewmoreinfo_edit).setVisibility(View.INVISIBLE);
@@ -96,27 +91,34 @@ public class FeatureViewMoreInfoAdapter extends ArrayAdapter<FeatureViewMoreInfo
         private String fieldName;
         private boolean isEdit;
         private Field.Type fieldType;
-        private boolean isMustEdit;
-
-        public boolean isMustEdit() {
-            return isMustEdit;
-        }
-
-        public void setMustEdit(boolean mustEdit) {
-            isMustEdit = mustEdit;
-        }
+        private boolean isEdited;
 
         public Item() {
-            this.isMustEdit = false;
         }
 
-
-        public Field.Type getFieldType() {
-            return fieldType;
-        }
-
-        public void setFieldType(Field.Type fieldType) {
+        public Item(String alias, String value, String fieldName, boolean isEdit, Field.Type fieldType, boolean isEdited) {
+            this.alias = alias;
+            this.value = value;
+            this.fieldName = fieldName;
+            this.isEdit = isEdit;
             this.fieldType = fieldType;
+            this.isEdited = isEdited;
+        }
+
+        public String getAlias() {
+            return alias;
+        }
+
+        public void setAlias(String alias) {
+            this.alias = alias;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
         }
 
         public String getFieldName() {
@@ -135,20 +137,20 @@ public class FeatureViewMoreInfoAdapter extends ArrayAdapter<FeatureViewMoreInfo
             isEdit = edit;
         }
 
-        public String getAlias() {
-            return alias;
+        public Field.Type getFieldType() {
+            return fieldType;
         }
 
-        public void setAlias(String alias) {
-            this.alias = alias;
+        public void setFieldType(Field.Type fieldType) {
+            this.fieldType = fieldType;
         }
 
-        public String getValue() {
-            return value;
+        public boolean isEdited() {
+            return isEdited;
         }
 
-        public void setValue(String value) {
-            this.value = value;
+        public void setEdited(boolean edited) {
+            isEdited = edited;
         }
     }
 }

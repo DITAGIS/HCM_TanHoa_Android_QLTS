@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -68,6 +68,10 @@
         <item name="android:textColor">@android:color/black</item>
     </style>
 
+    <style name="MyTextAppearance.Black.Small" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
     <style name="MyTextAppearance.Red" parent="@android:style/TextAppearance">
         <item name="android:textSize">17sp</item>
         <item name="android:textStyle">italic</item>
@@ -79,14 +83,30 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
+    <style name="MyTextAppearance.Blue.Small" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="MyTextAppearance.Blue.Big" parent="@android:style/TextAppearance">
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
+
     <style name="MyTextAppearance.Blue.Big.Bold" parent="@android:style/TextAppearance">
         <item name="android:textSize">17sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="MySeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:progressBackgroundTint">@color/colorGray</item>
+        <item name="android:progressTint">@color/colorPrimaryLight</item>
+        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="android:colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="android:colorControlNormal" tools:ignore="DuplicateDefinition">
+            @color/colorPrimaryDark
+        </item>
+
     </style>
     <!--textview end-->
 
