@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/rdgr_layout_settings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/fab_margin">
+
+        <RadioButton
+            android:id="@+id/rd_layout_settings_cham_diem"
+            style="@style/Radio"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preference_settings_phuong_thuc_them_diem_su_co_cham_diem"
+            android:checked="true"
+            android:textSize="17sp" />
+
+        <RadioButton
+            android:id="@+id/rd_layout_settings_toa_do"
+            style="@style/Radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preference_settings_phuong_thuc_them_diem_su_co_toa_do"
+            android:textSize="17sp" />
+
+        <RadioButton
+            android:id="@+id/rd_layout_settings_keo_tha"
+            style="@style/Radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preference_settings_phuong_thuc_them_diem_su_co_keo_tha"
+            android:textSize="17sp" />
+    </RadioGroup>
+</LinearLayout>

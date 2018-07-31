@@ -1,0 +1,256 @@
+<!DOCTYPE resources [<!ENTITY table_sys_layer "ChoLonSystem..SYS_Layer"><!ENTITY table_sys_layer_account "ChoLonSystem..SYS_Layer_Account"><!ENTITY table_sys_account "ChoLonSystem..SYS_Account">]>
+<resources>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="license">runtimelite,1000,rud6046938574,none,4N5X0H4AH5JB003AD169</string>
+    <string name="action_search">Tìm kiếm</string>
+
+    <string name="app_name">QLTS Chợ Lớn</string>
+    <string name="dialog_title_add">Thêm sự cố</string>
+    <string name="btn_OK">OK</string>
+    <string name="btn_save">Lưu thay đổi</string>
+    <string name="btn_cancel">Hủy</string>
+    <string name="quit">THOÁT</string>
+    <string name="titleLayer">Điểm sự cố</string>
+    <string name="people_info_title">Thông tin liên hệ</string>
+    <string name="hoten_field">Họ và tên</string>
+    <string name="sdt_field">Số điện thoại</string>
+    <string name="email_field">Thư điện tử</string>
+    <string name="address_field">Địa chỉ liên lạc</string>
+    <string name="suco_info_title">Thông tin liên hệ</string>
+    <string name="loaisuco_field">Loại sự cố</string>
+    <string name="noidung_field">Nội dung sự cố</string>
+    <string name="hinhanh_field">Hình ảnh đính kèm</string>
+    <string name="vitrisuco_field">Vị trí sự cố</string>
+
+    <!--ID START-->
+    <string name="ID_DONG_HO_KHACH_HANG">DONG_HO_KHACH_HANG</string>
+    <string name="ID_DONG_HO_TONG">DONG_HO_TONG</string>
+    <string name="ID_ONG_NGANH">ONG_NGANH</string>
+    <string name="ID_ONG_PHAN_PHOI">ONG_PHAN_PHOI</string>
+    <string name="ID_ONG_TRUYEN_DAN">ONG_TRUYEN_DAN</string>
+    <string name="ID_THUY_DAI">THUY_DAI</string>
+    <string name="ID_THAP_CAT_AP">THAP_CAT_AP</string>
+    <string name="ID_BE_CHUA">BE_CHUA</string>
+    <string name="ID_MOI_NOI">MOI_NOI</string>
+    <string name="ID_TRU_HONG">TRU_HONG</string>
+    <string name="ID_DIEM_SU_CO">DIEM_SU_CO</string>
+    <string name="ID_VAN">VAN</string>
+    <string name="ID_DIEM_AP_LUC">DIEM_AP_LUC</string>
+    <string name="ID_DIEM_CUOI_ONG">DIEM_CUOI_ONG</string>
+    <string name="ID_DIEM_XA_CAN">DIEM_XA_CAN</string>
+    <string name="ID_DMA">DMA</string>
+    <string name="ID_TIM_DUONG">TIM_DUONG</string>
+    <string name="ID_TIM_SONG">TIM_SONG</string>
+    <string name="ID_SONG_HO">SONG_HO</string>
+    <string name="ID_THUA_DAT">THUA_DAT</string>
+    <string name="ID_GIAO_THONG">SONG_HO</string>
+    <string name="ID_HANH_CHINH">HANH_CHINH</string>
+
+    <!--ID END-->
+    <!--TITLE SERVICE START-->
+    <string name="TITLE_DONG_HO_KHACH_HANG">Đồng hồ khách hàng</string>
+    <string name="TITLE_DIEM_XA_CAN">Điểm xả cặn</string>
+    <string name="TITLE_SU_CO">Sự cố</string>
+    <string name="TITLE_DIEM_CUOI_ONG">Điểm cuối ống</string>
+    <string name="TITLE_VAN">Van</string>
+    <string name="TITLE_TRU_HONG">Trụ họng</string>
+    <string name="TITLE_MOI_NOI">Mối nối</string>
+    <string name="TITLE_DONG_HO_TONG">Đồng hồ tổng</string>
+    <string name="TITLE_BE_CHUA">Bể chứa</string>
+    <string name="TITLE_THAP_CAT_AP">Tháp cắt áp</string>
+    <string name="TITLE_THUY_DAI">Thủy đài</string>
+    <string name="TITLE_ONG_TRUYEN_DAN">Ống truyền dẫn</string>
+    <string name="TITLE_ONG_PHAN_PHOI">Ống phân phối</string>
+    <string name="TITLE_ONG_NGANH">Ống ngánh</string>
+    <string name="TITLE_DMA">DMA</string>
+
+    <string name="TITLE_TIM_DUONG">Tim đường</string>
+    <string name="TITLE_TIM_SONG">Tim sông</string>
+    <string name="TITLE_GIAO_THONG">Giao thông</string>
+    <string name="TITLE_SONG_HO">Sông hồ</string>
+    <string name="TITLE_THUA_DAT">Thửa đất</string>
+    <string name="TITLE_HANH_CHINH">Hành chính</string>
+    <!--TITLE SERVICE END-->
+
+    <!--URL SERVICE START-->
+    <string name="URL_DONG_HO_KHACH_HANG">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/0</string>
+    <string name="URL_DIEM_XA_CAN">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/1</string>
+    <string name="URL_SU_CO">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/2</string>
+    <string name="URL_DIEM_CUOI_ONG">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/3</string>
+    <string name="URL_VAN">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/4</string>
+    <string name="URL_TRU_HONG">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/5</string>
+    <string name="URL_MOI_NOI">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/6</string>
+    <string name="URL_DONG_HO_TONG">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/7</string>
+    <string name="URL_BE_CHUA">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/8</string>
+    <string name="URL_THAP_CAT_AP">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/9</string>
+    <string name="URL_THUY_DAI">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/10</string>
+    <string name="URL_ONG_TRUYEN_DAN">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/11</string>
+    <string name="URL_ONG_PHAN_PHOI">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/12</string>
+    <string name="URL_ONG_NGANH">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/13</string>
+    <string name="URL_DMA">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonGIS/FeatureServer/14</string>
+
+
+    <!--url basemap-->
+    <string name="URL_TIM_DUONG">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonBaseMap/MapServer/0</string>
+    <string name="URL_TIM_SONG">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonBaseMap/MapServer/1</string>
+    <string name="URL_GIAO_THONG">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonBaseMap/MapServer/2</string>
+    <string name="URL_SONG_HO">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonBaseMap/MapServer/3</string>
+    <string name="URL_THUA_DAT">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonBaseMap/MapServer/4</string>
+    <string name="URL_HANH_CHINH">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonBaseMap/MapServer/5</string>
+    <!--URL SERVICE END-->
+    <string name="group_base_map">BASEMAP</string>
+    <string name="group_tai_san">TAISAN</string>
+    <string name="group_su_co">SUCO</string>
+
+
+    <string name="NAME_DIEMSUCO">DIEMSUCO</string>
+    <string name="path_saveImage">.qlsc</string>
+    <string name="attachment">attachment</string>
+    <!--<string name="world_elevation_service">https://ditagis.com:6443/arcgis/rest/services/HoChiMinh/SuCo_TanHoa/MapServer</string>-->
+    <!--<string name="service_feature_table">https://sawagis.vn/arcgis/rest/services/TanHoa/TanHoaSuCo/FeatureServer/0</string>-->
+    <string name="service_feature_table">https://sawagis.vn/arcgis/rest/services/TanHoa/TanHoaSuCo/FeatureServer/0</string>
+
+    <string name="tongloaitrangthai">tongloaitrangthai</string>
+    <string name="title_activity_tra_cuu">TraCuuActivity</string>
+    <string name="ket_qua_objectid">ket_qua_objectid</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!--thông báo-->
+    <string name="title_search">Tìm kiếm mọi thứ…</string>
+    <string name="notify_add_feature">Vui lòng click vào một điểm trên bản đồ để thêm một sự cố</string>
+    <string name="location_permission_denied">Chưa có quyền truy cập vị trí</string>
+
+    <!--navigation-->
+    <string name="nav_tra_cuu">Tra cứu</string>
+    <string name="nav_find_route">Tìm đường đi</string>
+    <string name="nav_find_address">Tìm địa chỉ</string>
+    <string name="nav_xoa_tim_kiem">Xóa các tìm kiếm</string>
+    <string name="nav_an_hien_nut_chuc_nang">Ẩn/hiện nút chức năng</string>
+    <string name="nav_cai_dat">Cài đặt</string>
+    <string name="nav_log_out">Đăng xuất</string>
+    <string name="nav_cai_dat_them_su_co_title">Phương thức thêm điểm sự cố</string>
+    <string name="nav_cai_dat_tim_kiem_title">Tùy chọn tìm kiếm</string>
+    <string name="nav_thong_ke">Thống kê</string>
+    <string name="nav_thong_ke_tong_su_co">Tổng các sự cố: </string>
+    <string name="nav_thong_ke_chua_sua_chua">Chưa sửa chữa</string>
+    <string name="nav_thong_ke_dang_sua_chua">Đang sửa chữa</string>
+    <string name="nav_thong_ke_da_sua_chua">Đã sửa chữa</string>
+    <string name="nav_thong_ke_tong_diem">Tổng số lượng: </string>
+    <!--async-->
+    <string name="async_dang_xu_ly">Đang xử lý…</string>
+    <string name="async_dang_tai_du_lieu">Đang tải dữ liệu…</string>
+    <string name="async_dang_lay_hinh_anh_dinh_kem">Đang tải hình ảnh đính kèm…</string>
+    <string name="async_dang_cap_nhat_giao_dien">Đang cập nhật giao diện…</string>
+    <!--preference-->
+    <string name="preference_settings_phuong_thuc_them_diem_su_co">preference_settings_phuong_thuc_them_diem_su_co</string>
+    <string name="preference_settings_phuong_thuc_them_diem_su_co_cham_diem">Chấm điểm trên bản đồ</string>
+    <string name="preference_settings_phuong_thuc_them_diem_su_co_toa_do">Theo tọa độ vị trí</string>
+    <string name="preference_settings_phuong_thuc_them_diem_su_co_keo_tha">Kéo thả bản đồ</string>
+
+    <string name="preference_settings_tuy_chon_tim_kiem">preference_settings_tuy_chon_tim_kiem</string>
+    <string name="preference_settings_tuy_chon_tim_kiem_co_san">Tìm kiếm sự cố</string>
+    <string name="preference_settings_tuy_chon_tim_kiem_chua_co">Tìm vị trí</string>
+
+    <string name="format_day_yearfirst">yyyy-MM-dd HH:mm:ss</string>
+    <string name="format_time_day_month_year">dd/MM/yyyy</string>
+
+    <!--Attribute-->
+    <string name="OBJECTID">OBJECTID</string>
+    <string name="IDSUCO">IDSuCo</string>
+    <string name="NGAYXAYRA">NgayXayRa</string>
+    <string name="VITRI">ViTri</string>
+
+
+    <!--Route begin-->
+    <string name="title_activity_find_route">Tìm đường đi</string>
+    <string name="find_route_xem_ban_do">Xem bản đồ</string>
+    <string name="find_route_cac_buoc">Các bước</string>
+    <string name="find_route_diem_bat_dau">Nhập điểm bắt đầu</string>
+    <string name="find_route_diem_ket_thuc">Nhập điểm kết thúc</string>
+    <string name="find_route_image_change">Đổi địa điểm</string>
+    <string name="find_route_image_route">Độ dài đường đi</string>
+    <string name="find_route_image_time">Thời gian đi</string>
+    <string name="find_route_image_menu">Menu</string>
+    <string name="find_route_textview_route">0 km</string>
+    <string name="find_route_textview_time">0 min</string>
+    <string name="find_route_textview_begin">Từ</string>
+    <string name="find_route_textview_end">Đến</string>
+    <string name="todo">TODO</string>
+    <string name="title_layer_default">Mặc định</string>
+    <string name="title_layer_street">Đường phố</string>
+    <string name="title_layer_satellite">Vệ tinh</string>
+    <!--Route end-->
+
+    <!--display process status -->
+    <string name="DATA_SUCCESSFULLY_INSERTED">Thêm dữ liệu thành công</string>
+    <string name="FAILED_TO_INSERT_DATA">Thêm dữ liệu không thành công</string>
+    <string name="DATA_SUCCESSFULLY_DELETED">Xóa dữ liệu thành công </string>
+    <string name="FAILED_TO_DELETE_DATA">Xóa dữ liệu không thành công</string>
+    <string name="DATA_SUCCESSFULLY_UPDATED">Cập nhật dữ liệu thành công </string>
+    <string name="FAILED_TO_UPDATE_DATA">Cập nhật dữ liệu không thành công</string>
+    <string name="INCORRECT_INPUT_FORMAT">Số liệu nhập vào không đúng định dạng!!!</string>
+
+
+    <!--Action popup-->
+    <string name="btn_TakePicture">Chụp hình</string>
+    <string name="btn_Update">Cập nhật</string>
+    <string name="btn_Esc">Thoát</string>
+    <string name="type_search_address">TYPE_SEARCH_ADDRESS</string>
+    <string name="type_search_feature_layer">TYPE_SEARCH_FEATURE_LAYER</string>
+    <string name="email_nv">nva.cholon@gmail.com</string>
+    <string name="name_nv">Nhân viên A</string>
+    <string name="sql_login">select *
+					 from &table_sys_account;
+        where username = ? and password = ?</string>
+    <string name="encode_string">DITAGIS*#</string>
+
+
+    <!--sql column login begin-->
+    <string name="sql_coloumn_login_displayname">namedisplay</string>
+    <string name="sql_coloumn_login_tanbinh">tanbinh</string>
+    <string name="sql_coloumn_login_tanphu">tanphu</string>
+    <string name="sql_coloumn_login_phunhuan">phunhuan</string>
+    <!--sql column login end-->
+
+
+    <!--sql end-->
+    <string name="find_khachhHang_message">Đang lấy thông tin khách hàng…</string>
+    <string name="connect_message">Đang kết nối đến máy chủ…</string>
+    <string name="login_message">Đang kiểm tra thông tin đăng nhập…</string>
+
+    <!--preference begin-->
+    <string name="preference_username">username</string>
+    <string name="preference_password">pasword</string>
+    <string name="preference_displayname">displayname</string>
+    <string name="preference_login_api">preference_login_api</string>
+    <!--preference end-->
+
+
+    <string name="action_logout">Đăng xuất</string>
+    <string name="validate_no_connect">Không có kết nối internet</string>
+    <string name="info_login_empty">Danh bạ hoặc mật khẩu không được để trống</string>
+    <string name="validate_login_fail">Sai danh bạ hoặc mật khẩu</string>
+    <string name="validate_hieuluc">Đồng hồ của khách hàng đã không còn hiệu lực\nVui lòng liên hệ công ty Cấp nước Tân Hòa\nđể biết thêm thông tin</string>
+    <string name="validate_tracuutiennuoc_invalidtime">Chưa đến đợt đọc số!\nVui lòng chọn thời gian khác để tra cứu</string>
+    <string name="sql_coloumn_login_status">status</string>
+
+
+
+    <string name="preparing">Đang khởi tạo bản đồ…</string>
+    <!--sql column login begin-->
+    <string name="sql_coloumn_sys_id">LayerID</string>
+    <string name="sql_coloumn_sys_title">LayerTitle</string>
+    <string name="sql_coloumn_sys_url">Url</string>
+    <string name="sql_coloumn_sys_iscreate">IsCreate</string>
+    <string name="sql_coloumn_sys_isdelete">IsDelete</string>
+    <string name="sql_coloumn_sys_isedit">IsEdit</string>
+    <string name="sql_coloumn_sys_isview">IsView</string>
+    <string name="sql_coloumn_sys_outfield">OutFields</string>
+    <string name="sql_coloumn_sys_definition">Definition</string>
+    <string name="sql_select_sys_layer">SELECT *  FROM &table_sys_layer;
+        l  inner join &table_sys_layer_account; la  on l.id = la.Layer  where account = ?</string>
+    <!--sql column login end-->
+
+    <string name="IDLayer_Basemap">BASEMAP</string>
+</resources>
