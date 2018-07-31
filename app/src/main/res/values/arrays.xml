@@ -1,118 +1,402 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="field_subtype_array">
-        <item>@string/Field_SuCo_NguyenNhan</item>
-        <item>@string/Field_SuCo_VatLieu</item>
-        <item>@string/Field_SuCo_ViTri</item>
-        <!--<item>@string/Field_SuCo_VatTu</item>-->
-        <item>@string/Field_SuCo_DuongKinhOng</item>
+    <string-array name="district_arrays">
+        <item> Chọn quận huyện </item>
+        <item> Quận Phú Nhuận </item>
+        <item> Quận Tân Bình</item>
+        <item> Quận Tân Phú </item>
     </string-array>
+    <string-array name="phanloai_arrays">
+        <item> Chọn loại sự cố </item>
+        <item> A </item>
+        <item> B </item>
+    </string-array>
+    <string-array name="trangthai_arrays">
+        <item>Chưa sửa chữa</item>
+        <item>Đang sửa chữa</item>
+        <item>Đã sửa chữa</item>
+    </string-array>
+
     <string-array name="update_fields_arrays">
+        <item>NgayKhacPhuc</item>
         <item>NgaySuaChua</item>
-        <item>@string/Field_SuCo_NguyenNhan</item>
+        <item>NguyenNhan</item>
         <item>NguoiSuaChua</item>
         <item>GhiChuVatTu</item>
-        <item>@string/Field_SuCo_ViTri</item>
+        <item>ViTri</item>
         <item>GhiChu</item>
+        <item>NgayCapNhat</item>
         <item>PhanLoaiSuCo</item>
         <item>DonViSuaChua</item>
         <item>DuongKinhOng</item>
         <item>HinhThucPhatHien</item>
-        <item>@string/Field_SuCo_VatLieu</item>
-        <item>@string/Field_SuCo_TrangThai</item>
-        <item>VatTu</item>
+        <item>VatLieu</item>
+        <item>SoNha</item>
+        <item>TrangThai</item>
+        <item>NGUOICAPNHAT</item>
         <item>KetQuaKiemTra</item>
         <item>ApLuc</item>
-        <item>ThoiGianThucHien</item>
+        <item>THOIGIANTHUCHIEN</item>
+        <item>CONGNHANTHUCHIEN</item>
         <item>VatLieuOng</item>
-        <item>@string/Field_SuCo_LoaiSuCo</item>
-        <item>SDTNguoiBao</item>
-        <item>MADMA</item>
-        <item>TIETDIENBE</item>
-        <item>@string/Field_SuCo_PhuiDao1</item>
-        <item>@string/Field_SuCo_PhuiDao1_Dai</item>
-        <item>@string/Field_SuCo_PhuiDao1_Sau</item>
-        <item>@string/Field_SuCo_PhuiDao1_Rong</item>
-        <item>@string/Field_SuCo_PhuiDao2</item>>
-        <item>@string/Field_SuCo_PhuiDao2_Dai</item>
-        <item>@string/Field_SuCo_PhuiDao2_Sau</item>
-        <item>@string/Field_SuCo_PhuiDao2_Rong</item>
-        <item>@string/Field_SuCo_PhuiDao3</item>
-        <item>@string/Field_SuCo_PhuiDao3_Dai</item>
-        <item>@string/Field_SuCo_PhuiDao3_Sau</item>
-        <item>@string/Field_SuCo_PhuiDao3_Rong</item>
-        <item>SoNha</item>
+        <item>LoaiSuCo</item>
     </string-array>
-    <string-array name="add_fields_arrays">
-        <item>IDSuCo</item>
-        <item>NgayXayRa</item>
-        <item>HinhThucPhatHien</item>
-        <item>SoNha</item>
-        <item>SDTNguoiBao</item>
+    <string-array name="update_fields_van">
+        <item>VATLIEU</item>
+        <item>TIEUCHUAN</item>
+        <item>HIEU</item>
+        <item>NHASANXUAT</item>
+        <item>NUOCSANXUAT</item>
+        <item>DOSAU</item>
+        <item>CHIEUDONGVAN</item>
+        <item>SVDONGVAN</item>
+        <item>VITRIVAN</item>
+        <item>TINHTRANG</item>
+        <item>COCHIAKHOA</item>
+        <item>SONHA</item>
+        <item>MADUONG</item>
     </string-array>
-    <string-array name="no_display_fields_arrays">
-        <item>OBJECTID</item>
-        <item>VatLieuOng</item>
-        <item>NgaySuaChua</item>
-        <item>GlobalID</item>
+    <string-array name="update_fields_dma">
         <item>TENDMA</item>
+        <item>MoTa</item>
+    </string-array>
+    <string-array name="update_fields_ongnganh">
+        <item>HUONGDONGCHAY</item>
+        <item>CHIEUDAI</item>
+        <item>VATLIEU</item>
+        <item>TIEUCHUAN</item>
+        <item>DONHAMTHUCTE</item>
+        <item>APLUCTHIETKE</item>
+        <item>DOSAU</item>
+        <item>DODOC</item>
+        <item>SONHA</item>
+        <item>MADMA</item>
+        <item>CoOng</item>
+        <item>MADUONG</item>
+        <item>GHICHU</item>
+    </string-array>
+    <string-array name="update_fields_ongphanphoi">
+        <item>HUONGDONGCHAY</item>
+        <item>CHIEUDAI</item>
+        <item>VATLIEU</item>
+        <item>TIEUCHUAN</item>
+        <item>DONHAMTHUCTE</item>
+        <item>APLUCTHIETKE</item>
+        <item>DOSAU</item>
+        <item>DODOC</item>
+        <item>COONG</item>
+        <item>MADMA</item>
+        <item>MADUONG</item>
+        <item>GHICHU</item>
+    </string-array>
+    <string-array name="update_fields_ongtruyendan">
+        <item>HUONGDONGCHAY</item>
+        <item>CHIEUDAI</item>
+        <item>VATLIEU</item>
+        <item>TIEUCHUAN</item>
+        <item>DONHAMTHUCTE</item>
+        <item>APLUCTHIETKE</item>
+        <item>DOSAU</item>
+        <item>DODOC</item>
+        <item>MADMA</item>
+        <item>MADUONG</item>
+        <item>GHICHU</item>
+        <item>TINHTRANGRORI</item>
+    </string-array>
+    <string-array name="update_fields_thuydai">
+        <item>DKONGVAO</item>
+        <item>DKONGRA</item>
+        <item>DKONGXATRAN</item>
+        <item>DKONGXADAY</item>
+        <item>TIEUCHUAN</item>
+        <item>DOCAO</item>
+        <item>TINHTRANG</item>
+        <item>COCHIAKHOA</item>
+        <item>SONHA</item>
+        <item>MADUONG</item>
+        
+        
+    </string-array>
+    <string-array name="update_fields_thapcatap">
+        <item>DUONGKINH</item>
+        <item>MUCAPTOIDA</item>
+        <item>KTHINHHOC</item>
+        <item>DKONGVAO</item>
+        <item>DKONGXA</item>
+        <item>CDMIENGTRAN</item>
+        <item>DIADIEM</item>
+        <item>NAMXAYDUNG</item>
+        <item>TINHTRANG</item>
+        <item>DONVIQUANLY</item>
+        <item>SONHA</item>
+        <item>MADUONG</item>
+        
+        
+    </string-array>
+    <string-array name="update_fields_bechua">
+        <item>NAMXAYDUNG</item>
+        <item>DTKHUDAT</item>
+        <item>DTHUUDUNG</item>
+        <item>CDONGXADAY</item>
+        <item>CDONGXATRAN</item>
+        <item>KTNGOVAO</item>
+        <item>KTNGORA</item>
+        <item>DKONGXATRAN</item>
+        <item>DKONGXADAY</item>
+        <item>TINHTRANG</item>
+        <item>KICHTHUOCBE</item>
+        <item>DONVIQUANLY</item>
+        <item>SONHA</item>
+        <item>MADUONG</item>
+        
+        
+        <item>GHICHU</item>
+        <item>MATRAMBOM</item>
+        <item>MUCNUOCBE</item>
+        <item>MUCNUOCLONNHAT</item>
+        <item>MUCNUOCNHONHAT</item>
+        <item>NGAYCAPNHAT</item>
+        <item>THETICH</item>
+    </string-array>
+    <string-array name="update_fields_donghotong">
+        <item>TINHTRANG</item>
+        <item>CODONGHO</item>
+        <item>Caotrinh</item>
+        <item>NAMSANXUAT</item>
+        <item>SOTHANDONGHO</item>
+        <item>NGAYLAPDAT</item>
+        <item>VITRILAPDAT</item>
+        <item>DONVIDO</item>
+        <item>LLDOLONNHAT</item>
+        <item>LLDONHONHAT</item>
+        <item>APLUC</item>
+        <item>DONVITHICONG</item>
+        <item>DONVITHIETKE</item>
+        <item>DOCHINHXAC</item>
+        <item>CAPCHINHXAC</item>
+        <item>KIEU</item>
+        <item>DONVIQUANLY</item>
+        <item>SONHA</item>
+        <item>MADUONG</item>
+        
+        
+        <item>GHICHU</item>
+        <item>MSDONGHOTONG</item>
+        <item>MASOHAMDHT</item>
+        <item>GHICHUHAMDHT</item>
+        <item>TOADO_X</item>
+        <item>TOADO_Y</item>
+        <item>NGAYCAPNHAT</item>
+        <item>THONGTINLICHSU</item>
+        <item>TENHAM</item>
+        <item>CHUCNANGHAM</item>
+        <item>MADMA</item>
+        <item>MADMZ</item>
+        <item>NGAYTHAYMOI</item>
+        <item>SOLANTHAY</item>
+        <item>HIEUDONGHO</item>
+        <item>LOAIFILE</item>
+        <item>LOAIDONGHOTONG</item>
+        <item>DONVITHIETKEHAM</item>
+        <item>DONVITHICONGHAM</item>
+        <item>VATLIEU</item>
+        <item>KICHTHUOC</item>
+        <item>NGAYHOANTHANH</item>
+        <item>DANGLUOILUOC</item>
+        <item>TIEUCHUANLAPDAT</item>
+        <item>LOGGER</item>
+        <item>HIEULOGGER</item>
+        <item>THOIHANSUDUNG</item>
+        <item>NHAKIEMDINH</item>
+        <item>NGAYKIEMDINH</item>
+        <item>NGUOICAPNHAT</item>
+    </string-array>
+    <string-array name="update_fields_moinoi">
+        <item>TINHTRANG</item>
+        <item>GHICHU</item>
+        <item>LAYER</item>
+        <item>NAMLAPDAT</item>
+        <item>NGAYCAPNHAT</item>
+        <item>COONGNOI</item>
+        <item>NGUOICAPNHAT</item>
+        <item>IDMAONGNOI</item>
+        <item>COVAO</item>
+        <item>CORA</item>
+    </string-array>
+    <string-array name="update_fields_truhong">
+        <item>TINHTRANG</item>
+        <item>LOAIFILE</item>
+        <item>IDCAPNUOC</item>
+        <item>KICHCO</item>
+        <item>KIEU</item>
+        <item>NAMLAPDAT</item>
+        <item>SLMIENGPHUN</item>
+        <item>KCMIENGPHUN</item>
+        <item>VITRI</item>
+        <item>ALHOATDONG</item>
+        <item>DONVIQUANLY</item>
+        <item>SONHA</item>
+        <item>MADUONG</item>
+        
+        
+        <item>GHICHU</item>
+        <item>LAYER</item>
+        <item>VUNGPHUCVU</item>
+        <item>TOADO_X</item>
+        <item>TOADO_Y</item>
+        <item>DKNUOCVAO</item>
+        <item>NGAYCAPNHAT</item>
+        <item>GHICHUHINHANH</item>
+        <item>NGUOICAPNHAT</item>
+        <item>LOAITRUHONG</item>
+        <item>IDMATRUHONG</item>
+        <item>SOLANSUACHUA</item>
+        <item>MADMA</item>
+    </string-array>
+    <string-array name="update_fields_diemcuoiong">
+        <item>TINHTRANG</item>
+        <item>NguoiCapNhat</item>
+        <item>ViTriDiem</item>
+        <item>DuongKinhOng</item>
+        <item>TenDiemCuoi</item>
+        <item>SoNha</item>
         <item>MaDuong</item>
-        <item>MaPhuong</item>
+        
+        
+        <item>NgayCapNhat</item>
+        <item>GhiChu</item>
+        <item>NamLapDat</item>
+        <item>LOAIFILE</item>
+        <item>MaDMA</item>
     </string-array>
-    <string-array name="vitri_ongnganh_arrays">
-        <item>Bên phải nhà</item>
-        <item>Bên trái nhà</item>
+    <string-array name="update_fields_diemxacan">
+        <item>TinhTrang</item>
+        <item>NamLapDat</item>
+        <item>IDDiem</item>
+        <item>DuongKinhXa</item>
+        <item>HinhThucXa</item>
+        <item>DuongKinhVan</item>
+        <item>SoNha</item>
+        <item>MaDuong</item>
+        
+        
+        <item>GhiChu</item>
+        <item>Layer</item>
+        <item>ViTriXaCan</item>
+        <item>NgayCapNhat</item>
+        <item>MaSoHamXaCan</item>
+        <item>TenHam</item>
+        <item>ChucNangHam</item>
+        <item>KichThuoc</item>
+        <item>VatLieu</item>
+        <item>DonViThiCong</item>
+        <item>DonViThietKe</item>
+        <item>NgayHoanThanh</item>
+        <item>GhiChuHamXaCan</item>
+        <item>NguoiCapNhat</item>
+        <item>MADMA</item>
+        <item>TOADO_X</item>
+        <item>TOADO_Y</item>
+        <item>LOAIFILE</item>
+        <item>APLUC</item>
     </string-array>
-    <string-array name="vitri_ongchinh1_arrays">
-        <item>Cách mép nhà…</item>
-        <item>Cách bó vỉa…</item>
+    <string-array name="update_fields_donghokhachhang">
+        <item>TIEUCHUAN</item>
+        <item>TINHTRANG</item>
+        <item>CODONGHO</item>
+        <item>MUCDICHSUDUNG</item>
+        <item>LOAIFILE</item>
+        <item>NAMSANXUAT</item>
+        <item>SOTHANDONGHO</item>
+        <item>VITRILAPDAT</item>
+        <item>APLUC</item>
+        <item>DONVITHICONG</item>
+        <item>DONVITHIETKE</item>
+        <item>DBDONGHONUOC</item>
+        <item>TENTHUEBAO</item>
+        <item>SONHA</item>
+        <item>MADUONG</item>
+        
+        
+        <item>GHICHU</item>
+        <item>SOHOPDONG</item>
+        <item>SONGUOISUDUNG</item>
+        <item>MASOCHI</item>
+        <item>SODIENTHOAI</item>
+        <item>SONHACU</item>
+        <item>MASOCHIMATSO</item>
+        <item>CHIKHOAGOC</item>
+        <item>SOCNKIEMDINH</item>
+        <item>TINHTRANGQLDHN</item>
+        <item>TINHTRANGTHUNGANDHN</item>
+        <item>TINHTRANGTUBODHN</item>
+        <item>SOHOKHAU</item>
+        <item>TENTHUEBAOCU</item>
+        <item>NGAYBAMCHI</item>
+        <item>LYDOBAMCHI</item>
+        <item>SOLANTHAY</item>
+        <item>TRANGTHAI</item>
+        <item>CAPCHINHXAC</item>
+        <item>NGAYLAPDAT</item>
+        <item>NGAYKIEMDINH</item>
+        <item>NHAKIEMDINH</item>
+        <item>DINHMUCSUDUNG</item>
+        <item>NGAYTHAYMOI</item>
+        <item>THOIHANSUDUNG</item>
+        <item>LOAIDONGHO</item>
+        <item>HIEUDONGHO</item>
+        <item>NGUOICAPNHAT</item>
+        <item>NGAYCAPNHAT</item>
+        <item>MADMA</item>
+        <item>MADMZ</item>
+        <item>MAVAN</item>
+        <item>TINHTRANGVAN</item>
+        <item>COCHIAKHOA</item>
+        <item>GHICHUVANKH</item>
+        <item>KHUPHO</item>
+        <item>SOHOSO</item>
+        <item>LOAIVAN</item>
+        <item>TENDUONG</item>
+        <item>LOAIKHACHHANG</item>
+        <item>LOAIMATSO</item>
+        <item>GIABIEU</item>
+        <item>NGAYDOCSO</item>
+        <item>MALOTRINH</item>
+        <item>CHUKYDOCSO</item>
+        <item>SOCHUNGMINH</item>
+        <item>TINHTRANGKYTHUAT</item>
+        <item>HIEU</item>
+        <item>VITRI</item>
+        <item>ThongTinSuaChua</item>
+        <item>GHICHUTHONGTIN</item>
+        <item>IDTHUA</item>
+        <item>TINHTRANGDH</item>
+        <item>CSTTThangGanNhat</item>
+        <item>NHANVIENTHIETKE</item>
+        <item>NHANVIENBAMCHI</item>
+        <item>TINHTRANGVIPHAM</item>
+        <item>TTRoRiTrenDHN</item>
+        <item>DacDiemRoRi</item>
+        <item>TinhTrangRoRi</item>
+        <item>SLTieuThuTB</item>
+        <item>TINHTRANGSUDUNG</item>
+        <item>DOSAU</item>
+        <item>COONGNGANH</item>
+        <item>VATLIEU</item>
+        <item>CHIEUDAI</item>
     </string-array>
-    <string-array name="nguyennhan_ongnganh_array">
-        <item>Tét ống</item>
-        <item>Gãy ống</item>
-        <item>Mục ống</item>
-        <item>Xì joint ĐHN</item>
-        <item>Xì joint van góc</item>
-        <item>Xì joint khóa góc</item>
-        <item>Hư van góc</item>
-        <item>Hư khóa góc</item>
-        <item>Hư Van cóc</item>
-        <item>Hư Con cóc</item>
+    <string-array name="updateFields_donghotong">
+        <item>MADMA</item>
+        <item>MADUONG</item>
+        <item>TenHanhChinh</item>
+        <item>TenQuan</item>
     </string-array>
-    <string-array name="nguyennhan_ongchinh_array">
-        <item>Nứt ống theo chiều dọc</item>
-        <item>Nứt ống theo chiều ngang</item>
-        <item>Do bị ăn mòn ống</item>
-        <item>Rò rì tại đầu cái (mối nối)</item>
-        <item>Rò rỉ tại mặt bích</item>
-        <item>Rò rỉ tại đai khởi thủy</item>
-        <item>Hư van</item>
-        <item>Hư Tê</item>
-        <item>Hư Khuỷu 1/4</item>
-        <item>Hư Khuỷu 1/8</item>
-        <item>Hư Khuỷu 1/16</item>
-        <item>Hư Khuỷu 1/32</item>
-        <item>Hư Bù Manchon</item>
-        <item>Hư Kiềng</item>
-        <item>Hư joint kiềng</item>
-        <item>Hư Joint mặt bích</item>
-    </string-array>
-    <string-array name="vatlieu_ongnganh_array">
-        <item>HDPE</item>
-        <item>PE</item>
-        <item>Gang</item>
-        <item>Pb</item>
-        <item>PVC</item>
-        <item>STK</item>
-    </string-array>
-    <string-array name="vatlieu_ongchinh_array">
-        <item>uPVC</item>
-        <item>HDPE</item>
-        <item>Gang dẻo</item>
-        <item>Gang xám</item>
-        <item>AC</item>
-        <item>Bêtông</item>
-        <item>Thép</item>
+    <string-array name="updateFields_donghokhachhang">
+        <item>DBDONGHONUOC</item>
+        <item>TENTHUEBAO</item>
+        <item>TenDuong</item>
+        <item>CODONGHO</item>
+        <item>NGAYLAPDAT</item>
     </string-array>
     <!--Query field begin-->
     <string-array name="queryFields_dma">
@@ -267,5 +551,14 @@
         <item>CODONGHO</item>
         <item>NGAYLAPDAT</item>
     </string-array>
+    <string-array name="hiddenFields">
+        <item>GLOBALID</item>
+        <item>GlobalID</item>
+        <item>TOADO_X</item>
+        <item>TOADO_Y</item>
+        <item>Shape.STArea()</item>
+        <item>Shape.STLength()</item>
+    </string-array>
+
     <!--Out field end-->
 </resources>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="hcm.ditagis.com.tanhoa.qlsc.TraCuuActivity">
+    tools:context="hcm.ditagis.com.cholon.qlts.hcm.ditagis.com.tanhoa.qlts.TraCuuActivity">
 
 
    <include layout="@layout/layout_viewmoreinfo_feature" android:id="@+id/layout_tracuu_include"/>

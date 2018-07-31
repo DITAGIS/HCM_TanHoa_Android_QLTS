@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -7,11 +7,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-    <style name="generalnotitle" parent="Theme.AppCompat.Light">
+    <style name="generalnotitle" parent="Theme.AppCompat.Light" >
         <item name="android:windowNoTitle">true</item>   <!-- //this -->
     </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -51,63 +49,11 @@
         <item name="android:background">@color/colorGray</item>
 
     </style>
-    <!--textview begin-->
-    <style name="MyTextAppearance.White" parent="@android:style/TextAppearance">
-        <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@color/colorWhite</item>
-    </style>
-
-    <style name="MyTextAppearance.White.Bold" parent="@android:style/TextAppearance">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="MyTextAppearance.Black" parent="@android:style/TextAppearance">
-        <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
-    <style name="MyTextAppearance.Black.Small" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@android:color/black</item>
-    </style>
 
     <style name="MyTextAppearance.Red" parent="@android:style/TextAppearance">
         <item name="android:textSize">17sp</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textColor">@color/colorRed</item>
     </style>
-
-    <style name="MyTextAppearance.Blue" parent="@android:style/TextAppearance">
-        <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-
-    <style name="MyTextAppearance.Blue.Small" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-
-    <style name="MyTextAppearance.Blue.Big" parent="@android:style/TextAppearance">
-        <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-
-    <style name="MyTextAppearance.Blue.Big.Bold" parent="@android:style/TextAppearance">
-        <item name="android:textSize">17sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-
-    <style name="MySeekBar" parent="Widget.AppCompat.SeekBar">
-        <item name="android:progressBackgroundTint">@color/colorGray</item>
-        <item name="android:progressTint">@color/colorPrimaryLight</item>
-        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
-        <item name="android:colorControlHighlight">@color/colorPrimaryDark</item>
-        <item name="android:colorControlNormal" tools:ignore="DuplicateDefinition">
-            @color/colorPrimaryDark
-        </item>
-
-    </style>
-    <!--textview end-->
 
 </resources>

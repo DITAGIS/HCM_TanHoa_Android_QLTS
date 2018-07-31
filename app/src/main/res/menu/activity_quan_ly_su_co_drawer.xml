@@ -5,19 +5,19 @@
 
     <!--<group android:checkableBehavior="single">-->
     <!--<item-->
-    <!--android:id="@+id/nav_camera"-->
+    <!--andrtypeSearchd:idtypeSearch@+id/nav_camera"-->
     <!--android:icon="@drawable/ic_menu_camera"-->
     <!--andraliasitle="Import" />-->
     <!--<item-->
-    <!--android:id="@+id/nav_gallery"-->
+    <!--andrtypeSearchd:idtypeSearch@+id/nav_gallery"-->
     <!--android:icon="@drawable/ic_menu_gallery"-->
     <!--andraliasitle="Gallery" />-->
     <!--<item-->
-    <!--android:id="@+id/nav_slideshow"-->
+    <!--andrtypeSearchd:idtypeSearch@+id/nav_slideshow"-->
     <!--android:icon="@drawable/ic_menu_slideshow"-->
     <!--andraliasitle="Slideshow" />-->
     <!--<item-->
-    <!--android:id="@+id/nav_manage"-->
+    <!--andrtypeSearchd:idtypeSearch@+id/nav_manage"-->
     <!--android:icon="@drawable/ic_menu_manage"-->
     <!--andraliasitle="Tools" />-->
     <!--</group>-->
@@ -30,10 +30,11 @@
                     android:id="@+id/nav_thongke"
                     android:icon="@drawable/ic_thongke"
                     android:title="@string/nav_thong_ke" />
-                <!--<item-->
-                    <!--android:id="@+id/nav_tracuu"-->
-                    <!--android:icon="@drawable/ic_search"-->
-                    <!--android:title="@string/nav_tra_cuu" />-->
+                <item
+                    android:id="@+id/nav_tracuu"
+                    android:icon="@drawable/ic_search"
+                    android:visible="false"
+                    android:title="@string/nav_tra_cuu" />
                 <item
                     android:id="@+id/nav_find_route"
                     android:icon="@drawable/ic_navigation"
@@ -43,10 +44,6 @@
     </item>
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_reload"
-            android:icon="@drawable/ic_refresh"
-            android:title="@string/nav_refresh" />
         <item
             android:id="@+id/nav_delete_searching"
             android:icon="@drawable/ic_delete"
@@ -59,10 +56,6 @@
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_settings"
             android:title="@string/nav_cai_dat" />
-        <item
-            android:id="@+id/nav_change_password"
-            android:icon="@drawable/ic_password"
-            android:title="@string/nav_change_password" />
         <item
             android:id="@+id/nav_logOut"
             android:icon="@drawable/ic_logout"

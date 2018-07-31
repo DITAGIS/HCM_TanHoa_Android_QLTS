@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:id="@+id/lstView_Settings"
-    tools:context="hcm.ditagis.com.tanhoa.qlsc.SettingsActivity">
+    tools:context="hcm.ditagis.com.cholon.qlts.hcm.ditagis.com.tanhoa.qlts.SettingsActivity">
 
 
 </ListView>

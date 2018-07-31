@@ -20,7 +20,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
         <ImageView
-            android:id="@+id/img_selectTime"
+            android:id="@+id/img_selectLayer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
