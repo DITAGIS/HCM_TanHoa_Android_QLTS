@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="hcm.ditagis.com.cholon.qlts">
+    package="hcm.ditagis.com.tanhoa.qlts">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -26,12 +26,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="hcm.ditagis.com.cholon.qlts.QuanLyTaiSan"
+            android:name="hcm.ditagis.com.tanhoa.qlts.QuanLyTaiSan"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name="hcm.ditagis.com.cholon.qlts.LoginActivity"
+            android:name="hcm.ditagis.com.tanhoa.qlts.LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,22 +39,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="hcm.ditagis.com.cholon.qlts.TraCuuActivity"
+            android:name="hcm.ditagis.com.tanhoa.qlts.TraCuuActivity"
             android:label="Tra cứu thông tin"
-            android:parentActivityName="hcm.ditagis.com.cholon.qlts.QuanLyTaiSan" />
+            android:parentActivityName="hcm.ditagis.com.tanhoa.qlts.QuanLyTaiSan" />
         <activity
-            android:name="hcm.ditagis.com.cholon.qlts.SettingsActivity"
+            android:name="hcm.ditagis.com.tanhoa.qlts.SettingsActivity"
             android:label="Cài đặt"
-            android:parentActivityName="hcm.ditagis.com.cholon.qlts.QuanLyTaiSan" />
+            android:parentActivityName="hcm.ditagis.com.tanhoa.qlts.QuanLyTaiSan" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="hcm.ditagis.com.cholon.qlts.FindRouteActivity"
+            android:name="hcm.ditagis.com.tanhoa.qlts.FindRouteActivity"
             android:label="@string/title_activity_find_route"
-            android:parentActivityName="hcm.ditagis.com.cholon.qlts.QuanLyTaiSan">
+            android:parentActivityName="hcm.ditagis.com.tanhoa.qlts.QuanLyTaiSan">
 
         </activity>
     </application>
