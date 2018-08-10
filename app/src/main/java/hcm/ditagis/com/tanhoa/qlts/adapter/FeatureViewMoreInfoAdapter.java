@@ -88,6 +88,8 @@ public class FeatureViewMoreInfoAdapter extends ArrayAdapter<FeatureViewMoreInfo
         private Field.Type fieldType;
 
         public Item() {
+            this.isEdit = false;
+
         }
 
 

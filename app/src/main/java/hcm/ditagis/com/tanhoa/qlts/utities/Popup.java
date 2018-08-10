@@ -188,7 +188,18 @@ public class Popup extends AppCompatActivity {
                 FeatureViewMoreInfoAdapter.Item item = new FeatureViewMoreInfoAdapter.Item();
                 item.setAlias(field.getAlias());
                 item.setFieldName(field.getName());
-
+                if (updateFields.length > 0) {
+                    if (updateFields[0].equals("*")) {
+                        item.setEdit(true);
+                    } else {
+                        for (String updateField : updateFields) {
+                            if (item.getFieldName().equals(updateField)) {
+                                item.setEdit(true);
+                                break;
+                            }
+                        }
+                    }
+                }
                 if (value != null) {
                     if (item.getFieldName().equals(typeIdField) && featureTypes.size() > 0) {
                         Object valueFeatureType = getValueFeatureType(featureTypes, value.toString());
@@ -196,9 +207,11 @@ public class Popup extends AppCompatActivity {
                             item.setValue(valueFeatureType.toString());
                     } else if (item.getFieldName().toUpperCase().equals("MAPHUONG")) {
                         getHanhChinhFeature(value.toString());
+                        item.setEdit(false);
                         if (quanhuyen_feature != null)
                             item.setValue(quanhuyen_feature.getAttributes().get("TenHanhChinh").toString());
                     } else if (item.getFieldName().toUpperCase().equals("MAQUAN")) {
+                        item.setEdit(false);
                         if (quanhuyen_feature != null)
                             item.setValue(quanhuyen_feature.getAttributes().get("TenQuan").toString());
                     } else if (field.getDomain() != null) {
@@ -221,20 +234,8 @@ public class Popup extends AppCompatActivity {
                             break;
                     }
                 }
-                item.setEdit(false);
 
-                if (updateFields.length > 0) {
-                    if (updateFields[0].equals("*")) {
-                        item.setEdit(true);
-                    } else {
-                        for (String updateField : updateFields) {
-                            if (item.getFieldName().equals(updateField)) {
-                                item.setEdit(true);
-                                break;
-                            }
-                        }
-                    }
-                }
+
                 item.setFieldType(field.getFieldType());
                 mFeatureViewMoreInfoAdapter.add(item);
                 mFeatureViewMoreInfoAdapter.notifyDataSetChanged();
@@ -363,8 +364,7 @@ public class Popup extends AppCompatActivity {
                                     @Override
                                     public void onClick(View view) {
                                         DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
-                                        Calendar calendar = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-                                        String s = String.format("%02d_%02d_%d", datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
+                                        String s = String.format("%02d_%02d_%d", datePicker.getDayOfMonth(), datePicker.getMonth()+1, datePicker.getYear());
 
                                         textView.setText(s);
                                         alertDialog.dismiss();
@@ -485,27 +485,35 @@ public class Popup extends AppCompatActivity {
         linearLayout = (LinearLayout) inflater.inflate(R.layout.layout_popup_infos, null);
         refressPopup();
         ((TextView) linearLayout.findViewById(R.id.txt_title_layer)).setText(mFeatureLayerDTG.getFeatureLayer().getName());
-        ((ImageButton) linearLayout.findViewById(R.id.imgBtn_ViewMoreInfo)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewMoreInfo();
-            }
-        });
+        ImageButton imgBtn_ViewMoreInfo = (ImageButton) linearLayout.findViewById(R.id.imgBtn_ViewMoreInfo);
+        if (mFeatureLayerDTG.getAction().isEdit()) {
+            imgBtn_ViewMoreInfo.setVisibility(View.VISIBLE);
+            imgBtn_ViewMoreInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewMoreInfo();
+                }
+            });
+        } else imgBtn_ViewMoreInfo.setVisibility(View.GONE);
+        ImageButton imgBtn_delete = (ImageButton) linearLayout.findViewById(R.id.imgBtn_delete);
+        if (mFeatureLayerDTG.getAction().isDelete()) {
+            imgBtn_delete.setVisibility(View.VISIBLE);
+            imgBtn_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSelectedArcGISFeature.getFeatureTable().getFeatureLayer().clearSelection();
+                    deleteFeature();
+                }
+            });
+        } else imgBtn_delete.setVisibility(View.GONE);
 
-        ((ImageButton) linearLayout.findViewById(R.id.imgBtn_delete)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSelectedArcGISFeature.getFeatureTable().getFeatureLayer().clearSelection();
-                deleteFeature();
-            }
-        });
         ((Button) linearLayout.findViewById(R.id.btn_layer_close)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dimissCallout();
             }
         });
-        if (this.mSelectedArcGISFeature.canEditAttachments()) {
+        if (mFeatureLayerDTG.getAction().isEdit() && this.mSelectedArcGISFeature.canEditAttachments()) {
             ((ImageButton) linearLayout.findViewById(R.id.imgBtn_takePics)).setVisibility(View.VISIBLE);
             ((ImageButton) linearLayout.findViewById(R.id.imgBtn_takePics)).setOnClickListener(new View.OnClickListener() {
                 @Override

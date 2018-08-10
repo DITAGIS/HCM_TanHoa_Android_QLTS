@@ -74,12 +74,12 @@ public class QueryHanhChinhAsync extends AsyncTask<Void, ArrayList<Feature>, Voi
         super.onPreExecute();
         mDialog.setMessage(mContext.getString(R.string.async_dang_tai_du_lieu));
         mDialog.setCancelable(false);
-        mDialog.setButton("Hủy", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                publishProgress(null);
-            }
-        });
+//        mDialog.setButton("Hủy", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                publishProgress(null);
+//            }
+//        });
         mDialog.show();
 
     }

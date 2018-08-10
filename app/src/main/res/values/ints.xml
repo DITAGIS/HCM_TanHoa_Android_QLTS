@@ -29,4 +29,6 @@
     <integer name="MIN_SCALE_THUA_DAT">2100</integer>
     <integer name="MIN_SCALE_HANH_CHINH">0</integer>
     <!--MINSCALE END-->
+
+    <integer name="size_feature_renderer">23</integer>
 </resources>

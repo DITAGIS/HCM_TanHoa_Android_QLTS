@@ -99,6 +99,14 @@
     <string name="URL_THUA_DAT">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonBaseMap/MapServer/4</string>
     <string name="URL_HANH_CHINH">https://sawagis.vn/arcgis/rest/services/ChoLon/ChoLonBaseMap/MapServer/5</string>
     <!--URL SERVICE END-->
+
+    <!--URL START-->
+    <string name="url_image_symbol_chuasuachua">http://sawagis.vn/tanhoa/Content/images/map/0.png</string>
+    <string name="url_image_symbol_dangsuachua">http://sawagis.vn/tanhoa/Content/images/map/1.png</string>
+    <string name="url_image_symbol_beNgam">http://cholon.sawagis.vn/images/map/bengam.png</string>
+    <string name="url_image_symbol_hoanthanh">http://sawagis.vn/tanhoa/Content/images/map/3.png</string>
+    <!--URL END-->
+
     <string name="group_base_map">BASEMAP</string>
     <string name="group_tai_san">TAISAN</string>
     <string name="group_su_co">SUCO</string>

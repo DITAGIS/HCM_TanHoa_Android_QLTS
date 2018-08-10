@@ -20,7 +20,7 @@ public class SearchItem {
         this.mFeatureLayerDTGS = mFeatureLayerDTGS;
         items = new ArrayList<>();
         for (FeatureLayerDTG featureLayerDTG : mFeatureLayerDTGS) {
-            if (featureLayerDTG.getAction() != null && featureLayerDTG.getAction().getSearch())
+            if (featureLayerDTG.getAction() != null && featureLayerDTG.getAction().isView())
                 items.add(new SearchAdapter.Item(quanLyTaiSan.getString(R.string.type_search_feature_layer), featureLayerDTG.getFeatureLayer().getName(),featureLayerDTG.getFeatureLayer().getId()));
         }
 

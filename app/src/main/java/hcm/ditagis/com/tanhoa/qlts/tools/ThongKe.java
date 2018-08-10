@@ -84,7 +84,7 @@ public class ThongKe {
         String queryClause = "1=1";
         queryParameters.setWhereClause(queryClause);
         for(final FeatureLayerDTG featureLayerDTG:mFeatureLayerDTGS) {
-            if(featureLayerDTG.getAction() != null && featureLayerDTG.getAction().getStatistics()) {
+            if(featureLayerDTG.getAction() != null && featureLayerDTG.getAction().isView()) {
                 final ListenableFuture<Long> longListenableFuture = featureLayerDTG.getFeatureLayer().getFeatureTable().queryFeatureCountAsync(queryParameters);
                 longListenableFuture.addDoneListener(new Runnable() {
                     @Override

@@ -5,38 +5,48 @@ package hcm.ditagis.com.tanhoa.qlts.libs;
  */
 
 public class Action{
-    private Boolean isUpdate, isSearch, isStatistics = false;
+    private boolean isCreate, isDelete, isEdit, isView;
 
-    public Action(Boolean isUpdate, Boolean isSearch, Boolean isStatistics) {
-        this.isUpdate = isUpdate;
-        this.isSearch = isSearch;
-        this.isStatistics = isStatistics;
+
+    public Action(boolean isView,boolean isCreate,boolean isEdit, boolean isDelete ) {
+        this.isCreate = isCreate;
+        this.isDelete = isDelete;
+        this.isEdit = isEdit;
+        this.isView = isView;
     }
 
-    public Action() {
+
+    public boolean isCreate() {
+        return isCreate;
     }
 
-    public Boolean getUpdate() {
-        return isUpdate;
+    public void setCreate(boolean create) {
+        isCreate = create;
     }
 
-    public void setUpdate(Boolean update) {
-        isUpdate = update;
+    public boolean isDelete() {
+        return isDelete;
     }
 
-    public Boolean getSearch() {
-        return isSearch;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 
-    public void setSearch(Boolean search) {
-        isSearch = search;
+    public boolean isEdit() {
+        return isEdit;
     }
 
-    public Boolean getStatistics() {
-        return isStatistics;
+    public void setEdit(boolean edit) {
+        isEdit = edit;
     }
 
-    public void setStatistics(Boolean statistics) {
-        isStatistics = statistics;
+    public boolean isView() {
+        return isView;
     }
+
+    public void setView(boolean view) {
+        isView = view;
+    }
+
+
 }
