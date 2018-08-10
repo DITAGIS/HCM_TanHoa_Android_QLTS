@@ -107,4 +107,20 @@
         android:background="@color/colorWhite"
         android:orientation="horizontal"
         android:visibility="gone"></LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+        <TextView
+            android:layout_gravity="right"
+            android:id="@+id/txt_toado"
+            android:textColor="@color/colorWhite"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10.771980, 106.664270"/>
+    </LinearLayout>
 </FrameLayout>

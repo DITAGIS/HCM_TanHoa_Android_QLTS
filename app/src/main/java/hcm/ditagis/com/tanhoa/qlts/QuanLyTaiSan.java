@@ -290,6 +290,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
         mMapViewHandler.setmPopUp(popupInfos);
         mMapViewHandler.setFeatureLayerDTGs(mFeatureLayerDTGS);
         thongKe = new ThongKe(this, mFeatureLayerDTGS);
+        final TextView txtToaDo = ((TextView) findViewById(R.id.txt_toado));
         mMap.addDoneLoadingListener(new Runnable() {
             @Override
             public void run() {
@@ -311,6 +312,13 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
             @SuppressLint("SetTextI18n")
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+                if(mMapViewHandler != null) {
+                    double[] location = mMapViewHandler.onScroll(e1, e2, distanceX, distanceY);
+                    float log = (float) Math.round(location[0] * 100000) / 100000;
+                    float lat = (float) Math.round(location[1] * 100000) / 100000;
+                    txtToaDo.setText(lat + ", " + log);
+//                    edit_latitude.setText(location[1] + "");
+                }
                 return super.onScroll(e1, e2, distanceX, distanceY);
             }
 
