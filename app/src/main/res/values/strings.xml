@@ -140,7 +140,7 @@
     <string name="nav_cai_dat_them_su_co_title">Phương thức thêm điểm sự cố</string>
     <string name="nav_cai_dat_tim_kiem_title">Tùy chọn tìm kiếm</string>
     <string name="nav_thong_ke">Thống kê</string>
-    <string name="nav_thong_ke_tong_su_co">Tổng các sự cố: </string>
+    <string name="nav_datalogger">Dữ liệu logger </string>
     <string name="nav_thong_ke_chua_sua_chua">Chưa sửa chữa</string>
     <string name="nav_thong_ke_dang_sua_chua">Đang sửa chữa</string>
     <string name="nav_thong_ke_da_sua_chua">Đã sửa chữa</string>
@@ -260,4 +260,9 @@
     <!--sql column login end-->
 
     <string name="IDLayer_Basemap">BASEMAP</string>
+    <string name="diemsucoLYR">diemsucoLYR</string>
+    <string name="TrangThai">TrangThai</string>
+    <string name="Ngay">Ngay</string>
+    <string name="LayerID">LayerID</string>
+    <string name="ID">ID</string>
 </resources>

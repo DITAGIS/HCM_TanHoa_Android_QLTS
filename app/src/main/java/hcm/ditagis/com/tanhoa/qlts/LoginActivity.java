@@ -55,6 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mTxtUsername = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txtUsername);
         mTxtPassword = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txtPassword);
         mTxtValidation = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_login_validation);
+//        mTxtPassword.setText("ditagis@123");
+//        mTxtUsername.setText("ditagis");
         create();
 
 

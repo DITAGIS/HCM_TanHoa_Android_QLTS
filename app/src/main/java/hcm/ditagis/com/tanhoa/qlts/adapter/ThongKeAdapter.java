@@ -1,10 +1,12 @@
 package hcm.ditagis.com.tanhoa.qlts.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -28,13 +30,24 @@ public class ThongKeAdapter extends ArrayAdapter<ThongKeAdapter.Item> {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_viewinfo, null);
+//            convertView = inflater.inflate(R.layout.item_viewinfo, null);
+            convertView = inflater.inflate(R.layout.item_viewmoreinfo, null);
         }
+
         Item item = items.get(position);
-        TextView txt_viewinfo_alias = (TextView) convertView.findViewById(R.id.txt_viewinfo_alias);
-        TextView txt_viewinfo_value = (TextView) convertView.findViewById(R.id.txt_viewinfo_value);
-        txt_viewinfo_alias.setText(item.getTitleLayer());
-        txt_viewinfo_value.setText(item.getSumFeatures().toString());
+        LinearLayout layout = (LinearLayout) convertView.findViewById(R.id.layout_viewmoreinfo);
+        TextView txtAlias = (TextView) convertView.findViewById(R.id.txt_viewmoreinfo_alias);
+        TextView txtValue = (TextView) convertView.findViewById(R.id.txt_viewmoreinfo_value);
+        txtAlias.setText(item.getTitleLayer());
+        txtValue.setText(item.getSumFeatures().toString());
+        if (item.isView()) {
+            convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent_1));
+            convertView.findViewById(R.id.img_viewmoreinfo_edit).setVisibility(View.VISIBLE);
+        } else {
+            convertView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackground_1));
+            convertView.findViewById(R.id.img_viewmoreinfo_edit).setVisibility(View.INVISIBLE);
+
+        }
         return convertView;
     }
 
@@ -60,6 +73,7 @@ public class ThongKeAdapter extends ArrayAdapter<ThongKeAdapter.Item> {
     public static class Item {
         private String titleLayer;
         private Long sumFeatures;
+        private boolean isView = false;
 
         public Item(String titleLayer, Long sumFeatures) {
             this.titleLayer = titleLayer;
@@ -80,6 +94,14 @@ public class ThongKeAdapter extends ArrayAdapter<ThongKeAdapter.Item> {
 
         public void setSumFeatures(Long sumFeatures) {
             this.sumFeatures = sumFeatures;
+        }
+
+        public boolean isView() {
+            return isView;
+        }
+
+        public void setView(boolean view) {
+            isView = view;
         }
     }
 }

@@ -29,5 +29,5 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="padding_layout">20dp</dimen>
     <dimen name="padding_small">8dp</dimen>
-
+    <dimen name="dimen_5dp">5dp</dimen>
 </resources>

@@ -77,8 +77,6 @@ import com.esri.arcgisruntime.symbology.PictureMarkerSymbol;
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import com.esri.arcgisruntime.symbology.UniqueValueRenderer;
 import com.esri.arcgisruntime.util.ListenableList;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -99,18 +97,15 @@ import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
 import hcm.ditagis.com.tanhoa.qlts.socket.LocationHelper;
 import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
-import hcm.ditagis.com.tanhoa.qlts.tools.MySnackBar;
-import hcm.ditagis.com.tanhoa.qlts.tools.SearchItem;
 import hcm.ditagis.com.tanhoa.qlts.tools.ThongKe;
 import hcm.ditagis.com.tanhoa.qlts.utities.CheckConnectInternet;
 import hcm.ditagis.com.tanhoa.qlts.utities.ImageFile;
 import hcm.ditagis.com.tanhoa.qlts.utities.MapViewHandler;
+import hcm.ditagis.com.tanhoa.qlts.tools.MySnackBar;
 import hcm.ditagis.com.tanhoa.qlts.utities.Popup;
+import hcm.ditagis.com.tanhoa.qlts.tools.SearchItem;
 
-public class QuanLyTaiSan extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback {
+public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private Uri mUri;
     private Popup popupInfos;
@@ -122,7 +117,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements
     private ListView mListViewSearch;
     private ObjectsAdapter mSearchAdapter;
     private LocationDisplay mLocationDisplay;
-    private int requestCode = 2;
+    private static final int REQUEST_SEARCH = 2;
     private Point mCurrentPoint;
     private Geocoder mGeocoder;
     private GraphicsOverlay mGraphicsOverlay;
@@ -156,8 +151,9 @@ public class QuanLyTaiSan extends AppCompatActivity implements
 
     private ArcGISFeature mSelectedArcGISFeature;
     private static final int REQUEST_ID_IMAGE_CAPTURE = 55;
-    private static final int REQUEST_SEARCH = 1;
+    private static final int REQUEST_ID_DATA_LOGGER = 22;
     private static final int REQUEST_ID_IMAGE_CAPTURE_POPUP = 44;
+
     String[] reqPermissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private LocationHelper mLocationHelper;
     private Location mLocation;
@@ -574,7 +570,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements
 
                 if (!(permissionCheck1 && permissionCheck2)) {
                     // If permissions are not already granted, request permission from the user.
-                    ActivityCompat.requestPermissions(QuanLyTaiSan.this, reqPermissions, requestCode);
+                    ActivityCompat.requestPermissions(QuanLyTaiSan.this, reqPermissions, REQUEST_SEARCH);
                 }  // Report other unknown failure types to the user - for example, location services may not // be enabled on the device. //                    String message = String.format("Error in DataSourceStatusChangedListener: %s", dataSourceStatusChangedEvent //                            .getSource().getLocationDataSource().getError().getMessage()); //                    Toast.makeText(QuanLyTaiSan.this, message, Toast.LENGTH_LONG).show();
 
             }
@@ -863,6 +859,10 @@ public class QuanLyTaiSan extends AppCompatActivity implements
             case hcm.ditagis.com.tanhoa.qlts.R.id.nav_thongke:
                 thongKe.start();
                 break;
+            case R.id.nav_datalogger:
+                intent = new Intent(this, DataLoggerActivity.class);
+                startActivityForResult(intent, REQUEST_ID_DATA_LOGGER);
+                break;
             case hcm.ditagis.com.tanhoa.qlts.R.id.nav_tracuu:
 //                traCuu.start();
                 break;
@@ -871,8 +871,8 @@ public class QuanLyTaiSan extends AppCompatActivity implements
                 this.startActivity(intent);
                 break;
             case hcm.ditagis.com.tanhoa.qlts.R.id.nav_setting:
-//                intent = new Intent(this, SettingsActivity.class);
-//                this.startActivityForResult(intent, 1);
+                intent = new Intent(this, SettingsActivity.class);
+                this.startActivityForResult(intent, 1);
                 break;
             case hcm.ditagis.com.tanhoa.qlts.R.id.nav_visible_float_button:
                 toogleFloatButton();
@@ -1087,11 +1087,13 @@ public class QuanLyTaiSan extends AppCompatActivity implements
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
+
             switch (requestCode) {
-                case REQUEST_SEARCH:
-                    final int objectid = data.getIntExtra(getString(hcm.ditagis.com.tanhoa.qlts.R.string.ket_qua_objectid), 1);
+                case REQUEST_ID_DATA_LOGGER:
                     if (resultCode == Activity.RESULT_OK) {
-                        mMapViewHandler.queryByObjectID(objectid);
+                        String objectid = data.getStringExtra(getString(R.string.ID));
+                        String layerID = data.getStringExtra(getString(R.string.LayerID));
+                        mMapViewHandler.queryObjectByLayerID_ObjectID(objectid, layerID);
                     }
                     break;
                 case Constants.REQUEST_LOGIN:
@@ -1160,20 +1162,5 @@ public class QuanLyTaiSan extends AppCompatActivity implements
                 MySnackBar.make(mMapView, "Lỗi khi chụp ảnh", false);
             }
         }
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 }

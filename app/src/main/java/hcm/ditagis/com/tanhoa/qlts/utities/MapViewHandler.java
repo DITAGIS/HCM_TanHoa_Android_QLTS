@@ -19,7 +19,10 @@ import com.esri.arcgisruntime.geometry.Geometry;
 import com.esri.arcgisruntime.geometry.GeometryEngine;
 import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.SpatialReferences;
+import com.esri.arcgisruntime.layers.FeatureLayer;
+import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
+import com.esri.arcgisruntime.mapping.LayerList;
 import com.esri.arcgisruntime.mapping.Viewpoint;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import com.esri.arcgisruntime.tasks.geocode.LocatorTask;
@@ -57,7 +60,6 @@ public class MapViewHandler extends Activity {
     private ServiceFeatureTable searchSFT;
     private Popup mPopUp;
     private Context mContext;
-
 
     public void setFeatureLayerDTGs(List<FeatureLayerDTG> mFeatureLayerDTGs) {
         this.mFeatureLayerDTGs = mFeatureLayerDTGs;
@@ -152,7 +154,46 @@ public class MapViewHandler extends Activity {
         });
 
     }
+    public void queryObjectByLayerID_ObjectID(String objectID,String layerID) {
+        final QueryParameters queryParameters = new QueryParameters();
+        final String query = "OBJECTID = " + objectID;
+        queryParameters.setWhereClause(query);
+        FeatureLayer featureLayer = getServiceFeatureTable(layerID).getFeatureLayer();
+        if(featureLayer != null) {
+            featureLayer.setVisible(true);
+            ServiceFeatureTable serviceFeatureTable = (ServiceFeatureTable) featureLayer.getFeatureTable();
+            final ListenableFuture<FeatureQueryResult> feature = serviceFeatureTable.queryFeaturesAsync(queryParameters, ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
+            feature.addDoneListener(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        FeatureQueryResult result = feature.get();
+                        if (result.iterator().hasNext()) {
+                            mSelectedArcGISFeature = (ArcGISFeature) result.iterator().next();
+                            if (mSelectedArcGISFeature != null) {
+                                String tableName = ((ArcGISFeatureTable) mSelectedArcGISFeature.getFeatureTable()).getTableName();
+                                FeatureLayerDTG featureLayerDTG = getmFeatureLayerDTG(tableName);
+                                mPopUp.setFeatureLayerDTG(featureLayerDTG);
+                                mPopUp.showPopup(mSelectedArcGISFeature, false);
+                            } else mPopUp.dimissCallout();
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
 
+    }
+    private FeatureLayerDTG getServiceFeatureTable(String layerID) {
+        for (FeatureLayerDTG featureLayerDTG : mFeatureLayerDTGs) {
+            String layerID_DTG = featureLayerDTG.getFeatureLayer().getId();
+            if (layerID_DTG.equals(layerID)) return featureLayerDTG;
+        }
+        return null;
+    }
     public FeatureLayerDTG getmFeatureLayerDTG(String tableName) {
         for (FeatureLayerDTG featureLayerDTG : mFeatureLayerDTGs) {
             String tableNameDTG = ((ArcGISFeatureTable) featureLayerDTG.getFeatureLayer().getFeatureTable()).getTableName();
