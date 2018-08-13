@@ -91,6 +91,7 @@ import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.LayerInfoDTG;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.ListObjectDB;
 import hcm.ditagis.com.tanhoa.qlts.libs.Action;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
+import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
 import hcm.ditagis.com.tanhoa.qlts.tools.ThongKe;
 import hcm.ditagis.com.tanhoa.qlts.utities.CheckConnectInternet;
 import hcm.ditagis.com.tanhoa.qlts.utities.ImageFile;

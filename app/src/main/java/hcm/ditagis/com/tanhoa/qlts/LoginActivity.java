@@ -1,25 +1,48 @@
 package hcm.ditagis.com.tanhoa.qlts;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import hcm.ditagis.com.tanhoa.qlts.async.LoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.async.NewLoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.User;
+import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
+import hcm.ditagis.com.tanhoa.qlts.socket.LocationHelper;
+import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
 import hcm.ditagis.com.tanhoa.qlts.utities.CheckConnectInternet;
 import hcm.ditagis.com.tanhoa.qlts.utities.Preference;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback {
     private TextView mTxtUsername;
     private TextView mTxtPassword;
     private boolean isLastLogin;
     private TextView mTxtValidation;
+    private Location mLocation;
+    private Socket mSocket;
+    private LocationHelper mLocationHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +59,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mTxtUsername.setText("ditagis");
         mTxtValidation = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_login_validation);
         create();
+
+
     }
+
+    private Emitter.Listener onInfinity = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            if (args != null && args.length > 0)
+                Log.d("Nhận", args[0].toString());
+        }
+    };
 
     private void create() {
         Preference.getInstance().setContext(this);
@@ -101,7 +134,66 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void handleLoginSuccess(User user) {
+        // GPS
 
+        final TanHoaApplication app = (TanHoaApplication) getApplication();
+        app.setmUsername(mTxtUsername.getText().toString());
+        mSocket = app.getSocket();
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        mLocationHelper = new LocationHelper(this, new LocationHelper.AsyncResponse() {
+            @Override
+            public void processFinish(double longtitude, double latitude) {
+
+            }
+
+        });
+        mLocationHelper.checkpermission();
+        LocationListener listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mLocation = location;
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+//                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                startActivity(i);
+                mLocationHelper.execute();
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            return;
+        }
+        locationManager.requestLocationUpdates("gps", 5000, 0, listener);
+        final Handler handler = new Handler();
+        final int delay = 5000; //milliseconds
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                //do something
+                if (mLocation != null) {
+                    Log.d("gửi", "hhi");
+                    Emitter emit = mSocket.emit(Constants.EVENT_STAFF_NAME, Constants.APP_ID + "," + app.getmUsername());
+                    Emitter emit1 = mSocket.emit(Constants.EVENT_LOCATION, mLocation.getLatitude() + "," + mLocation.getLongitude());
+                    Log.d("Kết quả vị trí", emit1.hasListeners(Constants.EVENT_LOCATION) + "");
+                }
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
+        mSocket.on(Constants.EVENT_STAFF_NAME, onInfinity);
+        mSocket.on(Constants.EVENT_LOCATION, onInfinity);
+
+        mSocket.connect();
 
         Preference.getInstance().savePreferences(getString(hcm.ditagis.com.tanhoa.qlts.R.string.preference_username), mTxtUsername.getText().toString());
 //        Preference.getInstance().savePreferences(getString(R.string.preference_password), khachHang.getPassWord());
@@ -151,5 +243,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             default:
                 return super.onKeyUp(keyCode, event);
         }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
