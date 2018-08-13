@@ -97,13 +97,14 @@ import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
 import hcm.ditagis.com.tanhoa.qlts.socket.LocationHelper;
 import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
+import hcm.ditagis.com.tanhoa.qlts.tools.MySnackBar;
+import hcm.ditagis.com.tanhoa.qlts.tools.SearchItem;
 import hcm.ditagis.com.tanhoa.qlts.tools.ThongKe;
 import hcm.ditagis.com.tanhoa.qlts.utities.CheckConnectInternet;
 import hcm.ditagis.com.tanhoa.qlts.utities.ImageFile;
 import hcm.ditagis.com.tanhoa.qlts.utities.MapViewHandler;
-import hcm.ditagis.com.tanhoa.qlts.tools.MySnackBar;
 import hcm.ditagis.com.tanhoa.qlts.utities.Popup;
-import hcm.ditagis.com.tanhoa.qlts.tools.SearchItem;
+import hcm.ditagis.com.tanhoa.qlts.utities.Preference;
 
 public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
@@ -163,9 +164,10 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(hcm.ditagis.com.tanhoa.qlts.R.layout.activity_quan_ly_tai_san);
+        setContentView(R.layout.activity_quan_ly_tai_san);
         startGPS();
         startSignIn();
+
 
     }
 
@@ -226,6 +228,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
     }
 
     private void setUp() {
+
         states = new int[][]{{android.R.attr.state_checked}, {}};
         colors = new int[]{hcm.ditagis.com.tanhoa.qlts.R.color.colorTextColor_1, hcm.ditagis.com.tanhoa.qlts.R.color.colorTextColor_1};
         setLicense();
@@ -234,16 +237,16 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
         StrictMode.setVmPolicy(builder.build());
 
         // for navigation
-        Toolbar toolbar = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // permisson
         requestPermisson();
 
-        DrawerLayout drawer = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, hcm.ditagis.com.tanhoa.qlts.R.string.navigation_drawer_open, hcm.ditagis.com.tanhoa.qlts.R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        NavigationView navigationView = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // location
@@ -260,7 +263,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
 
     private void initMapView() {
         mMap = new ArcGISMap(Basemap.Type.OPEN_STREET_MAP, 10.7554041, 106.6546293, 12);
-        mMapView = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.mapView);
+        mMapView = findViewById(R.id.mapView);
         mMapView.setMap(mMap);
         final PreparingAsycn preparingAsycn = new PreparingAsycn(this, new PreparingAsycn.AsyncResponse() {
             @Override
@@ -360,8 +363,8 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
         mMap.addDoneLoadingListener(new Runnable() {
             @Override
             public void run() {
-                mLinnearDisplayLayerTaiSan = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.linnearDisplayLayerTaiSan);
-                mLinnearDisplayLayerBaseMap = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.linnearDisplayLayerBaseMap);
+                mLinnearDisplayLayerTaiSan = findViewById(R.id.linnearDisplayLayerTaiSan);
+                mLinnearDisplayLayerBaseMap = findViewById(R.id.linnearDisplayLayerBaseMap);
             }
         });
         mMapView.setOnTouchListener(new DefaultMapViewOnTouchListener(this, mMapView) {
@@ -393,7 +396,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
                 return super.onScale(detector);
             }
         });
-        SeekBar skbr_hanhchinh_layer = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.skbr_hanhchinh_layers);
+        SeekBar skbr_hanhchinh_layer = findViewById(R.id.skbr_hanhchinh_layers);
         skbr_hanhchinh_layer.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -426,20 +429,21 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
     }
 
     private void initLayerListView() {
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_open_street_map).setOnClickListener(this);
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_street_map).setOnClickListener(this);
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_topo).setOnClickListener(this);
-        mFloatButtonLayer = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer);
-        mFloatButtonLayer.setOnClickListener(this);
-        mLinearLayoutCover = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.layout_cover_quan_ly_su_co);
-        mLinearLayoutCover.setOnClickListener(this);
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.btn_layer_close).setOnClickListener(this);
-        mFloatButtonLocation = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation);
-        mFloatButtonLocation.setOnClickListener(this);
-        mLayoutTimKiem = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.layout_tim_kiem);
 
-        cb_Layer_HanhChinh = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.cb_Layer_HanhChinh);
-        cb_Layer_TaiSan = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.cb_Layer_TaiSan);
+        findViewById(R.id.layout_layer_open_street_map).setOnClickListener(this);
+        findViewById(R.id.layout_layer_street_map).setOnClickListener(this);
+        findViewById(R.id.layout_layer_topo).setOnClickListener(this);
+        mFloatButtonLayer = findViewById(R.id.floatBtnLayer);
+        mFloatButtonLayer.setOnClickListener(this);
+        mLinearLayoutCover = findViewById(R.id.layout_cover_quan_ly_su_co);
+        mLinearLayoutCover.setOnClickListener(this);
+        findViewById(R.id.btn_layer_close).setOnClickListener(this);
+        mFloatButtonLocation = findViewById(R.id.floatBtnLocation);
+        mFloatButtonLocation.setOnClickListener(this);
+        mLayoutTimKiem = findViewById(R.id.layout_tim_kiem);
+
+        cb_Layer_HanhChinh = findViewById(R.id.cb_Layer_HanhChinh);
+        cb_Layer_TaiSan = findViewById(R.id.cb_Layer_TaiSan);
         cb_Layer_TaiSan.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -473,7 +477,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
     }
 
     private void initListViewSearch() {
-        this.mListViewSearch = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.lstview_search);
+        this.mListViewSearch = findViewById(R.id.lstview_search);
         //đưa listview search ra phía sau
         this.mListViewSearch.invalidate();
         List<ObjectsAdapter.Item> items = new ArrayList<>();
@@ -715,7 +719,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -728,7 +732,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
 
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(hcm.ditagis.com.tanhoa.qlts.R.menu.quan_ly_su_co, menu);
-        final SearchView mTxtSearch = (SearchView) menu.findItem(hcm.ditagis.com.tanhoa.qlts.R.id.action_search).getActionView();
+        final SearchView mTxtSearch = (SearchView) menu.findItem(R.id.action_search).getActionView();
         mTxtSearch.setQueryHint(getString(hcm.ditagis.com.tanhoa.qlts.R.string.title_search));
         mTxtSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -764,21 +768,21 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
                 return false;
             }
         });
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_clearSelectLayer).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.img_clearSelectLayer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_title_search)).setText(getString(hcm.ditagis.com.tanhoa.qlts.R.string.nav_find_address));
+                ((TextView) findViewById(R.id.txt_title_search)).setText(getString(hcm.ditagis.com.tanhoa.qlts.R.string.nav_find_address));
                 isSearchingFeature = false;
             }
         });
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_selectLayer).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.img_selectLayer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 showDialogSelectTypeSearch();
             }
         });
-        menu.findItem(hcm.ditagis.com.tanhoa.qlts.R.id.action_search).setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+        menu.findItem(R.id.action_search).setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 hiddenFloatButton();
@@ -802,9 +806,9 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
         SearchAdapter searchAdapter = new SearchAdapter(this, items);
         AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_Holo_Light_NoActionBar_Fullscreen);
         @SuppressLint("InflateParams") View layout = getLayoutInflater().inflate(hcm.ditagis.com.tanhoa.qlts.R.layout.layout_title_listview, null);
-        ListView listView = layout.findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.listview);
+        ListView listView = layout.findViewById(R.id.listview);
         listView.setAdapter(searchAdapter);
-        TextView txt_Title_Layout = layout.findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_Title_Layout);
+        TextView txt_Title_Layout = layout.findViewById(R.id.txt_Title_Layout);
         txt_Title_Layout.setText("Tìm kiếm theo");
         builder.setView(layout);
         final AlertDialog selectTimeDialog = builder.create();
@@ -817,7 +821,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
                 selectTimeDialog.dismiss();
                 final SearchAdapter.Item itemAtPosition = (SearchAdapter.Item) parent.getItemAtPosition(position);
                 String idLayer = itemAtPosition.getIdLayer();
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_title_search)).setText(itemAtPosition.getTitleLayer());
+                ((TextView) findViewById(R.id.txt_title_search)).setText(itemAtPosition.getTitleLayer());
                 ServiceFeatureTable serviceFeatureTable = getServiceFeatureTable(idLayer);
                 serviceFeatureTable.getFeatureLayer().setVisible(true);
                 mMapViewHandler.setSearchSFT(serviceFeatureTable);
@@ -841,7 +845,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case hcm.ditagis.com.tanhoa.qlts.R.id.action_search:
+            case R.id.action_search:
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -856,31 +860,31 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
         Intent intent;
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
-            case hcm.ditagis.com.tanhoa.qlts.R.id.nav_thongke:
+            case R.id.nav_thongke:
                 thongKe.start();
                 break;
             case R.id.nav_datalogger:
                 intent = new Intent(this, DataLoggerActivity.class);
                 startActivityForResult(intent, REQUEST_ID_DATA_LOGGER);
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.nav_tracuu:
+            case R.id.nav_tracuu:
 //                traCuu.start();
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.nav_find_route:
+            case R.id.nav_find_route:
                 intent = new Intent(this, FindRouteActivity.class);
                 this.startActivity(intent);
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.nav_setting:
+            case R.id.nav_setting:
                 intent = new Intent(this, SettingsActivity.class);
                 this.startActivityForResult(intent, 1);
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.nav_visible_float_button:
+            case R.id.nav_visible_float_button:
                 toogleFloatButton();
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.nav_logOut:
+            case R.id.nav_logOut:
                 this.finish();
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.nav_delete_searching:
+            case R.id.nav_delete_searching:
                 mGraphicsOverlay.getGraphics().clear();
                 mSearchAdapter.clear();
                 mSearchAdapter.notifyDataSetChanged();
@@ -890,7 +894,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
         }
 
 
-        DrawerLayout drawer = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -918,63 +922,63 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
     }
 
     private void hiddenFloatButton() {
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer).setVisibility(View.INVISIBLE);
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation).setVisibility(View.INVISIBLE);
+        findViewById(R.id.floatBtnLayer).setVisibility(View.INVISIBLE);
+        findViewById(R.id.floatBtnLocation).setVisibility(View.INVISIBLE);
     }
 
     private void showFloatButton() {
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer).setVisibility(View.VISIBLE);
-        findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation).setVisibility(View.VISIBLE);
+        findViewById(R.id.floatBtnLayer).setVisibility(View.VISIBLE);
+        findViewById(R.id.floatBtnLocation).setVisibility(View.VISIBLE);
     }
 
     private void toogleFloatButton() {
-        if (findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer).getVisibility() == View.VISIBLE) {
-            findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer).setVisibility(View.INVISIBLE);
+        if (findViewById(R.id.floatBtnLayer).getVisibility() == View.VISIBLE) {
+            findViewById(R.id.floatBtnLayer).setVisibility(View.INVISIBLE);
         } else
-            findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer).setVisibility(View.VISIBLE);
-        if (findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation).getVisibility() == View.VISIBLE) {
-            findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation).setVisibility(View.INVISIBLE);
+            findViewById(R.id.floatBtnLayer).setVisibility(View.VISIBLE);
+        if (findViewById(R.id.floatBtnLocation).getVisibility() == View.VISIBLE) {
+            findViewById(R.id.floatBtnLocation).setVisibility(View.INVISIBLE);
         } else
-            findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation).setVisibility(View.VISIBLE);
+            findViewById(R.id.floatBtnLocation).setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer:
+            case R.id.floatBtnLayer:
                 toogleFloatButton();
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer).setVisibility(View.VISIBLE);
+                findViewById(R.id.layout_layer).setVisibility(View.VISIBLE);
                 mCurrentPoint = mMapView.getCurrentViewpoint(Viewpoint.Type.CENTER_AND_SCALE).getTargetGeometry().getExtent().getCenter();
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_open_street_map:
+            case R.id.layout_layer_open_street_map:
                 mMapView.getMap().setMaxScale(1128.497175);
                 mMapView.getMap().setBasemap(Basemap.createOpenStreetMap());
-                handlingColorBackgroundLayerSelected(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_open_street_map);
+                handlingColorBackgroundLayerSelected(R.id.layout_layer_open_street_map);
                 mMapView.getCurrentViewpoint(Viewpoint.Type.CENTER_AND_SCALE);
 
                 setViewPointCenter(mCurrentPoint);
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_street_map:
+            case R.id.layout_layer_street_map:
                 mMapView.getMap().setMaxScale(1128.497176);
                 mMapView.getMap().setBasemap(Basemap.createStreets());
-                handlingColorBackgroundLayerSelected(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_street_map);
+                handlingColorBackgroundLayerSelected(R.id.layout_layer_street_map);
 
                 setViewPointCenter(mCurrentPoint);
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_topo:
+            case R.id.layout_layer_topo:
                 mMapView.getMap().setMaxScale(5);
                 mMapView.getMap().setBasemap(Basemap.createImageryWithLabels());
-                handlingColorBackgroundLayerSelected(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_topo);
+                handlingColorBackgroundLayerSelected(R.id.layout_layer_topo);
 
                 setViewPointCenter(mCurrentPoint);
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.btn_layer_close:
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer).setVisibility(View.INVISIBLE);
+            case R.id.btn_layer_close:
+                findViewById(R.id.layout_layer).setVisibility(View.INVISIBLE);
                 toogleFloatButton();
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.layout_cover_quan_ly_su_co:
+            case R.id.layout_cover_quan_ly_su_co:
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation:
+            case R.id.floatBtnLocation:
                 if (!mLocationDisplay.isStarted()) {
                     mLocationDisplay.startAsync();
                     setViewPointCenter(mLocationDisplay.getMapLocation());
@@ -1058,29 +1062,29 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
     @SuppressLint("ResourceAsColor")
     private void handlingColorBackgroundLayerSelected(int id) {
         switch (id) {
-            case hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_open_street_map:
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_layer_open_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap);
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_layer_open_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorPrimary));
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_layer_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_layer_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_layer_topo).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_layer_topo)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
+            case R.id.layout_layer_open_street_map:
+                findViewById(R.id.img_layer_open_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap);
+                ((TextView) findViewById(R.id.txt_layer_open_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorPrimary));
+                findViewById(R.id.img_layer_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
+                ((TextView) findViewById(R.id.txt_layer_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
+                findViewById(R.id.img_layer_topo).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
+                ((TextView) findViewById(R.id.txt_layer_topo)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_street_map:
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_layer_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap);
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_layer_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorPrimary));
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_layer_open_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_layer_open_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_layer_topo).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_layer_topo)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
+            case R.id.layout_layer_street_map:
+                findViewById(R.id.img_layer_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap);
+                ((TextView) findViewById(R.id.txt_layer_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorPrimary));
+                findViewById(R.id.img_layer_open_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
+                ((TextView) findViewById(R.id.txt_layer_open_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
+                findViewById(R.id.img_layer_topo).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
+                ((TextView) findViewById(R.id.txt_layer_topo)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
                 break;
-            case hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_topo:
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_layer_topo).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap);
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_layer_topo)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorPrimary));
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_layer_open_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_layer_open_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
-                findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.img_layer_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
-                ((TextView) findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_layer_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
+            case R.id.layout_layer_topo:
+                findViewById(R.id.img_layer_topo).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap);
+                ((TextView) findViewById(R.id.txt_layer_topo)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorPrimary));
+                findViewById(R.id.img_layer_open_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
+                ((TextView) findViewById(R.id.txt_layer_open_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
+                findViewById(R.id.img_layer_street_map).setBackgroundResource(hcm.ditagis.com.tanhoa.qlts.R.drawable.layout_shape_basemap_none);
+                ((TextView) findViewById(R.id.txt_layer_street_map)).setTextColor(ContextCompat.getColor(this, hcm.ditagis.com.tanhoa.qlts.R.color.colorBlack));
                 break;
         }
     }
@@ -1104,6 +1108,10 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
                         mGeocoder = new Geocoder(this);
                         // create an empty map instance
                         setUp();
+                        ((TextView) QuanLyTaiSan.this.findViewById(R.id.txt_nav_username)).setText(Preference.getInstance().
+                                loadPreference(getString(R.string.preference_username)));
+                        ((TextView) QuanLyTaiSan.this.findViewById(R.id.txt_nav_displayname)).setText(Preference.getInstance().
+                                loadPreference(getString(R.string.preference_displayname)));
                     }
 
             }
