@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hcm.ditagis.com.tanhoa.qlts.QuanLyTaiSan;
-import hcm.ditagis.com.tanhoa.qlts.R;
 import hcm.ditagis.com.tanhoa.qlts.adapter.SearchAdapter;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
 
@@ -21,7 +20,7 @@ public class SearchItem {
         items = new ArrayList<>();
         for (FeatureLayerDTG featureLayerDTG : mFeatureLayerDTGS) {
             if (featureLayerDTG.getAction() != null && featureLayerDTG.getAction().isView())
-                items.add(new SearchAdapter.Item(quanLyTaiSan.getString(R.string.type_search_feature_layer), featureLayerDTG.getFeatureLayer().getName(),featureLayerDTG.getFeatureLayer().getId()));
+                items.add(new SearchAdapter.Item(featureLayerDTG.getFeatureLayer().getName(), featureLayerDTG.getFeatureLayer().getId()));
         }
 
     }

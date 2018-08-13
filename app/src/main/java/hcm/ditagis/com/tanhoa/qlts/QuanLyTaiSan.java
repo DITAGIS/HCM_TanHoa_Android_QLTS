@@ -12,6 +12,9 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -74,6 +77,8 @@ import com.esri.arcgisruntime.symbology.PictureMarkerSymbol;
 import com.esri.arcgisruntime.symbology.SimpleMarkerSymbol;
 import com.esri.arcgisruntime.symbology.UniqueValueRenderer;
 import com.esri.arcgisruntime.util.ListenableList;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -90,17 +95,22 @@ import hcm.ditagis.com.tanhoa.qlts.async.UpdateAttachmentAsync;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.LayerInfoDTG;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.ListObjectDB;
 import hcm.ditagis.com.tanhoa.qlts.libs.Action;
+import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
+import hcm.ditagis.com.tanhoa.qlts.socket.LocationHelper;
 import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
+import hcm.ditagis.com.tanhoa.qlts.tools.MySnackBar;
+import hcm.ditagis.com.tanhoa.qlts.tools.SearchItem;
 import hcm.ditagis.com.tanhoa.qlts.tools.ThongKe;
 import hcm.ditagis.com.tanhoa.qlts.utities.CheckConnectInternet;
 import hcm.ditagis.com.tanhoa.qlts.utities.ImageFile;
 import hcm.ditagis.com.tanhoa.qlts.utities.MapViewHandler;
-import hcm.ditagis.com.tanhoa.qlts.tools.MySnackBar;
 import hcm.ditagis.com.tanhoa.qlts.utities.Popup;
-import hcm.ditagis.com.tanhoa.qlts.tools.SearchItem;
 
-public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class QuanLyTaiSan extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private Uri mUri;
     private Popup popupInfos;
@@ -146,8 +156,11 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
 
     private ArcGISFeature mSelectedArcGISFeature;
     private static final int REQUEST_ID_IMAGE_CAPTURE = 55;
+    private static final int REQUEST_SEARCH = 1;
     private static final int REQUEST_ID_IMAGE_CAPTURE_POPUP = 44;
     String[] reqPermissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    private LocationHelper mLocationHelper;
+    private Location mLocation;
 
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -155,9 +168,65 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(hcm.ditagis.com.tanhoa.qlts.R.layout.activity_quan_ly_tai_san);
-        mGeocoder = new Geocoder(this);
-        // create an empty map instance
-        setUp();
+        startGPS();
+        startSignIn();
+
+    }
+
+    private void startGPS() {
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        mLocationHelper = new LocationHelper(this, new LocationHelper.AsyncResponse() {
+            @Override
+            public void processFinish(double longtitude, double latitude) {
+
+            }
+
+        });
+        mLocationHelper.checkpermission();
+        LocationListener listener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mLocation = location;
+                ((TanHoaApplication) QuanLyTaiSan.this.getApplication()).setmLocation(mLocation);
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+//                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                startActivity(i);
+                mLocationHelper.execute();
+
+                mLocationHelper = new LocationHelper(QuanLyTaiSan.this, new LocationHelper.AsyncResponse() {
+                    @Override
+                    public void processFinish(double longtitude, double latitude) {
+
+                    }
+
+                });
+                mLocationHelper.checkpermission();
+            }
+        };
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            return;
+        }
+        locationManager.requestLocationUpdates("gps", 5000, 0, listener);
+    }
+
+    private void startSignIn() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivityForResult(intent, Constants.REQUEST_LOGIN);
     }
 
     private void setUp() {
@@ -257,7 +326,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
                 });
                 hanhChinhImageLayers.loadAsync();
             } else {
-                Action action = new Action(layerInfoDTG.isView(),layerInfoDTG.isCreate(),layerInfoDTG.isEdit(),layerInfoDTG.isDelete());
+                Action action = new Action(layerInfoDTG.isView(), layerInfoDTG.isCreate(), layerInfoDTG.isEdit(), layerInfoDTG.isDelete());
 
                 ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(url);
                 final FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
@@ -267,8 +336,8 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
                 featureLayer.setMaxScale(0);
                 featureLayer.setMinScale(1000000);
                 FeatureLayerDTG featureLayerDTG = new FeatureLayerDTG(featureLayer);
-                if(layerInfoDTG.getId().equals("diemsucoLYR")){
-                    action = new Action(layerInfoDTG.isView(),false,false,false);
+                if (layerInfoDTG.getId().equals("diemsucoLYR")) {
+                    action = new Action(layerInfoDTG.isView(), false, false, false);
                     setRendererSuCoFeatureLayer(featureLayer);
                 }
                 featureLayerDTG.setAction(action);
@@ -313,7 +382,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
             @SuppressLint("SetTextI18n")
             @Override
             public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-                if(mMapViewHandler != null) {
+                if (mMapViewHandler != null) {
                     double[] location = mMapViewHandler.onScroll(e1, e2, distanceX, distanceY);
                     float log = (float) Math.round(location[0] * 100000) / 100000;
                     float lat = (float) Math.round(location[1] * 100000) / 100000;
@@ -346,6 +415,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
     private String[] getFieldsDTG(String stringFields) {
         String[] returnFields = null;
         if (stringFields != null) {
@@ -358,6 +428,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
         }
         return returnFields;
     }
+
     private void initLayerListView() {
         findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_open_street_map).setOnClickListener(this);
         findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.layout_layer_street_map).setOnClickListener(this);
@@ -509,6 +580,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+
     private void setRendererSuCoFeatureLayer(FeatureLayer featureLayer) {
         UniqueValueRenderer uniqueValueRenderer = new UniqueValueRenderer();
         uniqueValueRenderer.getFieldNames().add("TrangThai");
@@ -627,6 +699,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
 
 
     }
+
     private void setViewPointCenter(Point position) {
         Geometry geometry = GeometryEngine.project(position, SpatialReferences.getWebMercator());
         mMapView.setViewpointCenterAsync(geometry.getExtent().getCenter());
@@ -798,8 +871,8 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
                 this.startActivity(intent);
                 break;
             case hcm.ditagis.com.tanhoa.qlts.R.id.nav_setting:
-                intent = new Intent(this, SettingsActivity.class);
-                this.startActivityForResult(intent, 1);
+//                intent = new Intent(this, SettingsActivity.class);
+//                this.startActivityForResult(intent, 1);
                 break;
             case hcm.ditagis.com.tanhoa.qlts.R.id.nav_visible_float_button:
                 toogleFloatButton();
@@ -857,10 +930,12 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
     private void toogleFloatButton() {
         if (findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer).getVisibility() == View.VISIBLE) {
             findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer).setVisibility(View.INVISIBLE);
-        } else findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer).setVisibility(View.VISIBLE);
+        } else
+            findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLayer).setVisibility(View.VISIBLE);
         if (findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation).getVisibility() == View.VISIBLE) {
             findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation).setVisibility(View.INVISIBLE);
-        } else findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation).setVisibility(View.VISIBLE);
+        } else
+            findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.floatBtnLocation).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -1012,11 +1087,23 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
-            final int objectid = data.getIntExtra(getString(hcm.ditagis.com.tanhoa.qlts.R.string.ket_qua_objectid), 1);
-            if (requestCode == 1) {
-                if (resultCode == Activity.RESULT_OK) {
-                    mMapViewHandler.queryByObjectID(objectid);
-                }
+            switch (requestCode) {
+                case REQUEST_SEARCH:
+                    final int objectid = data.getIntExtra(getString(hcm.ditagis.com.tanhoa.qlts.R.string.ket_qua_objectid), 1);
+                    if (resultCode == Activity.RESULT_OK) {
+                        mMapViewHandler.queryByObjectID(objectid);
+                    }
+                    break;
+                case Constants.REQUEST_LOGIN:
+                    if (Activity.RESULT_OK != resultCode) {
+                        finish();
+                        return;
+                    } else {
+                        mGeocoder = new Geocoder(this);
+                        // create an empty map instance
+                        setUp();
+                    }
+
             }
         } catch (Exception ignored) {
         }
@@ -1073,5 +1160,20 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
                 MySnackBar.make(mMapView, "Lỗi khi chụp ảnh", false);
             }
         }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

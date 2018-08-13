@@ -6,4 +6,5 @@ public class Constants {
     public static final String EVENT_LOCATION = "vitrinhanvien";
     public static final String EVENT_STAFF_NAME = "tennhanvien";
     public static final String APP_ID = "qlts";
+    public static final int REQUEST_LOGIN = 0;
 }

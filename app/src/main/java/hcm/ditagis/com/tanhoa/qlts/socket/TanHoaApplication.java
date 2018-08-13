@@ -1,6 +1,7 @@
 package hcm.ditagis.com.tanhoa.qlts.socket;
 
 import android.app.Application;
+import android.location.Location;
 
 import java.net.URISyntaxException;
 
@@ -31,5 +32,14 @@ public class TanHoaApplication extends Application {
 
     public Socket getSocket() {
         return mSocket;
+    }
+    private Location mLocation;
+
+    public Location getmLocation() {
+        return mLocation;
+    }
+
+    public void setmLocation(Location mLocation) {
+        this.mLocation = mLocation;
     }
 }

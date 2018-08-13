@@ -56,26 +56,17 @@ public class SearchAdapter extends ArrayAdapter<SearchAdapter.Item> {
 
 
     public static class Item {
-        String typeSearch;
         String titleLayer;
         String idLayer;
 
         public Item() {
         }
 
-        public Item(String typeSearch, String titleLayer,String idLayer) {
-            this.typeSearch = typeSearch;
+        public Item( String titleLayer,String idLayer) {
             this.titleLayer = titleLayer;
             this.idLayer = idLayer;
         }
 
-        public String getTypeSearch() {
-            return typeSearch;
-        }
-
-        public void setTypeSearch(String typeSearch) {
-            this.typeSearch = typeSearch;
-        }
 
         public String getTitleLayer() {
             return titleLayer;

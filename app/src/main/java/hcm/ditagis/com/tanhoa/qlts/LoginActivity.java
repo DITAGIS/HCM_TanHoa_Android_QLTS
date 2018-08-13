@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView mTxtValidation;
     private Location mLocation;
     private Socket mSocket;
-    private LocationHelper mLocationHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +54,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mTxtUsername = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txtUsername);
         mTxtPassword = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txtPassword);
-        mTxtPassword.setText("ditagis@123");
-        mTxtUsername.setText("ditagis");
         mTxtValidation = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_login_validation);
         create();
 
@@ -139,43 +136,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final TanHoaApplication app = (TanHoaApplication) getApplication();
         app.setmUsername(mTxtUsername.getText().toString());
         mSocket = app.getSocket();
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        mLocationHelper = new LocationHelper(this, new LocationHelper.AsyncResponse() {
-            @Override
-            public void processFinish(double longtitude, double latitude) {
-
-            }
-
-        });
-        mLocationHelper.checkpermission();
-        LocationListener listener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                mLocation = location;
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-//                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-//                startActivity(i);
-                mLocationHelper.execute();
-            }
-        };
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            return;
-        }
-        locationManager.requestLocationUpdates("gps", 5000, 0, listener);
         final Handler handler = new Handler();
         final int delay = 5000; //milliseconds
         handler.postDelayed(new Runnable() {
@@ -200,9 +160,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Preference.getInstance().savePreferences(getString(hcm.ditagis.com.tanhoa.qlts.R.string.preference_displayname), user.getDisplayName());
         mTxtUsername.setText("");
         mTxtPassword.setText("");
-        Intent intent = new Intent(this, QuanLyTaiSan.class);
-
-        startActivity(intent);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void changeAccount() {

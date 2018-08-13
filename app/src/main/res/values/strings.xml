@@ -204,8 +204,6 @@
     <string name="btn_TakePicture">Chụp hình</string>
     <string name="btn_Update">Cập nhật</string>
     <string name="btn_Esc">Thoát</string>
-    <string name="type_search_address">TYPE_SEARCH_ADDRESS</string>
-    <string name="type_search_feature_layer">TYPE_SEARCH_FEATURE_LAYER</string>
     <string name="email_nv">nva.tanhoa@gmail.com</string>
     <string name="name_nv">Nhân viên A</string>
     <string name="SERVICES_URL">http://sawagis.vn/tanhoa1/api</string>
