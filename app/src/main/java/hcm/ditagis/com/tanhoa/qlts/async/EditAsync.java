@@ -1,5 +1,6 @@
 package hcm.ditagis.com.tanhoa.qlts.async;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,8 +24,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import hcm.ditagis.com.tanhoa.qlts.QuanLyTaiSan;
 import hcm.ditagis.com.tanhoa.qlts.R;
 import hcm.ditagis.com.tanhoa.qlts.adapter.FeatureViewMoreInfoAdapter;
+import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
 import hcm.ditagis.com.tanhoa.qlts.utities.Constant;
 
 /**
@@ -32,29 +35,30 @@ import hcm.ditagis.com.tanhoa.qlts.utities.Constant;
  */
 
 public class EditAsync extends AsyncTask<FeatureViewMoreInfoAdapter, Void, Void> {
+
     public interface AsyncResponse {
         void processFinish();
     }
     public AsyncResponse delegate = null;
     private ProgressDialog mDialog;
-    private Context mContext;
+    private QuanLyTaiSan mMainActivity;
     private ServiceFeatureTable mServiceFeatureTable;
     private ArcGISFeature mSelectedArcGISFeature = null;
     private boolean isUpdateAttachment;
     private byte[] mImage;
 
-    public EditAsync(Context context, ServiceFeatureTable serviceFeatureTable, ArcGISFeature selectedArcGISFeature,AsyncResponse delegate) {
-        mContext = context;
+    public EditAsync(QuanLyTaiSan mainActivity, ServiceFeatureTable serviceFeatureTable, ArcGISFeature selectedArcGISFeature,AsyncResponse delegate) {
+        mMainActivity = mainActivity;
         mServiceFeatureTable = serviceFeatureTable;
         mSelectedArcGISFeature = selectedArcGISFeature;
-        mDialog = new ProgressDialog(context, android.R.style.Theme_Material_Dialog_Alert);
+        mDialog = new ProgressDialog(mainActivity, android.R.style.Theme_Material_Dialog_Alert);
         this.delegate = delegate;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mDialog.setMessage(mContext.getString(R.string.async_dang_xu_ly));
+        mDialog.setMessage(mMainActivity.getString(R.string.async_dang_xu_ly));
         mDialog.setCancelable(false);
         mDialog.setButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
@@ -68,9 +72,13 @@ public class EditAsync extends AsyncTask<FeatureViewMoreInfoAdapter, Void, Void>
 
     @Override
     protected Void doInBackground(FeatureViewMoreInfoAdapter... params) {
+        String username = ((TanHoaApplication) mMainActivity.getApplication()).getmUsername();
         FeatureViewMoreInfoAdapter adapter = params[0];
         List<FeatureType> featureTypes = mSelectedArcGISFeature.getFeatureTable().getFeatureTypes();
         for (FeatureViewMoreInfoAdapter.Item item : adapter.getItems()) {
+            if(item.getFieldName().equals(mMainActivity.getString(R.string.NGUOICAPNHAT))){
+                mSelectedArcGISFeature.getAttributes().put(mMainActivity.getString(R.string.NGUOICAPNHAT), username);
+            }
             if (item.getValue() == null || !item.isEdit()) continue;
             Domain domain = mSelectedArcGISFeature.getFeatureTable().getField(item.getFieldName()).getDomain();
             Object codeDomain = null;
@@ -114,6 +122,7 @@ public class EditAsync extends AsyncTask<FeatureViewMoreInfoAdapter, Void, Void>
                     break;
             }
         }
+
         mServiceFeatureTable.loadAsync();
         mServiceFeatureTable.addDoneLoadingListener(new Runnable() {
             @Override
@@ -154,7 +163,7 @@ public class EditAsync extends AsyncTask<FeatureViewMoreInfoAdapter, Void, Void>
     }
     private void addAttachment() {
 
-        final String attachmentName = mContext.getString(R.string.attachment) + "_" + System.currentTimeMillis() + ".png";
+        final String attachmentName = mMainActivity.getString(R.string.attachment) + "_" + System.currentTimeMillis() + ".png";
         final ListenableFuture<Attachment> addResult = mSelectedArcGISFeature.addAttachmentAsync(mImage, Bitmap.CompressFormat.PNG.toString(), attachmentName);
         addResult.addDoneListener(new Runnable() {
             @Override

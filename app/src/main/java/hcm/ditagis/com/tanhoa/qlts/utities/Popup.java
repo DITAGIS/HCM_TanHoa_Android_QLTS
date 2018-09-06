@@ -59,6 +59,7 @@ import hcm.ditagis.com.tanhoa.qlts.async.NotifyDataSetChangeAsync;
 import hcm.ditagis.com.tanhoa.qlts.async.QueryHanhChinhAsync;
 import hcm.ditagis.com.tanhoa.qlts.async.ViewAttachmentAsync;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
+import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
 
 public class Popup extends AppCompatActivity {
     private QuanLyTaiSan mMainActivity;
