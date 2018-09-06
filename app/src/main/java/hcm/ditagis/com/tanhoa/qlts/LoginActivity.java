@@ -1,11 +1,7 @@
 package hcm.ditagis.com.tanhoa.qlts;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -25,7 +21,6 @@ import hcm.ditagis.com.tanhoa.qlts.async.LoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.async.NewLoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.User;
 import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
-import hcm.ditagis.com.tanhoa.qlts.socket.LocationHelper;
 import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
 import hcm.ditagis.com.tanhoa.qlts.utities.CheckConnectInternet;
 import hcm.ditagis.com.tanhoa.qlts.utities.Preference;
@@ -40,7 +35,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView mTxtPassword;
     private boolean isLastLogin;
     private TextView mTxtValidation;
-    private Location mLocation;
     private Socket mSocket;
 
     @Override
@@ -143,10 +137,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         handler.postDelayed(new Runnable() {
             public void run() {
                 //do something
-                if (mLocation != null) {
+                if (app.getmLocation() != null) {
                     Log.d("gửi", "hhi");
                     Emitter emit = mSocket.emit(Constants.EVENT_STAFF_NAME, Constants.APP_ID + "," + app.getmUsername());
-                    Emitter emit1 = mSocket.emit(Constants.EVENT_LOCATION, mLocation.getLatitude() + "," + mLocation.getLongitude());
+                    Emitter emit1 = mSocket.emit(Constants.EVENT_LOCATION,
+                            app.getmLocation().getLatitude() + "," +app.getmLocation().getLongitude());
                     Log.d("Kết quả vị trí", emit1.hasListeners(Constants.EVENT_LOCATION) + "");
                 }
                 handler.postDelayed(this, delay);
