@@ -96,7 +96,7 @@ import hcm.ditagis.com.tanhoa.qlts.libs.Action;
 import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
 import hcm.ditagis.com.tanhoa.qlts.socket.LocationHelper;
-import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
+import hcm.ditagis.com.tanhoa.qlts.socket.DApplication;
 import hcm.ditagis.com.tanhoa.qlts.tools.MySnackBar;
 import hcm.ditagis.com.tanhoa.qlts.tools.SearchItem;
 import hcm.ditagis.com.tanhoa.qlts.tools.ThongKe;
@@ -187,7 +187,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
             @Override
             public void onLocationChanged(Location location) {
                 mLocation = location;
-                ((TanHoaApplication) QuanLyTaiSan.this.getApplication()).setmLocation(mLocation);
+                ((DApplication) QuanLyTaiSan.this.getApplication()).setmLocation(mLocation);
             }
 
             @Override

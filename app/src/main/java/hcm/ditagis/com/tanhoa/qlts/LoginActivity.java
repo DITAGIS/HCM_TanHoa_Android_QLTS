@@ -1,7 +1,6 @@
 package hcm.ditagis.com.tanhoa.qlts;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -21,7 +20,7 @@ import hcm.ditagis.com.tanhoa.qlts.async.LoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.async.NewLoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.User;
 import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
-import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
+import hcm.ditagis.com.tanhoa.qlts.socket.DApplication;
 import hcm.ditagis.com.tanhoa.qlts.utities.CheckConnectInternet;
 import hcm.ditagis.com.tanhoa.qlts.utities.Preference;
 import io.socket.client.Socket;
@@ -36,12 +35,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean isLastLogin;
     private TextView mTxtValidation;
     private Socket mSocket;
+    private DApplication mApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(hcm.ditagis.com.tanhoa.qlts.R.layout.activity_login);
-
+        mApplication = (DApplication) getApplication();
         Button btnLogin = (findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.btnLogin));
         btnLogin.setOnClickListener(this);
         findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_login_changeAccount).setOnClickListener(this);
@@ -107,9 +107,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void processFinish(User output) {
-                if (output != null)
+                if (output != null) {
+                    mApplication.setUserDangNhap(output);
                     handleLoginSuccess(output);
-                else
+                } else
                     handleLoginFail();
             }
         });
@@ -129,8 +130,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void handleLoginSuccess(User user) {
         // GPS
 
-        final TanHoaApplication app = (TanHoaApplication) getApplication();
-        app.setmUsername(mTxtUsername.getText().toString());
+        final DApplication app = (DApplication) getApplication();
         mSocket = app.getSocket();
         final Handler handler = new Handler();
         final int delay = 5000; //milliseconds
@@ -139,9 +139,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //do something
                 if (app.getmLocation() != null) {
                     Log.d("gửi", "hhi");
-                    Emitter emit = mSocket.emit(Constants.EVENT_STAFF_NAME, Constants.APP_ID + "," + app.getmUsername());
+                    if (mApplication.getUserDangNhap != null &&
+                            mApplication.getUserDangNhap.getUserName() != null)
+                        mSocket.emit(Constants.EVENT_STAFF_NAME, Constants.APP_ID + "," + mApplication.getUserDangNhap.getUserName());
                     Emitter emit1 = mSocket.emit(Constants.EVENT_LOCATION,
-                            app.getmLocation().getLatitude() + "," +app.getmLocation().getLongitude());
+                            app.getmLocation().getLatitude() + "," + app.getmLocation().getLongitude());
                     Log.d("Kết quả vị trí", emit1.hasListeners(Constants.EVENT_LOCATION) + "");
                 }
                 handler.postDelayed(this, delay);

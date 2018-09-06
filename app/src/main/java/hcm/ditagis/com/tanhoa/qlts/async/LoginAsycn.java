@@ -43,7 +43,6 @@ public class LoginAsycn extends AsyncTask<String, Void, User> {
             publishProgress();
             LoginDB loginDB = new LoginDB(mContext);
             User user = loginDB.find(danhBo, pin);
-            User.userDangNhap = user;
             return user;
         } catch (Exception e) {
             Log.e("Lỗi đăng nhập", e.toString());
