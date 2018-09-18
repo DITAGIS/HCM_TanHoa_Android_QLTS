@@ -16,7 +16,6 @@ import java.net.URL;
 
 import hcm.ditagis.com.tanhoa.qlts.R;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.User;
-import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.UserDangNhap;
 import hcm.ditagis.com.tanhoa.qlts.utities.Preference;
 
 public class NewLoginAsycn extends AsyncTask<String, Void, User> {
@@ -34,8 +33,8 @@ public class NewLoginAsycn extends AsyncTask<String, Void, User> {
     public NewLoginAsycn(Context context, LoginAsycn.AsyncResponse delegate) {
         this.mContext = context;
         this.mDelegate = delegate;
-        API_URL = context.getString(R.string.SERVICES_URL)+API_URL;
-        API_URL_PROFILE = context.getString(R.string.SERVICES_URL)+API_URL_PROFILE;
+        API_URL = context.getString(R.string.SERVICES_URL) + API_URL;
+        API_URL_PROFILE = context.getString(R.string.SERVICES_URL) + API_URL_PROFILE;
     }
 
     protected void onPreExecute() {
@@ -68,12 +67,12 @@ public class NewLoginAsycn extends AsyncTask<String, Void, User> {
                     stringBuilder.append(line);
                     break;
                 }
-                Preference.getInstance().savePreferences(mContext.getString(R.string.preference_login_api), stringBuilder.toString().replace("\"",""));
+                Preference.getInstance().savePreferences(mContext.getString(R.string.preference_login_api), stringBuilder.toString().replace("\"", ""));
                 bufferedReader.close();
-
-                UserDangNhap.getInstance().setUser(new User());
-                UserDangNhap.getInstance().getUser().setDisplayName(getDisplayName());
-                return UserDangNhap.getInstance().getUser();
+                User user = new User();
+                user.setUserName(userName);
+                user.setDisplayName(getDisplayName());
+                return user;
             } finally {
                 conn.disconnect();
             }

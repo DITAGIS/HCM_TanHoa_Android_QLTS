@@ -70,7 +70,11 @@ public class EditAsync extends AsyncTask<FeatureViewMoreInfoAdapter, Void, Void>
 
     @Override
     protected Void doInBackground(FeatureViewMoreInfoAdapter... params) {
+<<<<<<< HEAD
         String username = ((DApplication) mMainActivity.getApplication()).getmUsername();
+=======
+        String username = ((DApplication) mMainActivity.getApplication()).getUserDangNhap.getUserName();
+>>>>>>> c9813f38f4de6cc5730de8d7349eae764ac90df4
         FeatureViewMoreInfoAdapter adapter = params[0];
         List<FeatureType> featureTypes = mSelectedArcGISFeature.getFeatureTable().getFeatureTypes();
         for (FeatureViewMoreInfoAdapter.Item item : adapter.getItems()) {

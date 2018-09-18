@@ -8,6 +8,7 @@ import com.esri.arcgisruntime.data.Feature;
 import java.net.URISyntaxException;
 
 import hcm.ditagis.com.tanhoa.qlts.adapter.FeatureAdapter;
+import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.User;
 import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -35,13 +36,14 @@ public class DApplication extends Application {
     }
 
     private String mUsername;
+    public User getUserDangNhap;
 
-    public String getmUsername() {
-        return mUsername;
+    {
+        getUserDangNhap = new User();
     }
 
-    public void setmUsername(String mUsername) {
-        this.mUsername = mUsername;
+    public void setUserDangNhap(User user) {
+        getUserDangNhap = user;
     }
 
     public Socket getSocket() {

@@ -11,7 +11,6 @@ public class User {
 
     private boolean isCreate;
     private boolean isValid;
-    public static User userDangNhap;
 
     public User() {
 

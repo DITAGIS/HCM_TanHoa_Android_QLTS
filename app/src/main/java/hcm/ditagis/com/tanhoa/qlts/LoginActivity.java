@@ -35,12 +35,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private boolean isLastLogin;
     private TextView mTxtValidation;
     private Socket mSocket;
+    private DApplication mApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(hcm.ditagis.com.tanhoa.qlts.R.layout.activity_login);
-
+        mApplication = (DApplication) getApplication();
         Button btnLogin = (findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.btnLogin));
         btnLogin.setOnClickListener(this);
         findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_login_changeAccount).setOnClickListener(this);
@@ -106,9 +107,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void processFinish(User output) {
-                if (output != null)
+                if (output != null) {
+                    mApplication.setUserDangNhap(output);
                     handleLoginSuccess(output);
-                else
+                } else
                     handleLoginFail();
             }
         });
@@ -129,7 +131,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // GPS
 
         final DApplication app = (DApplication) getApplication();
+<<<<<<< HEAD
         app.setmUsername(mTxtUsername.getText().toString());
+=======
+>>>>>>> c9813f38f4de6cc5730de8d7349eae764ac90df4
         mSocket = app.getSocket();
         final Handler handler = new Handler();
         final int delay = 5000; //milliseconds
@@ -138,9 +143,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //do something
                 if (app.getmLocation() != null) {
                     Log.d("gửi", "hhi");
-                    Emitter emit = mSocket.emit(Constants.EVENT_STAFF_NAME, Constants.APP_ID + "," + app.getmUsername());
+                    if (mApplication.getUserDangNhap != null &&
+                            mApplication.getUserDangNhap.getUserName() != null)
+                        mSocket.emit(Constants.EVENT_STAFF_NAME, Constants.APP_ID + "," + mApplication.getUserDangNhap.getUserName());
                     Emitter emit1 = mSocket.emit(Constants.EVENT_LOCATION,
-                            app.getmLocation().getLatitude() + "," +app.getmLocation().getLongitude());
+                            app.getmLocation().getLatitude() + "," + app.getmLocation().getLongitude());
                     Log.d("Kết quả vị trí", emit1.hasListeners(Constants.EVENT_LOCATION) + "");
                 }
                 handler.postDelayed(this, delay);
