@@ -131,10 +131,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // GPS
 
         final DApplication app = (DApplication) getApplication();
-<<<<<<< HEAD
         app.setmUsername(mTxtUsername.getText().toString());
-=======
->>>>>>> c9813f38f4de6cc5730de8d7349eae764ac90df4
         mSocket = app.getSocket();
         final Handler handler = new Handler();
         final int delay = 5000; //milliseconds
