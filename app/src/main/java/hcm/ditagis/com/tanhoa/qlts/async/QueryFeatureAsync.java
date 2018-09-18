@@ -6,8 +6,12 @@ import android.os.AsyncTask;
 import android.widget.TextView;
 
 import com.esri.arcgisruntime.concurrent.ListenableFuture;
+import com.esri.arcgisruntime.data.CodedValue;
+import com.esri.arcgisruntime.data.CodedValueDomain;
+import com.esri.arcgisruntime.data.Domain;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureQueryResult;
+import com.esri.arcgisruntime.data.Field;
 import com.esri.arcgisruntime.data.QueryParameters;
 import com.esri.arcgisruntime.data.ServiceFeatureTable;
 
@@ -80,12 +84,21 @@ public class QueryFeatureAsync extends AsyncTask<String, List<FeatureAdapter.Ite
                         Feature feature = (Feature) iterator.next();
                         FeatureAdapter.Item item = new FeatureAdapter.Item();
                         Map<String, Object> attributes = feature.getAttributes();
+                        Object trangThai = attributes.get(mContext.getString(R.string.TrangThai));
                         if (attributes.get(mContext.getString(R.string.LayerID)) != null)
                             item.setLayerID(attributes.get(mContext.getString(R.string.LayerID)).toString());
                         if (attributes.get(mContext.getString(R.string.ID)) != null)
                             item.setID(attributes.get(mContext.getString(R.string.ID)).toString());
-                        if (attributes.get(mContext.getString(R.string.TrangThai)) != null)
-                            item.setTrangThai(attributes.get(mContext.getString(R.string.TrangThai)).toString());
+                        if (trangThai != null) {
+                            Field field = serviceFeatureTable.getField(mContext.getString(R.string.TrangThai));
+
+                            List<CodedValue> codedValues = ((CodedValueDomain) field.getDomain()).getCodedValues();
+                            Object valueDomainObject = getValueDomain(codedValues, trangThai.toString());
+                            if (valueDomainObject != null) {
+                                item.setTrangThai(valueDomainObject.toString());
+                                item.setValue_TrangThai(Short.parseShort(trangThai.toString()));
+                            }
+                        }
                         if (attributes.get(mContext.getString(R.string.Ngay)) != null) {
                             String format_date = Constant.DATE_FORMAT.format(((Calendar) attributes.get(mContext.getString(R.string.Ngay))).getTime());
                             item.setNgay(format_date);
@@ -105,7 +118,17 @@ public class QueryFeatureAsync extends AsyncTask<String, List<FeatureAdapter.Ite
         });
         return null;
     }
+    private Object getValueDomain(List<CodedValue> codedValues, String code) {
+        Object value = null;
+        for (CodedValue codedValue : codedValues) {
+            if (codedValue.getCode().toString().equals(code)) {
+                value = codedValue.getName();
+                break;
+            }
 
+        }
+        return value;
+    }
     @Override
     protected void onProgressUpdate(List<FeatureAdapter.Item>... values) {
         featureAdapter.clear();

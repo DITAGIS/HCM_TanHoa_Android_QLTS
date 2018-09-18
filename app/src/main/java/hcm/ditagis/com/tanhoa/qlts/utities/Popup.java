@@ -15,6 +15,8 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -33,8 +35,10 @@ import com.esri.arcgisruntime.data.CodedValueDomain;
 import com.esri.arcgisruntime.data.Domain;
 import com.esri.arcgisruntime.data.Feature;
 import com.esri.arcgisruntime.data.FeatureEditResult;
+import com.esri.arcgisruntime.data.FeatureQueryResult;
 import com.esri.arcgisruntime.data.FeatureType;
 import com.esri.arcgisruntime.data.Field;
+import com.esri.arcgisruntime.data.QueryParameters;
 import com.esri.arcgisruntime.data.ServiceFeatureTable;
 import com.esri.arcgisruntime.geometry.Envelope;
 import com.esri.arcgisruntime.layers.FeatureLayer;
@@ -45,7 +49,7 @@ import com.esri.arcgisruntime.mapping.view.MapView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -59,12 +63,14 @@ import hcm.ditagis.com.tanhoa.qlts.async.NotifyDataSetChangeAsync;
 import hcm.ditagis.com.tanhoa.qlts.async.QueryHanhChinhAsync;
 import hcm.ditagis.com.tanhoa.qlts.async.ViewAttachmentAsync;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
-import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
+import hcm.ditagis.com.tanhoa.qlts.socket.DApplication;
+import hcm.ditagis.com.tanhoa.qlts.tools.FeatureLayerUpdate;
 
 public class Popup extends AppCompatActivity {
     private QuanLyTaiSan mMainActivity;
     private ArcGISFeature mSelectedArcGISFeature = null;
     private ServiceFeatureTable mServiceFeatureTable;
+    private ServiceFeatureTable apLucBatThuongTBL;
     private Callout mCallout;
     private FeatureLayerDTG mFeatureLayerDTG;
     private List<String> lstFeatureType;
@@ -74,16 +80,18 @@ public class Popup extends AppCompatActivity {
     private MapView mMapView;
     private ArrayList<Feature> quanhuyen_features;
     private Feature quanhuyen_feature;
-
-
+    private FeatureLayerUpdate featureLayerUpdate;
+    private DApplication mApplication;
     public Popup(QuanLyTaiSan mainActivity, MapView mMapView, Callout callout) {
         this.mMainActivity = mainActivity;
         this.mMapView = mMapView;
         this.mCallout = callout;
-
-
+        this.featureLayerUpdate = new FeatureLayerUpdate(this.mMainActivity);
+        this.mApplication = (DApplication) mMainActivity.getApplication();
     }
-
+    public void setApLucBatThuongTBL(ServiceFeatureTable apLucBatThuongTBL) {
+        this.apLucBatThuongTBL = apLucBatThuongTBL;
+    }
 
     public void setmSFTHanhChinh(ServiceFeatureTable mSFTHanhChinh) {
         new QueryHanhChinhAsync(mMainActivity, mSFTHanhChinh, new QueryHanhChinhAsync.AsyncResponse() {
@@ -365,7 +373,7 @@ public class Popup extends AppCompatActivity {
                                     @Override
                                     public void onClick(View view) {
                                         DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
-                                        String s = String.format("%02d_%02d_%d", datePicker.getDayOfMonth(), datePicker.getMonth()+1, datePicker.getYear());
+                                        String s = String.format("%02d_%02d_%d", datePicker.getDayOfMonth(), datePicker.getMonth() + 1, datePicker.getYear());
 
                                         textView.setText(s);
                                         alertDialog.dismiss();
@@ -540,6 +548,168 @@ public class Popup extends AppCompatActivity {
         return linearLayout;
     }
 
+    public LinearLayout showPopup(final ArcGISFeature mSelectedArcGISFeature, String popupQueryType) {
+        dimissCallout();
+        mServiceFeatureTable = (ServiceFeatureTable) mFeatureLayerDTG.getFeatureLayer().getFeatureTable();
+        this.mSelectedArcGISFeature = mSelectedArcGISFeature;
+        final FeatureLayer featureLayer = mFeatureLayerDTG.getFeatureLayer();
+        featureLayer.selectFeature(mSelectedArcGISFeature);
+        lstFeatureType = new ArrayList<>();
+        for (int i = 0; i < mSelectedArcGISFeature.getFeatureTable().getFeatureTypes().size(); i++) {
+            lstFeatureType.add(mSelectedArcGISFeature.getFeatureTable().getFeatureTypes().get(i).getName());
+        }
+        LayoutInflater inflater = LayoutInflater.from(this.mMainActivity.getApplicationContext());
+        linearLayout = (LinearLayout) inflater.inflate(R.layout.layout_popup_infos, null);
+        refressPopup();
+        ((TextView) linearLayout.findViewById(R.id.txt_title_layer)).setText(mFeatureLayerDTG.getFeatureLayer().getName());
+        ImageButton imgBtn_ViewMoreInfo = (ImageButton) linearLayout.findViewById(R.id.imgBtn_ViewMoreInfo);
+        if (mFeatureLayerDTG.getAction().isEdit()) {
+            imgBtn_ViewMoreInfo.setVisibility(View.VISIBLE);
+            imgBtn_ViewMoreInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewMoreInfo();
+                }
+            });
+        } else imgBtn_ViewMoreInfo.setVisibility(View.GONE);
+        ImageButton imgBtn_delete = (ImageButton) linearLayout.findViewById(R.id.imgBtn_delete);
+
+        if (mFeatureLayerDTG.getAction().isDelete()) {
+            imgBtn_delete.setVisibility(View.VISIBLE);
+            imgBtn_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSelectedArcGISFeature.getFeatureTable().getFeatureLayer().clearSelection();
+                    deleteFeature();
+                }
+            });
+        } else imgBtn_delete.setVisibility(View.GONE);
+
+        ((Button) linearLayout.findViewById(R.id.btn_layer_close)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dimissCallout();
+            }
+        });
+        if (mFeatureLayerDTG.getAction().isEdit() && this.mSelectedArcGISFeature.canEditAttachments()) {
+            ((ImageButton) linearLayout.findViewById(R.id.imgBtn_takePics)).setVisibility(View.VISIBLE);
+            ((ImageButton) linearLayout.findViewById(R.id.imgBtn_takePics)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateAttachment();
+                }
+            });
+        }
+
+        linearLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        Envelope envelope = mSelectedArcGISFeature.getGeometry().getExtent();
+        if (popupQueryType.equals(Constant.POPUP_QUERY_TYPE.CLICKMAP))
+            mMapView.setViewpointGeometryAsync(envelope, 0);
+        else if(popupQueryType.equals(Constant.POPUP_QUERY_TYPE.DATALOGGER)){
+            final CheckBox cbDaKiemTra = (CheckBox) linearLayout.findViewById(R.id.cbDaKiemTra);
+            cbDaKiemTra.setVisibility(View.VISIBLE);
+            short value_trangThai = mApplication.getItemDataLogger().getValue_TrangThai();
+            if(value_trangThai == 2){
+                cbDaKiemTra.setChecked(true);
+                cbDaKiemTra.setClickable(false);
+            }else{
+                final Map<String, Object> attr = mSelectedArcGISFeature.getAttributes();
+                cbDaKiemTra.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                        if (cbDaKiemTra.isChecked()) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(mMainActivity);
+
+                            builder.setTitle("Thông báo");
+                            builder.setMessage("Áp lực bất thường sẽ chuyển sang đã kiểm tra?");
+
+                            builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Do nothing but close the dialog
+                                    queryAndUpdateFeature(mFeatureLayerDTG.getFeatureLayer().getId(), attr.get("OBJECTID").toString());
+                                    cbDaKiemTra.setClickable(false);
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Do nothing
+                                    cbDaKiemTra.setChecked(false);
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+                    }
+                });
+            }
+
+        }
+        // show CallOut
+        mCallout.setLocation(envelope.getCenter());
+        mCallout.setContent(linearLayout);
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mCallout.refresh();
+                mCallout.show();
+            }
+        });
+        return linearLayout;
+    }
+    private void queryAndUpdateFeature(String layerID,String iD){
+        QueryParameters queryParameters = new QueryParameters();
+        String queryClause = "layerID =  '" + layerID + "' and ID = '" + iD + "'";
+        queryParameters.setWhereClause(queryClause);
+        final ListenableFuture<FeatureQueryResult> queryResultListenableFuture = this.apLucBatThuongTBL.queryFeaturesAsync(queryParameters, ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
+        queryResultListenableFuture.addDoneListener(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    FeatureQueryResult result = queryResultListenableFuture.get();
+                    Iterator iterator = result.iterator();
+                    while (iterator.hasNext()) {
+                        Feature feature = (Feature) iterator.next();
+                        Field field_NgayCapNhat = apLucBatThuongTBL.getField(mMainActivity.getString(R.string.NGAYCAPNHAT));
+                        if(field_NgayCapNhat != null){
+                            Calendar currentTime = Calendar.getInstance();
+                            feature.getAttributes().put(mMainActivity.getString(R.string.NGAYCAPNHAT), currentTime);
+                        }
+                        feature.getAttributes().put(mMainActivity.getString(R.string.TrangThai), Constant.VALUE_TRANGTHAI.DA_KIEM_TRA);
+                        final ListenableFuture<Void> mapViewResult = apLucBatThuongTBL.updateFeatureAsync(feature);
+                        mapViewResult.addDoneListener(new Runnable() {
+                            @Override
+                            public void run() {
+                                final ListenableFuture<List<FeatureEditResult>> listListenableEditAsync = apLucBatThuongTBL.applyEditsAsync();
+                                listListenableEditAsync.addDoneListener(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            List<FeatureEditResult> featureEditResults = listListenableEditAsync.get();
+                                            featureEditResults.size();
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        } catch (ExecutionException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                });
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     private void deleteFeature() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mMainActivity, android.R.style.Theme_Material_Light_Dialog_Alert);
         builder.setTitle("Xác nhận");

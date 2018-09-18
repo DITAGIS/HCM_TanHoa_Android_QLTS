@@ -1,7 +1,6 @@
 package hcm.ditagis.com.tanhoa.qlts.utities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.view.MotionEvent;
@@ -20,9 +19,7 @@ import com.esri.arcgisruntime.geometry.GeometryEngine;
 import com.esri.arcgisruntime.geometry.Point;
 import com.esri.arcgisruntime.geometry.SpatialReferences;
 import com.esri.arcgisruntime.layers.FeatureLayer;
-import com.esri.arcgisruntime.layers.Layer;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
-import com.esri.arcgisruntime.mapping.LayerList;
 import com.esri.arcgisruntime.mapping.Viewpoint;
 import com.esri.arcgisruntime.mapping.view.MapView;
 import com.esri.arcgisruntime.tasks.geocode.LocatorTask;
@@ -40,6 +37,7 @@ import hcm.ditagis.com.tanhoa.qlts.adapter.ObjectsAdapter;
 import hcm.ditagis.com.tanhoa.qlts.async.SingleTapAddFeatureAsync;
 import hcm.ditagis.com.tanhoa.qlts.async.SingleTapMapViewAsync;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
+import hcm.ditagis.com.tanhoa.qlts.socket.DApplication;
 
 
 /**
@@ -59,7 +57,8 @@ public class MapViewHandler extends Activity {
     private boolean isClickBtnAdd = false;
     private ServiceFeatureTable searchSFT;
     private Popup mPopUp;
-    private Context mContext;
+    private Activity mActivity;
+    private DApplication mApplication;
 
     public void setFeatureLayerDTGs(List<FeatureLayerDTG> mFeatureLayerDTGs) {
         this.mFeatureLayerDTGs = mFeatureLayerDTGs;
@@ -73,8 +72,9 @@ public class MapViewHandler extends Activity {
 
     public MapViewHandler(MapView mMapView, QuanLyTaiSan quanLyTaiSan) {
         this.mMapView = mMapView;
-        this.mContext = quanLyTaiSan;
+        this.mActivity = quanLyTaiSan;
         this.mMap = mMapView.getMap();
+        this.mApplication = (DApplication) quanLyTaiSan.getApplication();
     }
 
     public ServiceFeatureTable getSearchSFT() {
@@ -90,7 +90,7 @@ public class MapViewHandler extends Activity {
     }
 
     public void addFeature(byte[] image) {
-        SingleTapAddFeatureAsync singleTapAdddFeatureAsync = new SingleTapAddFeatureAsync(mContext, image, searchSFT, loc, mMapView);
+        SingleTapAddFeatureAsync singleTapAdddFeatureAsync = new SingleTapAddFeatureAsync(mActivity, image, searchSFT, loc, mMapView);
         Point add_point = mMapView.getCurrentViewpoint(Viewpoint.Type.CENTER_AND_SCALE).getTargetGeometry().getExtent().getCenter();
         singleTapAdddFeatureAsync.execute(add_point);
     }
@@ -98,7 +98,7 @@ public class MapViewHandler extends Activity {
     public void onSingleTapMapView(MotionEvent e) {
         final Point clickPoint = mMapView.screenToLocation(new android.graphics.Point(Math.round(e.getX()), Math.round(e.getY())));
         mClickPoint = new android.graphics.Point((int) e.getX(), (int) e.getY());
-        SingleTapMapViewAsync singleTapMapViewAsync = new SingleTapMapViewAsync(mContext, mFeatureLayerDTGs, mPopUp, mClickPoint, mMapView);
+        SingleTapMapViewAsync singleTapMapViewAsync = new SingleTapMapViewAsync(mActivity, mFeatureLayerDTGs, mPopUp, mClickPoint, mMapView);
         singleTapMapViewAsync.execute(clickPoint);
     }
 
@@ -130,7 +130,7 @@ public class MapViewHandler extends Activity {
         final QueryParameters queryParameters = new QueryParameters();
         final String query = "OBJECTID = " + objectID;
         queryParameters.setWhereClause(query);
-        final ListenableFuture<FeatureQueryResult> feature = searchSFT.queryFeaturesAsync(queryParameters,ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
+        final ListenableFuture<FeatureQueryResult> feature = searchSFT.queryFeaturesAsync(queryParameters, ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
         feature.addDoneListener(new Runnable() {
             @Override
             public void run() {
@@ -142,7 +142,7 @@ public class MapViewHandler extends Activity {
                             String tableName = ((ArcGISFeatureTable) mSelectedArcGISFeature.getFeatureTable()).getTableName();
                             FeatureLayerDTG featureLayerDTG = getmFeatureLayerDTG(tableName);
                             mPopUp.setFeatureLayerDTG(featureLayerDTG);
-                            mPopUp.showPopup(mSelectedArcGISFeature,false);
+                            mPopUp.showPopup(mSelectedArcGISFeature, Constant.POPUP_QUERY_TYPE.SEARCH);
                         } else mPopUp.dimissCallout();
                     }
                 } catch (InterruptedException e) {
@@ -154,12 +154,13 @@ public class MapViewHandler extends Activity {
         });
 
     }
-    public void queryObjectByLayerID_ObjectID(String objectID,String layerID) {
+
+    public void queryObjectByLayerID_ObjectID() {
         final QueryParameters queryParameters = new QueryParameters();
-        final String query = "OBJECTID = " + objectID;
+        final String query = "OBJECTID = " + mApplication.getItemDataLogger().getID();
         queryParameters.setWhereClause(query);
-        FeatureLayer featureLayer = getServiceFeatureTable(layerID).getFeatureLayer();
-        if(featureLayer != null) {
+        FeatureLayer featureLayer = getServiceFeatureTable(mApplication.getItemDataLogger().getLayerID()).getFeatureLayer();
+        if (featureLayer != null) {
             featureLayer.setVisible(true);
             ServiceFeatureTable serviceFeatureTable = (ServiceFeatureTable) featureLayer.getFeatureTable();
             final ListenableFuture<FeatureQueryResult> feature = serviceFeatureTable.queryFeaturesAsync(queryParameters, ServiceFeatureTable.QueryFeatureFields.LOAD_ALL);
@@ -174,7 +175,7 @@ public class MapViewHandler extends Activity {
                                 String tableName = ((ArcGISFeatureTable) mSelectedArcGISFeature.getFeatureTable()).getTableName();
                                 FeatureLayerDTG featureLayerDTG = getmFeatureLayerDTG(tableName);
                                 mPopUp.setFeatureLayerDTG(featureLayerDTG);
-                                mPopUp.showPopup(mSelectedArcGISFeature, false);
+                                mPopUp.showPopup(mSelectedArcGISFeature, Constant.POPUP_QUERY_TYPE.DATALOGGER);
                             } else mPopUp.dimissCallout();
                         }
                     } catch (InterruptedException e) {
@@ -187,6 +188,7 @@ public class MapViewHandler extends Activity {
         }
 
     }
+
     private FeatureLayerDTG getServiceFeatureTable(String layerID) {
         for (FeatureLayerDTG featureLayerDTG : mFeatureLayerDTGs) {
             String layerID_DTG = featureLayerDTG.getFeatureLayer().getId();
@@ -194,6 +196,7 @@ public class MapViewHandler extends Activity {
         }
         return null;
     }
+
     public FeatureLayerDTG getmFeatureLayerDTG(String tableName) {
         for (FeatureLayerDTG featureLayerDTG : mFeatureLayerDTGs) {
             String tableNameDTG = ((ArcGISFeatureTable) featureLayerDTG.getFeatureLayer().getFeatureTable()).getTableName();

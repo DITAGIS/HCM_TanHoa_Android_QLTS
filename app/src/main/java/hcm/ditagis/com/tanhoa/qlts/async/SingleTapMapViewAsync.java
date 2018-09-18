@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
+import hcm.ditagis.com.tanhoa.qlts.utities.Constant;
 import hcm.ditagis.com.tanhoa.qlts.utities.Popup;
 
 /**
@@ -110,7 +111,7 @@ public class SingleTapMapViewAsync extends AsyncTask<Point, FeatureLayerDTG, Voi
         if (values != null) {
             FeatureLayerDTG featureLayerDTG = values[0];
             mPopUp.setFeatureLayerDTG(featureLayerDTG);
-            if (mSelectedArcGISFeature != null) mPopUp.showPopup(mSelectedArcGISFeature,true);
+            if (mSelectedArcGISFeature != null) mPopUp.showPopup(mSelectedArcGISFeature, Constant.POPUP_QUERY_TYPE.CLICKMAP);
         }
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();

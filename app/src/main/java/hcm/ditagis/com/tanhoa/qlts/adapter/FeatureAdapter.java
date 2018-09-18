@@ -79,6 +79,7 @@ public class FeatureAdapter extends ArrayAdapter<FeatureAdapter.Item> {
         private String layerID;
         private String iD;
         private String trangThai;
+        private short value_TrangThai = -1;
         private String ngay;
 
         public Item() {
@@ -113,6 +114,14 @@ public class FeatureAdapter extends ArrayAdapter<FeatureAdapter.Item> {
 
         public void setTrangThai(String trangThai) {
             this.trangThai = trangThai;
+        }
+
+        public short getValue_TrangThai() {
+            return value_TrangThai;
+        }
+
+        public void setValue_TrangThai(short value_TrangThai) {
+            this.value_TrangThai = value_TrangThai;
         }
 
         public String getNgay() {

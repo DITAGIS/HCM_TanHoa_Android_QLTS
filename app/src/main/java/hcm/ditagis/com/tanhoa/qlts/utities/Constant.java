@@ -64,5 +64,13 @@ public class Constant {
         return mSettingsItems;
     }
 
-
+    public static class POPUP_QUERY_TYPE{
+        public static final String CLICKMAP = "CLICKMAP";
+        public static final String SEARCH = "SEARCH";
+        public static final String DATALOGGER = "DATALOGGER";
+    }
+   public static class VALUE_TRANGTHAI {
+        public static final short CHUA_KIEM_TRA = 1;
+        public static final short DA_KIEM_TRA = 2;
+    }
 }

@@ -45,6 +45,13 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="horizontal">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/padding_title_popup"
+                android:id="@+id/cbDaKiemTra"
+                android:visibility="gone"
+                android:text="Đã kiểm tra"/>
             <ImageButton
                 android:id="@+id/imgBtn_takePics"
                 android:layout_width="wrap_content"

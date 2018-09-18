@@ -261,9 +261,10 @@
 
     <string name="IDLayer_Basemap">BASEMAP</string>
     <string name="diemsucoLYR">diemsucoLYR</string>
-    <string name="TrangThai">TrangThai</string>
     <string name="Ngay">Ngay</string>
     <string name="LayerID">LayerID</string>
     <string name="ID">ID</string>
     <string name="NGUOICAPNHAT">NGUOICAPNHAT</string>
+    <string name="NGAYCAPNHAT">NGAYCAPNHAT</string>
+    <string name="TrangThai">TrangThai</string>
 </resources>

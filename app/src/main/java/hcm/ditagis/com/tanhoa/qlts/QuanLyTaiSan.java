@@ -96,7 +96,7 @@ import hcm.ditagis.com.tanhoa.qlts.libs.Action;
 import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
 import hcm.ditagis.com.tanhoa.qlts.libs.FeatureLayerDTG;
 import hcm.ditagis.com.tanhoa.qlts.socket.LocationHelper;
-import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
+import hcm.ditagis.com.tanhoa.qlts.socket.DApplication;
 import hcm.ditagis.com.tanhoa.qlts.tools.MySnackBar;
 import hcm.ditagis.com.tanhoa.qlts.tools.SearchItem;
 import hcm.ditagis.com.tanhoa.qlts.tools.ThongKe;
@@ -187,7 +187,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
             @Override
             public void onLocationChanged(Location location) {
                 mLocation = location;
-                ((TanHoaApplication) QuanLyTaiSan.this.getApplication()).setmLocation(mLocation);
+                ((DApplication) QuanLyTaiSan.this.getApplication()).setmLocation(mLocation);
             }
 
             @Override
@@ -293,11 +293,15 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
         mMapViewHandler = new MapViewHandler(mMapView, QuanLyTaiSan.this);
         popupInfos = new Popup(QuanLyTaiSan.this, mMapView, mCallout);
         for (final LayerInfoDTG layerInfoDTG : ListObjectDB.getInstance().getLstFeatureLayerDTG()) {
-            if (layerInfoDTG.getId().substring(layerInfoDTG.getId().length() - 3).equals("TBL") || !layerInfoDTG.isView())
-                continue;
             String url = layerInfoDTG.getUrl();
             if (!layerInfoDTG.getUrl().startsWith("http"))
                 url = "http:" + layerInfoDTG.getUrl();
+            if(layerInfoDTG.getId() != null && layerInfoDTG.getId().equals("aplucbatthuongTBL")){
+                ServiceFeatureTable apLucBatThuongTBL = new ServiceFeatureTable(url);
+                popupInfos.setApLucBatThuongTBL(apLucBatThuongTBL);
+            }
+            if (layerInfoDTG.getId().substring(layerInfoDTG.getId().length() - 3).equals("TBL") || !layerInfoDTG.isView())
+                continue;
             if (layerInfoDTG.getId().equals(getString(hcm.ditagis.com.tanhoa.qlts.R.string.IDLayer_Basemap))) {
                 hanhChinhImageLayers = new ArcGISMapImageLayer(url);
                 hanhChinhImageLayers.setId(layerInfoDTG.getId());
@@ -1095,9 +1099,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
             switch (requestCode) {
                 case REQUEST_ID_DATA_LOGGER:
                     if (resultCode == Activity.RESULT_OK) {
-                        String objectid = data.getStringExtra(getString(R.string.ID));
-                        String layerID = data.getStringExtra(getString(R.string.LayerID));
-                        mMapViewHandler.queryObjectByLayerID_ObjectID(objectid, layerID);
+                        mMapViewHandler.queryObjectByLayerID_ObjectID();
                     }
                     break;
                 case Constants.REQUEST_LOGIN:

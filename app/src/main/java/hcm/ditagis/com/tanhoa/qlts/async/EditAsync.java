@@ -1,8 +1,6 @@
 package hcm.ditagis.com.tanhoa.qlts.async;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -27,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 import hcm.ditagis.com.tanhoa.qlts.QuanLyTaiSan;
 import hcm.ditagis.com.tanhoa.qlts.R;
 import hcm.ditagis.com.tanhoa.qlts.adapter.FeatureViewMoreInfoAdapter;
-import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
+import hcm.ditagis.com.tanhoa.qlts.socket.DApplication;
 import hcm.ditagis.com.tanhoa.qlts.utities.Constant;
 
 /**
@@ -72,7 +70,7 @@ public class EditAsync extends AsyncTask<FeatureViewMoreInfoAdapter, Void, Void>
 
     @Override
     protected Void doInBackground(FeatureViewMoreInfoAdapter... params) {
-        String username = ((TanHoaApplication) mMainActivity.getApplication()).getmUsername();
+        String username = ((DApplication) mMainActivity.getApplication()).getmUsername();
         FeatureViewMoreInfoAdapter adapter = params[0];
         List<FeatureType> featureTypes = mSelectedArcGISFeature.getFeatureTable().getFeatureTypes();
         for (FeatureViewMoreInfoAdapter.Item item : adapter.getItems()) {

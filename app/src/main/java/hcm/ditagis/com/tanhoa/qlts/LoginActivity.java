@@ -1,7 +1,6 @@
 package hcm.ditagis.com.tanhoa.qlts;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -21,7 +20,7 @@ import hcm.ditagis.com.tanhoa.qlts.async.LoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.async.NewLoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.User;
 import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
-import hcm.ditagis.com.tanhoa.qlts.socket.TanHoaApplication;
+import hcm.ditagis.com.tanhoa.qlts.socket.DApplication;
 import hcm.ditagis.com.tanhoa.qlts.utities.CheckConnectInternet;
 import hcm.ditagis.com.tanhoa.qlts.utities.Preference;
 import io.socket.client.Socket;
@@ -49,8 +48,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mTxtUsername = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txtUsername);
         mTxtPassword = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txtPassword);
         mTxtValidation = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_login_validation);
-//        mTxtPassword.setText("ditagis@123");
-//        mTxtUsername.setText("ditagis");
+        mTxtPassword.setText("ditagis@123");
+        mTxtUsername.setText("ditagis");
         create();
 
 
@@ -129,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void handleLoginSuccess(User user) {
         // GPS
 
-        final TanHoaApplication app = (TanHoaApplication) getApplication();
+        final DApplication app = (DApplication) getApplication();
         app.setmUsername(mTxtUsername.getText().toString());
         mSocket = app.getSocket();
         final Handler handler = new Handler();
