@@ -361,7 +361,7 @@ public class LocationHelper extends AsyncTask<Void, Object, Void> implements Per
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                         break;
                 }
-                publishProgress(null);
+                publishProgress();
 
             }
         });

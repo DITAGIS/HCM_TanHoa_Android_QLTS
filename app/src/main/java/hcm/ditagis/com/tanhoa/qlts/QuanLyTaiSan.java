@@ -886,7 +886,7 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
                 toogleFloatButton();
                 break;
             case R.id.nav_logOut:
-                this.finish();
+               startSignIn();
                 break;
             case R.id.nav_delete_searching:
                 mGraphicsOverlay.getGraphics().clear();

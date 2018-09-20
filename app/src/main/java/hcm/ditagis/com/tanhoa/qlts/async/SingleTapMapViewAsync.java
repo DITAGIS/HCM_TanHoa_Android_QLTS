@@ -55,7 +55,7 @@ public class SingleTapMapViewAsync extends AsyncTask<Point, FeatureLayerDTG, Voi
         mDialog.setButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                publishProgress(null);
+                publishProgress();
             }
         });
 
@@ -85,11 +85,9 @@ public class SingleTapMapViewAsync extends AsyncTask<Point, FeatureLayerDTG, Voi
                         }
 
                     }
-                    publishProgress(null);
+                    publishProgress();
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
             }
@@ -108,7 +106,7 @@ public class SingleTapMapViewAsync extends AsyncTask<Point, FeatureLayerDTG, Voi
         super.onProgressUpdate(values);
         mPopUp.clearSelection();
         mPopUp.dimissCallout();
-        if (values != null) {
+        if (values != null && values.length > 0) {
             FeatureLayerDTG featureLayerDTG = values[0];
             mPopUp.setFeatureLayerDTG(featureLayerDTG);
             if (mSelectedArcGISFeature != null) mPopUp.showPopup(mSelectedArcGISFeature, Constant.POPUP_QUERY_TYPE.CLICKMAP);

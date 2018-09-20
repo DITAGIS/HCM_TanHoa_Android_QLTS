@@ -68,7 +68,7 @@ public class SingleTapAddFeatureAsync extends AsyncTask<Point, Void, Void> {
         mDialog.setButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                publishProgress(null);
+                publishProgress();
             }
         });
         mDialog.show();

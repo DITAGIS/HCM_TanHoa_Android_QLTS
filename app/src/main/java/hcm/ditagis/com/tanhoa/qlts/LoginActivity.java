@@ -49,8 +49,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mTxtUsername = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txtUsername);
         mTxtPassword = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txtPassword);
         mTxtValidation = findViewById(hcm.ditagis.com.tanhoa.qlts.R.id.txt_login_validation);
-        mTxtPassword.setText("ditagis@123");
-        mTxtUsername.setText("ditagis");
+//        mTxtPassword.setText("ditagis@123");
+//        mTxtUsername.setText("ditagis");
         create();
 
 
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // GPS
 
         final DApplication app = (DApplication) getApplication();
-        app.setmUsername(mTxtUsername.getText().toString());
+        app.getUserDangNhap.setUserName(mTxtUsername.getText().toString());
         mSocket = app.getSocket();
         final Handler handler = new Handler();
         final int delay = 5000; //milliseconds

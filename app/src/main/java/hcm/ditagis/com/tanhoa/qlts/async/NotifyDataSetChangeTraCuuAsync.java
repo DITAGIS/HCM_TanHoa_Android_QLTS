@@ -30,7 +30,7 @@ public class NotifyDataSetChangeTraCuuAsync extends AsyncTask<TraCuuAdapter, Voi
         dialog.setButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                publishProgress(null);
+                publishProgress();
             }
         });
         dialog.setCancelable(false);

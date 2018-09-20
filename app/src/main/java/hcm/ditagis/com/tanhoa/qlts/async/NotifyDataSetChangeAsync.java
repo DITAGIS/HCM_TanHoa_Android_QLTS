@@ -31,7 +31,7 @@ public class NotifyDataSetChangeAsync extends AsyncTask<FeatureViewMoreInfoAdapt
         dialog.setButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                publishProgress(null);
+                publishProgress();
             }
         });
         dialog.show();
