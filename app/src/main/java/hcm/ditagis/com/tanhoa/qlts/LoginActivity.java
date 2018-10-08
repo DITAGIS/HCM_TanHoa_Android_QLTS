@@ -145,6 +145,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         mSocket.emit(Constants.EVENT_STAFF_NAME, Constants.APP_ID + "," + mApplication.getUserDangNhap.getUserName());
                     Emitter emit1 = mSocket.emit(Constants.EVENT_LOCATION,
                             app.getmLocation().getLatitude() + "," + app.getmLocation().getLongitude());
+                    app.setmLocation(null);
                     Log.d("Kết quả vị trí", emit1.hasListeners(Constants.EVENT_LOCATION) + "");
                 }
                 handler.postDelayed(this, delay);
