@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import hcm.ditagis.com.tanhoa.qlts.async.LoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.async.NewLoginAsycn;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.User;
 import hcm.ditagis.com.tanhoa.qlts.libs.Constants;
@@ -103,16 +102,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             handleInfoLoginEmpty();
             return;
         }
-        NewLoginAsycn loginAsycn = new NewLoginAsycn(this, new LoginAsycn.AsyncResponse() {
-
-            @Override
-            public void processFinish(User output) {
-                if (output != null) {
-                    mApplication.setUserDangNhap(output);
-                    handleLoginSuccess(output);
-                } else
-                    handleLoginFail();
-            }
+        NewLoginAsycn loginAsycn = new NewLoginAsycn(this, output -> {
+            if (output != null) {
+                mApplication.setUserDangNhap(output);
+                handleLoginSuccess(output);
+            } else
+                handleLoginFail();
         });
         loginAsycn.execute(userName, passWord);
     }

@@ -57,10 +57,6 @@
             android:icon="@drawable/ic_action_visible"
             android:title="@string/nav_an_hien_nut_chuc_nang" />
         <item
-            android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_settings"
-            android:title="@string/nav_cai_dat" />
-        <item
             android:id="@+id/nav_logOut"
             android:icon="@drawable/ic_logout"
             android:title="@string/nav_log_out" />

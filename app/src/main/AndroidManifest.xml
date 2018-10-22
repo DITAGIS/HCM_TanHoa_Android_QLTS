@@ -47,10 +47,6 @@
             android:name="hcm.ditagis.com.tanhoa.qlts.DataLoggerActivity"
             android:label="Data Logger"
             android:parentActivityName="hcm.ditagis.com.tanhoa.qlts.QuanLyTaiSan" />
-        <activity
-            android:name="hcm.ditagis.com.tanhoa.qlts.SettingsActivity"
-            android:label="Cài đặt"
-            android:parentActivityName="hcm.ditagis.com.tanhoa.qlts.QuanLyTaiSan" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

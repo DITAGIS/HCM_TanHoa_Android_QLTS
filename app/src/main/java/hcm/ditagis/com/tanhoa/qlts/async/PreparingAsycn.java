@@ -20,6 +20,7 @@ import hcm.ditagis.com.tanhoa.qlts.R;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.LayerInfoDTG;
 import hcm.ditagis.com.tanhoa.qlts.entities.entitiesDB.ListObjectDB;
 import hcm.ditagis.com.tanhoa.qlts.tools.Route;
+import hcm.ditagis.com.tanhoa.qlts.utities.Constant;
 import hcm.ditagis.com.tanhoa.qlts.utities.Preference;
 
 
@@ -27,7 +28,6 @@ public class PreparingAsycn extends AsyncTask<Void, Void, Void> {
     private ProgressDialog mDialog;
     private Context mContext;
     private AsyncResponse mDelegate;
-    String API_URL = "/account/layerinfo";
 
     public interface AsyncResponse {
         void processFinish(Void output);
@@ -36,7 +36,6 @@ public class PreparingAsycn extends AsyncTask<Void, Void, Void> {
     public PreparingAsycn(Context context, AsyncResponse delegate) {
         this.mContext = context;
         this.mDelegate = delegate;
-        API_URL = context.getString(R.string.SERVICES_URL)+API_URL;
     }
 
     @Override
@@ -53,7 +52,7 @@ public class PreparingAsycn extends AsyncTask<Void, Void, Void> {
         try {
 //            String API_URL = "http://sawagis.vn/tanhoa1/api/Account/LayerInfo";
 
-            URL url = new URL(API_URL);
+            URL url = new URL(Constant.URL_API.LAYER_INFO);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             try {
                 conn.setDoOutput(false);
