@@ -874,10 +874,6 @@ public class QuanLyTaiSan extends AppCompatActivity implements NavigationView.On
             case R.id.nav_tracuu:
 //                traCuu.start();
                 break;
-            case R.id.nav_find_route:
-                intent = new Intent(this, FindRouteActivity.class);
-                this.startActivity(intent);
-                break;
             case R.id.nav_visible_float_button:
                 toogleFloatButton();
                 break;
